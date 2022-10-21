@@ -25,19 +25,17 @@ class BookControllerTest {
 
 
     @Test
-    void aListOfBooks_callTheGetAllBooksMethod_bookController_getAllBooksMethodIsCalled() {
+    void aListOfBooks_callTheBookServiceGetAllBooksMethod_bookControllerGetAllBooksMethodIsCalled() {
         //Given
-
         List<BookDto> expectedBookList = new ArrayList<>();
         Mockito.when(bookService.getAllBooks()).thenReturn(expectedBookList);
-
         //When
         List<BookDto> bookRepositoryToTest = bookController.getAllBooks();
-
         //Then
         Assertions.assertEquals(expectedBookList, bookRepositoryToTest);
-
     }
+
+
 
     /**
     List<BookDto> expectedBookList = new ArrayList<>(List.of(
