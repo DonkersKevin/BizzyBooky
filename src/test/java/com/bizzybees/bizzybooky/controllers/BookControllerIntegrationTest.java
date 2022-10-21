@@ -26,7 +26,6 @@ class BookControllerIntegrationTest {
     BookController bookController;
     List<BookDto> expectedBookList;
 
-    List<BookDto> expectedBookList;
 
     @BeforeEach
     void init() {

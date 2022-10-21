@@ -46,4 +46,16 @@ public class BookDto {
     public int hashCode() {
         return getISBN() != null ? getISBN().hashCode() : 0;
     }
+
+
+    @Override
+    public String toString() {
+        return "BookDto{" +
+                "isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", authorFirstName='" + authorFirstName + '\'' +
+                ", authorLastName='" + authorLastName + '\'' +
+                ", summary='" + summary + '\'' +
+                '}';
+    }
 }
