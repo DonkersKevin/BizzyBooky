@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 public class BookRepository {
     private List<Book> bookList;
 
-    public BookRepository(List<Book> bookList) {
+    public BookRepository() {
         this.bookList = new ArrayList<>(List.of(
-                new Book("1","1000-2000-3000", "Pirates", "Mister", "Crabs","Lorem Ipsum"),
-                new Book("2","2000-3000-4000", "Farmers", "Misses", "Potato","Lorem Ipsum"),
-                new Book("3","3000-4000-5000", "Gardeners", "Miss", "Lettuce","Lorem Ipsum"),
-                new Book("4","6000-7000-8000", "Programmes", "Boy", "Name","Lorem Ipsum")));
+                new Book("1", "1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new Book("2", "2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new Book("3", "3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new Book("4", "6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")));
     }
 
     public List<Book> getAllBooks() {
@@ -25,12 +25,20 @@ public class BookRepository {
     }
 
     public Book getBookDetailsByIsbn(String isbn) {
-        return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findAny().orElseThrow();
+        return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
 
     public Book getBookById(String id) {
         return bookList.stream().filter(book -> book.getId().equals(id)).findFirst().orElseThrow();
     }
-    
-    
+
+
+    /** Main method for testing purposes - to be removed later*/
+
+    public static void main(String[] args) {
+        BookRepository bookRepository = new BookRepository();
+        System.out.println(bookRepository.getBookDetailsByIsbn("1000-2000-3000").toString());
+    }
+
+    /** Main method for testing purposes - to be removed later*/
 }

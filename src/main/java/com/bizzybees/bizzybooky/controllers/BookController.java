@@ -43,8 +43,8 @@ public class BookController {
     }
 
 
-    @RequestMapping(path="/{isbn}",produces = "application/json")
-    public BookDto getBookByIsbn(@PathVariable String isbn){
+    @RequestMapping(path = "/{isbn}", produces = "application/json")
+    public BookDto getBookByIsbn(@PathVariable String isbn) {
         return bookService.getBookByIsbn(isbn);
     }
 }

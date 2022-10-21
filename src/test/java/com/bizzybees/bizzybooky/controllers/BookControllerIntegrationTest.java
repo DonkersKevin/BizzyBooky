@@ -24,7 +24,6 @@ class BookControllerIntegrationTest {
 
     @Autowired
     BookController bookController;
-
     List<BookDto> expectedBookList;
 
     @BeforeEach
