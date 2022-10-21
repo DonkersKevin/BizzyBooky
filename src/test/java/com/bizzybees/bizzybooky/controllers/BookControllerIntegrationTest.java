@@ -67,11 +67,11 @@ class BookControllerIntegrationTest {
         //When
         BookDto result = RestAssured
                 .given()
-                .baseUri("http://localhost:8080")
+                .baseUri("http://localhost")
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-                .get("/1000-2000-3000")
+                .get("/books/isbn/1000-2000-3000")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())

@@ -33,6 +33,9 @@ public class BookDto {
         return authorLastName;
     }
 
+    public String getSummary() {
+        return summary;
+    }
 
     @Override
     public boolean equals(Object o) {
