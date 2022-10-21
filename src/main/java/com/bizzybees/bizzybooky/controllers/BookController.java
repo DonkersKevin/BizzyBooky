@@ -23,5 +23,7 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
-
+    public BookService getBookService() {
+        return bookService;
+    }
 }

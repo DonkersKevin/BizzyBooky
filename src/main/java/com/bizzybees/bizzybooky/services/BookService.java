@@ -19,4 +19,8 @@ public class BookService {
     public List<BookDto> getAllBooks() {
         return bookMapper.listToDtoList(bookRepository.getAllBooks());
     }
+
+    public BookMapper getBookMapper() {
+        return bookMapper;
+    }
 }
