@@ -14,6 +14,11 @@ public class RentalService {
     private BookRepository bookRepository;
     private MemberRepository memberRepository;
 
+    public RentalService(RentalRepository rentalRepository, BookRepository bookRepository, MemberRepository memberRepository) {
+        this.rentalRepository = rentalRepository;
+        this.bookRepository = bookRepository;
+        this.memberRepository = memberRepository;
+    }
 
     public BookRental rentBook(String memberID, String bookISBN) {
         if (!bookRepository.getBookDetailsByIsbn(bookISBN).isAvailableForRent()) {
