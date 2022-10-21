@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     MemberService memberService;
 
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
     public MemberDto addMember(MemberDto memberDto) {
         return memberService.addMember(memberDto);
     }
