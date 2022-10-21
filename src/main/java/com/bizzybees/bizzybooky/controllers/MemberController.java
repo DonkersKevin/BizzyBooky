@@ -17,4 +17,6 @@ public class MemberController {
     public MemberDto addMember(MemberDto memberDto) {
         return memberService.addMember(memberDto);
     }
+
+
 }

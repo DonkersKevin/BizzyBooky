@@ -5,6 +5,9 @@ import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.memberdtos.MemberDto;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+import java.util.regex.Pattern;
+
 @Service
 public class MemberService {
     MemberRepository memberRepository;
@@ -15,23 +18,41 @@ public class MemberService {
         this.memberMapper = new MemberMapper();
     }
 
-    public MemberDto addMember(MemberDto memberDto){
+    public MemberDto addMember(MemberDto memberDto) {
+        checkRequiredFields(memberDto);
+        isValidEmail(memberDto.getEmail());
+        isUniqueEmail(memberDto.getEmail());
         Member newMember = memberMapper.memberDtoToMember(memberDto);
-        if (!isValidEmail(memberDto)) {
-
-        }
-
         memberRepository.save(newMember);
         return memberMapper.memberToMemberDto(newMember);
     }
 
-    private boolean isValidEmail(MemberDto memberDto) {
-        if(memberDto.getEmail()==null){
-            throw new IllegalArgumentException("Provide an Email address please!");
+    // Public for testing
+    public void isValidEmail(String emailAddress) {
+
+        if (!emailAddress.matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+            throw new IllegalArgumentException("Email address is not valid");
         }
-        return true;
+
     }
 
+    public void isUniqueEmail(String email) {
+        if (memberRepository.memberDatabase.values().stream().anyMatch(member -> email.equals(member.getEmail()))) {
+            throw new IllegalArgumentException("Email Already exists");
+        }
+    }
+
+    public void checkRequiredFields(MemberDto memberDto) {
+        if (memberDto.getEmail() == null || memberDto.getEmail().equals("")) {
+            throw new IllegalArgumentException("Provide an Email address please!");
+        }
+        if (memberDto.getCity() == null || memberDto.getCity().equals("")) {
+            throw new IllegalArgumentException("Provide a City please!");
+        }
+        if (memberDto.getLastname() == null || memberDto.getLastname().equals("")) {
+            throw new IllegalArgumentException("Provide a lastname please!");
+        }
+    }
 
 
 }
