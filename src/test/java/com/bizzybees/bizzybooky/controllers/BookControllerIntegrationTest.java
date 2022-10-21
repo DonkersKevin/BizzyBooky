@@ -12,9 +12,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -25,7 +25,6 @@ class BookControllerIntegrationTest {
     @Autowired
     BookController bookController;
     List<BookDto> expectedBookList;
-
 
     @BeforeEach
     void init() {
@@ -45,7 +44,7 @@ class BookControllerIntegrationTest {
         //ACT
         BookDto[] result = RestAssured
                 .given()
-                .baseUri("http://localhost:8080")
+                .baseUri("http://localhost")
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
@@ -61,7 +60,7 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookByIsbn(){
+    void getBookByIsbn() {
         //Given
         BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
         //When
@@ -88,7 +87,7 @@ class BookControllerIntegrationTest {
         //ACT
         BookDto result = RestAssured
                 .given()
-                .baseUri("http://localhost:8080")
+                .baseUri("http://localhost")
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
@@ -107,21 +106,16 @@ class BookControllerIntegrationTest {
 
     @Test
     void GivenStringIdOutOfBounds_ThrowNoSuchElement() {
-        BookDto[] result = RestAssured
-                //ARRANGE
+        RestAssured
                 .given()
-                .baseUri("http://localhost:8080")
+                .baseUri("http://localhost")
                 .port(port)
-                //ACT
                 .when()
                 .accept(ContentType.JSON)
                 .get("/books/8")
                 .then()
                 .assertThat()
-                .extract()
-                .as(BookDto[].class);
-
-        //ASSES
-        assertEquals(result, expectedBookList.get(2));
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("No book by that id..."));
     }
 }
