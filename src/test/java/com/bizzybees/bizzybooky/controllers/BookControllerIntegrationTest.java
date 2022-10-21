@@ -1,15 +1,19 @@
 package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Book;
+import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,7 @@ class BookControllerIntegrationTest {
 
     @Autowired
     BookController bookController;
+
 
     @Test
     void getAllBooks() {
@@ -72,5 +77,32 @@ class BookControllerIntegrationTest {
                 .as(BookDto.class);
         //Then
         assertThat(result).isEqualTo(bookDto);
+    }
+
+    @Test
+    void getRentalHappyPath(){
+        //given
+        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
+
+        List<BookDto> expectedBookList = new ArrayList<>(List.of(
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum")));
+
+        //when
+        LocalDate result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/1/1000-2000-3000/lent")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookRental.class).getDueDate();
+        //Then
+        assertThat(result).isEqualTo(LocalDate.of(2022,11,11));
+        //then
+        //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
     }
 }

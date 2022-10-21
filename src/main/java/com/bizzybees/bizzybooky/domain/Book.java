@@ -7,6 +7,7 @@ public class Book {
     private String authorFirstName;
     private String authorLastName;
     private String summary;
+    private boolean isAvailableForRent = true;
 
     public Book(String id, String isbn, String title, String authorFirstName, String authorLastName, String summary) {
         this.id = id;
@@ -15,6 +16,14 @@ public class Book {
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
         this.summary = summary;
+    }
+
+    public boolean isAvailableForRent() {
+        return isAvailableForRent;
+    }
+
+    public void setAvailableForRent(boolean availableForRent) {
+        isAvailableForRent = availableForRent;
     }
 
     public String getId() {

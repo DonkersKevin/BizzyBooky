@@ -5,8 +5,6 @@ import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.memberdtos.MemberDto;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 @Service
 public class MemberService {
