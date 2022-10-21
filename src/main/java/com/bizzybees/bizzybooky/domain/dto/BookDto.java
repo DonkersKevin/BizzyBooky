@@ -1,12 +1,13 @@
-package com.bizzybees.bizzybooky.domain;
+package com.bizzybees.bizzybooky.domain.dto;
 
-public class Book {
+public class BookDto {
+
     private String ISBN;
     private String title;
     private String authorFirstName;
     private String authorLastName;
 
-    public Book(String ISBN, String title, String authorFirstName, String authorLastName) {
+    public BookDto(String ISBN, String title, String authorFirstName, String authorLastName) {
         this.ISBN = ISBN;
         this.title = title;
         this.authorFirstName = authorFirstName;
