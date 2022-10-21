@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class BookRepository {
@@ -21,5 +22,9 @@ public class BookRepository {
 
     public List<Book> getAllBooks() {
         return bookList;
+    }
+
+    public Book getBookDetailsByIsbn(String isbn) {
+        return bookList.stream().filter(book -> book.getISBN().equals(isbn)).findAny().get();
     }
 }

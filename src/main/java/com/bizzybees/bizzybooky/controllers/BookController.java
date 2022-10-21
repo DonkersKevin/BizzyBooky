@@ -26,4 +26,9 @@ public class BookController {
     public BookService getBookService() {
         return bookService;
     }
+
+    @GetMapping
+    public BookDto getBookByIsbn(String isbn){
+        return bookService.getBookByIsbn(isbn);
+    }
 }
