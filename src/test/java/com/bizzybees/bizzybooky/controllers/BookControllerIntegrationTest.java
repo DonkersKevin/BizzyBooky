@@ -54,7 +54,7 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookByIsbn_withNoWildCard(){
+    void getBookByIsbn(){
         //Given
         BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
         //When
@@ -72,6 +72,50 @@ class BookControllerIntegrationTest {
                 .as(BookDto.class);
         //Then
         assertThat(result).isEqualTo(bookDto);
+    }
+
+    @Test
+    void GivenStringId_ReturnBookWIthGivenId() {
+        //ARRANGE
+
+        //ACT
+        BookDto result = RestAssured
+                .given()
+                .baseUri("http://localhost:8080")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/3")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto.class);
+
+        //ASSES
+        //Code smell?
+        assertEquals(result, expectedBookList.get(2));
+
+    }
+
+    @Test
+    void GivenStringIdOutOfBounds_ThrowNoSuchElement() {
+        assertThatExceptionOfType(NoSuchElementException.class)
+                .isThrownBy(() -> {
+                    BookDto[] result = RestAssured
+                            //ARRANGE
+                            .given()
+                            .baseUri("http://localhost:8080")
+                            .port(port)
+                            //ACT
+                            .when()
+                            .accept(ContentType.JSON)
+                            .get("/books/8")
+                            .then()
+                            .extract()
+                            .as(BookDto[].class);
+
+                });
     }
 
     @Test

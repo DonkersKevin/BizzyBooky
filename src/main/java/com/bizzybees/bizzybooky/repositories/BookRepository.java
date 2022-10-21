@@ -27,4 +27,10 @@ public class BookRepository {
     public Book getBookDetailsByIsbn(String isbn) {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findAny().orElseThrow();
     }
+
+    public Book getBookById(String id) {
+        return bookList.stream().filter(book -> book.getId().equals(id)).findFirst().orElseThrow();
+    }
+    
+    
 }
