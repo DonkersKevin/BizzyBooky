@@ -7,9 +7,11 @@ public class BookDto {
     private String authorFirstName;
     private String authorLastName;
 
+    private String summary;
 
 
-    public BookDto(String ISBN, String title, String authorFirstName, String authorLastName) {
+
+    public BookDto(String ISBN, String title, String authorFirstName, String authorLastName, String summary ) {
         this.isbn = ISBN;
         this.title = title;
         this.authorFirstName = authorFirstName;

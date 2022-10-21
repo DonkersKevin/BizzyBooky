@@ -28,10 +28,10 @@ class BookControllerIntegrationTest {
     void getAllBooks() {
         //ARRANGE
         List<BookDto> expectedBookList = new ArrayList<>(List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs"),
-                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato"),
-                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce"),
-                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name")
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")
         ));
 
         //ACT

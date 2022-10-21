@@ -13,10 +13,10 @@ public class BookRepository {
 
     public BookRepository(List<Book> bookList) {
         this.bookList = new ArrayList<>(List.of(
-                new Book("1000-2000-3000", "Pirates", "Mister", "Crabs"),
-                new Book("2000-3000-4000", "Farmers", "Misses", "Potato"),
-                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce"),
-                new Book("6000-7000-8000", "Programmes", "Boy", "Name")));
+                new Book("1","1000-2000-3000", "Pirates", "Mister", "Crabs","Lorem Ipsum"),
+                new Book("2","2000-3000-4000", "Farmers", "Misses", "Potato","Lorem Ipsum"),
+                new Book("3","3000-4000-5000", "Gardeners", "Miss", "Lettuce","Lorem Ipsum"),
+                new Book("4","6000-7000-8000", "Programmes", "Boy", "Name","Lorem Ipsum")));
     }
 
     public List<Book> getAllBooks() {
