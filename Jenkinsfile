@@ -12,9 +12,9 @@ pipeline {
                 sh 'mvn clean install -DskipTests'
             }
         }
-        stage('self-evaluation') {
+        stage('testing') {
             steps {
-                sh 'cd 20-programming-advanced-java && cd 00-self-evaluation && mvn -Dmaven.test.failure.ignore=true test'
+                sh 'mvn -Dmaven.test.failure.ignore=true test'
             }
         }
     }
