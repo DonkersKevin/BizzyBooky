@@ -7,6 +7,8 @@ public class BookDto {
     private String authorFirstName;
     private String authorLastName;
 
+
+
     public BookDto(String ISBN, String title, String authorFirstName, String authorLastName) {
         this.ISBN = ISBN;
         this.title = title;
@@ -28,5 +30,19 @@ public class BookDto {
 
     public String getAuthorLastName() {
         return authorLastName;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BookDto bookDto)) return false;
+
+        return getISBN() != null ? getISBN().equals(bookDto.getISBN()) : bookDto.getISBN() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getISBN() != null ? getISBN().hashCode() : 0;
     }
 }

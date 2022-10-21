@@ -11,6 +11,10 @@ public class BookService {
     private BookRepository bookRepository;
     private BookMapper bookMapper;
 
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+        this.bookMapper = new BookMapper();
+    }
 
     public List<BookDto> getAllBooks() {
         return bookMapper.listToDtoList(bookRepository.getAllBooks());

@@ -14,6 +14,10 @@ import java.util.List;
 public class BookController {
     private BookService bookService;
 
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @GetMapping
     public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
