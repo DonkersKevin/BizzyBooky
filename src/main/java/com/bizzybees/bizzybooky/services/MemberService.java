@@ -17,7 +17,21 @@ public class MemberService {
 
     public MemberDto addMember(MemberDto memberDto){
         Member newMember = memberMapper.memberDtoToMember(memberDto);
+        if (!isValidEmail(memberDto)) {
+
+        }
+
         memberRepository.save(newMember);
         return memberMapper.memberToMemberDto(newMember);
     }
+
+    private boolean isValidEmail(MemberDto memberDto) {
+        if(memberDto.getEmail()==null){
+            throw new IllegalArgumentException("Provide an Email address please!");
+        }
+        return true;
+    }
+
+
+
 }
