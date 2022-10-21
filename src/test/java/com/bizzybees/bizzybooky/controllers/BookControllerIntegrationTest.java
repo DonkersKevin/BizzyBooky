@@ -101,8 +101,6 @@ class BookControllerIntegrationTest {
 
     @Test
     void GivenStringIdOutOfBounds_ThrowNoSuchElement() {
-        assertThatExceptionOfType(NoSuchElementException.class)
-                .isThrownBy(() -> {
                     BookDto[] result = RestAssured
                             //ARRANGE
                             .given()
@@ -113,10 +111,12 @@ class BookControllerIntegrationTest {
                             .accept(ContentType.JSON)
                             .get("/books/8")
                             .then()
+                            .assertThat()
                             .extract()
                             .as(BookDto[].class);
 
-                });
+        //ASSES
+        assertEquals(result, expectedBookList.get(2));
     }
 
     @Test
