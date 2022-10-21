@@ -70,7 +70,7 @@ class BookControllerIntegrationTest {
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-                .get("/1000-2000-3000")
+                .get("/books/isbn/1000-2000-3000")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())

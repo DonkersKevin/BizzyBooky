@@ -32,7 +32,7 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
+    @GetMapping("id/{id}")
     public BookDto getBookById(@PathVariable String id) {
         log.info("Looking for book with id: " + id);
         return bookService.getBookById(id);
@@ -43,7 +43,7 @@ public class BookController {
     }
 
 
-    @RequestMapping(path = "/{isbn}", produces = "application/json")
+    @RequestMapping(path = "isbn/{isbn}", produces = "application/json")
     public BookDto getBookByIsbn(@PathVariable String isbn) {
         return bookService.getBookByIsbn(isbn);
     }
