@@ -12,7 +12,9 @@ public class BookMapper {
     }
 
     public BookDto bookToDto(Book book) {
-        return new BookDto(book.getISBN(), book.getTitle(), book.getAuthorFirstName(), book.getAuthorLastName());
+        return new BookDto(book.getIsbn(), book.getTitle(), book.getAuthorFirstName(), book.getAuthorLastName(), book.getSummary());
     }
+
+
 
 }

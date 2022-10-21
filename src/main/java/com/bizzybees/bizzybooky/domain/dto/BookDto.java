@@ -2,22 +2,24 @@ package com.bizzybees.bizzybooky.domain.dto;
 
 public class BookDto {
 
-    private String ISBN;
+    private String isbn;
     private String title;
     private String authorFirstName;
     private String authorLastName;
 
+    private String summary;
 
 
-    public BookDto(String ISBN, String title, String authorFirstName, String authorLastName) {
-        this.ISBN = ISBN;
+
+    public BookDto(String ISBN, String title, String authorFirstName, String authorLastName, String summary ) {
+        this.isbn = ISBN;
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
     }
 
     public String getISBN() {
-        return ISBN;
+        return isbn;
     }
 
     public String getTitle() {
