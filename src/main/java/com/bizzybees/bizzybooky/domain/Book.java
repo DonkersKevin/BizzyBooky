@@ -49,4 +49,16 @@ public class Book {
     public String getSummary() {
         return summary;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", authorFirstName='" + authorFirstName + '\'' +
+                ", authorLastName='" + authorLastName + '\'' +
+                ", summary='" + summary + '\'' +
+                '}';
+    }
 }

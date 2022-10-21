@@ -6,6 +6,7 @@ import com.bizzybees.bizzybooky.repositories.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class BookService {
     private BookRepository bookRepository;
@@ -24,7 +25,20 @@ public class BookService {
         return bookMapper;
     }
 
+    public BookDto getBookById(String id) {
+        return bookMapper.bookToDto(bookRepository.getBookById(id));
+    }
+
     public BookDto getBookByIsbn(String isbn) {
         return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));
     }
+
+    /** Main method for testing purposes - to be removed later*/
+
+    public static void main(String[] args) {
+        BookService bookService = new BookService(new BookRepository());
+        System.out.println(bookService.getBookByIsbn("1000-2000-3000").toString());
+    }
+
+    /** Main method for testing purposes - to be removed later*/
 }

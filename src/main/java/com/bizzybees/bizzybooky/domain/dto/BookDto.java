@@ -1,7 +1,6 @@
 package com.bizzybees.bizzybooky.domain.dto;
 
 public class BookDto {
-
     private String isbn;
     private String title;
     private String authorFirstName;
@@ -10,12 +9,12 @@ public class BookDto {
     private String summary;
 
 
-
-    public BookDto(String ISBN, String title, String authorFirstName, String authorLastName, String summary ) {
-        this.isbn = ISBN;
+    public BookDto(String isbn, String title, String authorFirstName, String authorLastName, String summary) {
+        this.isbn = isbn;
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
+        this.summary = summary;
     }
 
     public String getISBN() {
@@ -34,6 +33,9 @@ public class BookDto {
         return authorLastName;
     }
 
+    public String getSummary() {
+        return summary;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,5 +48,17 @@ public class BookDto {
     @Override
     public int hashCode() {
         return getISBN() != null ? getISBN().hashCode() : 0;
+    }
+
+
+    @Override
+    public String toString() {
+        return "BookDto{" +
+                "isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", authorFirstName='" + authorFirstName + '\'' +
+                ", authorLastName='" + authorLastName + '\'' +
+                ", summary='" + summary + '\'' +
+                '}';
     }
 }
