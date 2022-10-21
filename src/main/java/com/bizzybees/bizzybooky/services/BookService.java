@@ -23,4 +23,8 @@ public class BookService {
     public BookMapper getBookMapper() {
         return bookMapper;
     }
+
+    public BookDto getBookById(String id) {
+       return bookMapper.bookToDto(bookRepository.getBookById(id));
+    }
 }
