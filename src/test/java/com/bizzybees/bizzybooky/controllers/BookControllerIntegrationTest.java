@@ -54,7 +54,7 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookByIsbn(){
+    void getBookByIsbn_withNoWildCard(){
         //Given
         BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
         //When
@@ -65,6 +65,27 @@ class BookControllerIntegrationTest {
                 .when()
                 .accept(ContentType.JSON)
                 .get("/1000-2000-3000")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto.class);
+        //Then
+        assertThat(result).isEqualTo(bookDto);
+    }
+
+    @Test
+    void getBookByIsbn_withWildCards(){
+        //Given
+        BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
+        //When
+        BookDto result = RestAssured
+                .given()
+                .baseUri("http://localhost:8080")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/*-2000-3000")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
