@@ -1,5 +1,6 @@
 package com.bizzybees.bizzybooky.controllers;
 
+import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -49,8 +50,27 @@ class BookControllerIntegrationTest {
                 .as(BookDto[].class);
 
         //ASSES
-        // List<BookDto> expectedList = bookController.getBookService().getBookMapper().bookToDto();
         assertThat(List.of(result)).isEqualTo(expectedBookList);
+    }
 
+    @Test
+    void getBookByIsbn(){
+        //Given
+        BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
+        //When
+        BookDto result = RestAssured
+                .given()
+                .baseUri("http://localhost:8080")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/1000-2000-3000")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto.class);
+        //Then
+        assertThat(result).isEqualTo(bookDto);
     }
 }
