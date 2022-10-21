@@ -1,6 +1,5 @@
 package com.bizzybees.bizzybooky.controllers;
 
-import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -16,8 +15,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
