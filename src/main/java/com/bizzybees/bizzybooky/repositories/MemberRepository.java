@@ -13,12 +13,12 @@ public class MemberRepository {
 
     public MemberRepository() {
         memberDatabase = new ConcurrentHashMap<String, Member>();
-        memberDatabase.put("1",new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
+        memberDatabase.put("1",new Member("1", "Squarepants", "Patrick"
                 , "randomstreet"
-                , "13", "1", "Bikini Bottom"));
-        memberDatabase.put("2",new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
+                , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
+        memberDatabase.put("2",new Member("1", "Squarepants", "Patrick"
                 , "randomstreet"
-                , "13", "1", "Bikini Bottom"));
+                , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
 
     }
 
@@ -28,5 +28,9 @@ public class MemberRepository {
 
     public boolean isMemberInDatabase(String memberINSS) {
         return memberDatabase.containsKey(memberINSS);
+    }
+
+    public Member getMember(String id) {
+        return memberDatabase.get(id);
     }
 }

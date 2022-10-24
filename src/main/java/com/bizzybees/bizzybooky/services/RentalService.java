@@ -1,4 +1,5 @@
 package com.bizzybees.bizzybooky.services;
+
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalMapper;
@@ -21,7 +22,7 @@ public class RentalService {
         this.rentalRepository = rentalRepository;
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
-        this.bookRentalMapper =  new BookRentalMapper();
+        this.bookRentalMapper = new BookRentalMapper();
     }
 
     public BookRental rentBook(String memberINSS, String bookISBN) {
@@ -34,14 +35,14 @@ public class RentalService {
         return bookrental;
     }
 
-    private void isMemberInDatabase(String memberINSS){
-        if(!memberRepository.isMemberInDatabase(memberINSS)){
+    private void isMemberInDatabase(String memberINSS) {
+        if (!memberRepository.isMemberInDatabase(memberINSS)) {
             throw new IllegalArgumentException("Member doesn't exist");
         }
 
     }
 
-    private void isBookAvailable(String bookISBN){
+    private void isBookAvailable(String bookISBN) {
         if (!bookRepository.getBookDetailsByIsbn(bookISBN).isAvailableForRent()) {
             throw new IllegalArgumentException("This book is not available for rent");
         }

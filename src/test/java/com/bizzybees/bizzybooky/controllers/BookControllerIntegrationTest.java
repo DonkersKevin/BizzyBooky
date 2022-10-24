@@ -74,7 +74,7 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookByIsbn() {
+    void getBookByIsbn_happyPath() {
         //Given
         BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
         //When
@@ -133,7 +133,7 @@ class BookControllerIntegrationTest {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND.value())
-                .body("message", equalTo("No book by that id..."));
+                .body("message", equalTo("No book by that isbn..."));
     }
 
     @Test

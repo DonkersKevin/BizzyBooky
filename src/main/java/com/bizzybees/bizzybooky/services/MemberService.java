@@ -2,7 +2,8 @@ package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
-import com.bizzybees.bizzybooky.services.memberdtos.MemberDto;
+import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.services.memberdtos.ReturnMemberDto;
 import org.springframework.stereotype.Service;
 
 
@@ -16,13 +17,13 @@ public class MemberService {
         this.memberMapper = new MemberMapper();
     }
 
-    public MemberDto addMember(MemberDto memberDto) {
-        checkRequiredFields(memberDto);
-        isValidEmail(memberDto.getEmail());
-        isUniqueEmail(memberDto.getEmail());
-        Member newMember = memberMapper.memberDtoToMember(memberDto);
+    public ReturnMemberDto addMember(NewMemberDto newMemberDto) {
+        checkRequiredFields(newMemberDto);
+        isValidEmail(newMemberDto.getEmail());
+        isUniqueEmail(newMemberDto.getEmail());
+        Member newMember = memberMapper.newMemberDtoToMember(newMemberDto);
         memberRepository.save(newMember);
-        return memberMapper.memberToMemberDto(newMember);
+        return memberMapper.memberToReturnMemberDto(newMember);
     }
 
     // Public for testing
@@ -40,15 +41,18 @@ public class MemberService {
         }
     }
 
-    public void checkRequiredFields(MemberDto memberDto) {
-        if (memberDto.getEmail() == null || memberDto.getEmail().equals("")) {
+    public void checkRequiredFields(NewMemberDto newMemberDto) {
+        if (newMemberDto.getEmail() == null || newMemberDto.getEmail().equals("")) {
             throw new IllegalArgumentException("Provide an Email address please!");
         }
-        if (memberDto.getCity() == null || memberDto.getCity().equals("")) {
+        if (newMemberDto.getCity() == null || newMemberDto.getCity().equals("")) {
             throw new IllegalArgumentException("Provide a City please!");
         }
-        if (memberDto.getLastname() == null || memberDto.getLastname().equals("")) {
+        if (newMemberDto.getLastname() == null || newMemberDto.getLastname().equals("")) {
             throw new IllegalArgumentException("Provide a lastname please!");
+        }
+        if (newMemberDto.getINSS() == null || newMemberDto.getINSS().equals("")) {
+            throw new IllegalArgumentException("Provide an INSS number please!");
         }
     }
 

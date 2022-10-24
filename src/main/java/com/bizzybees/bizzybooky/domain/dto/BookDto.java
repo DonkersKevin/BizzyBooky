@@ -19,8 +19,6 @@ public class BookDto {
         this.summary = summary;
     }
 
-
-
     public String getIsbn() {
         return isbn;
     }

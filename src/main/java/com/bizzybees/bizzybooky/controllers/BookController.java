@@ -3,7 +3,6 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
-import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
@@ -30,11 +29,10 @@ public class BookController {
 
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
-      //  return bookService.getAllBooksWithoutSummary();
-       return bookService.getAllBooks();
+        //  return bookService.getAllBooksWithoutSummary();
+        return bookService.getAllBooks();
 
     }
-
 
     public BookService getBookService() {
         return bookService;
@@ -51,21 +49,25 @@ public class BookController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn"})
     public List<BookDto> getAllBooksByIsbnWildcardSearch(@RequestParam String isbn) {
         log.info("Looking for book with ISBN: " + isbn);
-        return bookService.getAllBooksByIsbnWildcard(isbn);
+        return bookService.getAllBooksByIsbnSearch(isbn);
     }
-
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"title"})
-    public List<BookDto> getAllBooksWithPartialTitle(@RequestParam String title) {
-        return bookService.getBooksByTitle(title);
+    public List<BookDto> getAllBooksWithTitleWildcardSearch(@RequestParam String title) {
+        return bookService.getBooksByTitleSearch(title);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"author"})
+    public List<BookDto> getAllBooksWithAuthorWildcardSearch(@RequestParam String author) {
+        return bookService.getBooksByAuthorSearch(author);
+    }
 
     //Fix uri
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn){
-        return rentalService.rentBook(id,isbn);
+    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
+        return rentalService.rentBook(id, isbn);
 
     }
 

@@ -9,7 +9,7 @@ public class BookRental {
     private String memberID;
     private String bookISBN;
 
-    public BookRental( String memberID, String bookISBN) {
+    public BookRental(String memberID, String bookISBN) {
         this.lendingID = UUID.randomUUID().toString();
         this.dueDate = LocalDate.now().plusWeeks(3);
         this.memberID = memberID;
