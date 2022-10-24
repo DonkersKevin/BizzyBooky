@@ -1,12 +1,10 @@
 package com.bizzybees.bizzybooky.repositories;
 
 import com.bizzybees.bizzybooky.domain.Book;
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class BookRepository {
@@ -35,7 +33,9 @@ public class BookRepository {
     }
 
 
-    /** Main method for testing purposes - to be removed later*/
+    /**
+     * Main method for testing purposes - to be removed later
+     */
 
     public static void main(String[] args) {
         BookRepository bookRepository = new BookRepository();
@@ -43,4 +43,18 @@ public class BookRepository {
     }
 
     /** Main method for testing purposes - to be removed later*/
+
+    public List<Book> getBooksByTitleAtLeastContaining(String title) {
+        return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
+    }
+
+    /*
+    public List<Book> getBooksByTitleWithWildcards(String title){
+        String[] strings = title.split()
+    }
+
+     */
+
+
+
 }

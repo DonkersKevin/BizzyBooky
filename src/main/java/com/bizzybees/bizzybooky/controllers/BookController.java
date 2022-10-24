@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/books") // see if slash is needed
 public class BookController {
 
-    //Check if class declaration needs to be explicit....
+    //Check if logger class declaration needs to be explicit....
     private final Logger log = LoggerFactory.getLogger(getClass());
     private BookService bookService;
     private RentalService rentalService;
@@ -45,19 +45,30 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
+<<<<<<< HEAD
+=======
     public BookService getBookService() {
         return bookService;
     }
 
 
     //Adapt the path naming according to conventions -> use query parameters
+>>>>>>> 5b81447b7074ee6dd713dfe1789c40bde19d44ac
     @RequestMapping(path = "isbn/{isbn}", produces = "application/json")
     public BookDto getBookByIsbn(@PathVariable String isbn) {
         return bookService.getBookByIsbn(isbn);
     }
 
+<<<<<<< HEAD
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"title"})
+    public List<BookDto> getAllBooksWithPartialTitle(@RequestParam String title){
+        return bookService.getBooksByTitle(title);
+    }
+
+=======
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookRental rentBook(@PathVariable String id,@PathVariable String isbn){
         return rentalService.rentBook(id,isbn);
     }
+>>>>>>> 5b81447b7074ee6dd713dfe1789c40bde19d44ac
 }
