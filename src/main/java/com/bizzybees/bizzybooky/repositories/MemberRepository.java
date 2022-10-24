@@ -13,17 +13,17 @@ public class MemberRepository {
 
     public MemberRepository() {
         memberDatabase = new ConcurrentHashMap<String, Member>();
-        memberDatabase.put("1",new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
+        memberDatabase.put("1", new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
                 , "randomstreet"
                 , "13", "1", "Bikini Bottom"));
-        memberDatabase.put("2",new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
+        memberDatabase.put("2", new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
                 , "randomstreet"
                 , "13", "1", "Bikini Bottom"));
 
     }
 
     public void save(Member member) {
-        memberDatabase.put(member.getINSS(),member);
+        memberDatabase.put(member.getINSS(), member);
     }
 
     public boolean isMemberInDatabase(String memberINSS) {

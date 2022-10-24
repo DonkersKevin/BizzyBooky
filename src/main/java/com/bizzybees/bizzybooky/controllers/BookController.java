@@ -29,11 +29,10 @@ public class BookController {
 
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
-      //  return bookService.getAllBooksWithoutSummary();
-       return bookService.getAllBooks();
+        //  return bookService.getAllBooksWithoutSummary();
+        return bookService.getAllBooks();
 
     }
-
 
     public BookService getBookService() {
         return bookService;
@@ -65,11 +64,10 @@ public class BookController {
         return bookService.getBooksByAuthorSearch(author);
     }
 
-
     //Fix uri
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn){
-        return rentalService.rentBook(id,isbn);
+    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
+        return rentalService.rentBook(id, isbn);
 
     }
 }
