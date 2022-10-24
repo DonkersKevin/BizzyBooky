@@ -64,6 +64,9 @@ public class MemberService {
         if (newMemberDto.getLastname() == null || newMemberDto.getLastname().equals("")) {
             throw new IllegalArgumentException("Provide a lastname please!");
         }
+        if (newMemberDto.getINSS() == null || newMemberDto.getINSS().equals("")) {
+            throw new IllegalArgumentException("Provide an INSS number please!");
+        }
     }
 
     //GetMembers method for testing purposes

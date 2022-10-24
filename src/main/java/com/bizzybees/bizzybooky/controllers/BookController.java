@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,38 +30,43 @@ public class BookController {
 
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
+    log.info("Fetching all books...");
         //  return bookService.getAllBooksWithoutSummary();
         return bookService.getAllBooks();
-
-    }
-
-    public BookService getBookService() {
-        return bookService;
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto getBookByIsbn(@PathVariable String isbn) {
         log.info("Looking for book with ISBN: " + isbn);
         return bookService.getBookByIsbn(isbn);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn"})
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title","author"})
+    public List<BookDto> getAllBooksCombinedSearch(@RequestParam(required = false) String isbn, @RequestParam(required = false) String title, @RequestParam(required = false) String author) {
+        log.info("Looking for book with: " + isbn + " " + title + " " + author);
+        return new ArrayList<>();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn"})
     public List<BookDto> getAllBooksByIsbnWildcardSearch(@RequestParam String isbn) {
-        log.info("Looking for book with ISBN: " + isbn);
+        log.info("Looking for book with isbn: " + isbn);
         return bookService.getAllBooksByIsbnSearch(isbn);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"title"})
     public List<BookDto> getAllBooksWithTitleWildcardSearch(@RequestParam String title) {
+        log.info("Looking for book with title: " + title);
         return bookService.getBooksByTitleSearch(title);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"author"})
     public List<BookDto> getAllBooksWithAuthorWildcardSearch(@RequestParam String author) {
+        log.info("Looking for book with author: " + author);
         return bookService.getBooksByAuthorSearch(author);
     }
 
@@ -69,5 +75,11 @@ public class BookController {
     public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
         return rentalService.rentBook(id, isbn);
 
+    }
+
+    //Fix uri
+    @GetMapping(path = "/{lendingId}/return", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String returnBook(@PathVariable String lendingId) {
+        return rentalService.returnBook(lendingId);
     }
 }
