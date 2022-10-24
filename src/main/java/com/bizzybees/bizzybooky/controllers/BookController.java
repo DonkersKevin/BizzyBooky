@@ -64,12 +64,8 @@ public class BookController {
 
     //Fix uri
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-<<<<<<< HEAD
-    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
-        return rentalService.rentBook(id, isbn);
-=======
     public BookRental rentBook(@PathVariable String id, @PathVariable String isbn){
         return rentalService.rentBook(id,isbn);
->>>>>>> 95c815eec9bc1a58f531d401ea9b089e05f36699
+
     }
 }
