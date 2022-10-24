@@ -2,19 +2,6 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
-import com.bizzybees.bizzybooky.repositories.BookRepository;
-
-=======
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
-=======
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
-=======
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +17,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookControllerIntegrationTest {
@@ -55,10 +41,10 @@ class BookControllerIntegrationTest {
     void WhenCallingBooks_GetFullBookListBack() {
         //ARRANGE
         ArrayList<BookDto> expectedBookListWithoutSummary = new ArrayList<>(List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs"),
-                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato"),
-                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce"),
-                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name")
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")
         ));
 
         //ACT
@@ -80,7 +66,7 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookByIsbn() {
+    void getBookByIsbn_happyPath() {
         //Given
         BookDto bookDto = new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum");
         //When
@@ -90,7 +76,7 @@ class BookControllerIntegrationTest {
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-                .get("/books/isbn/1000-2000-3000")
+                .get("/books/1000-2000-3000")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -100,6 +86,7 @@ class BookControllerIntegrationTest {
         assertThat(result).isEqualTo(bookDto);
     }
 
+    /*
     @Test
     void GivenStringId_ReturnBookWIthGivenId() {
         //ARRANGE
@@ -124,6 +111,8 @@ class BookControllerIntegrationTest {
 
     }
 
+     */
+
     @Test
     void GivenStringIdOutOfBounds_ThrowNoSuchElement() {
         RestAssured
@@ -136,7 +125,7 @@ class BookControllerIntegrationTest {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND.value())
-                .body("message", equalTo("No book by that id..."));
+                .body("message", equalTo("No book by that isbn..."));
     }
 
     @Test
@@ -154,7 +143,7 @@ class BookControllerIntegrationTest {
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-                .get("/books?title=ar")
+                .get("/books?title=*ar*")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -169,19 +158,7 @@ class BookControllerIntegrationTest {
     @Test
     void getRentalHappyPath() {
         //given
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
         BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
-=======
-        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
-=======
-        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 
 
         //when
@@ -198,22 +175,8 @@ class BookControllerIntegrationTest {
                 .extract()
                 .as(BookRental.class).getDueDate();
         //Then
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
-        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
-
-=======
-        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
-=======
-        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
-=======
-        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
->>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 

@@ -22,5 +22,4 @@ public class MemberController {
         return memberService.addMember(newMemberDto);
     }
 
-
 }
