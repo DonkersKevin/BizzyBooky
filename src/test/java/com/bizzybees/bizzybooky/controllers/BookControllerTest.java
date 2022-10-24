@@ -41,6 +41,7 @@ class BookControllerTest {
         Assertions.assertEquals(expectedBookList, bookRepositoryToTest);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -59,6 +60,8 @@ class BookControllerTest {
 
 
 
+=======
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 =======
 >>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 }
