@@ -8,6 +8,8 @@ import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.repositories.RentalRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class RentalService {
 
@@ -44,5 +46,30 @@ public class RentalService {
         if (!bookRepository.getBookDetailsByIsbn(bookISBN).isAvailableForRent()) {
             throw new IllegalArgumentException("This book is not available for rent");
         }
+    }
+
+    public String returnBook(String lendingId) {
+        if (!rentalRepository.getRentalDatabase().containsKey(lendingId)) {
+            throw new IllegalArgumentException("This lending ID is not attributed");
+        }
+        LocalDate returnDate = rentalRepository.getRentalDatabase().get(lendingId).getDueDate();
+        bookRepository.getBookDetailsByIsbn(rentalRepository.getRentalDatabase().get(lendingId).getBookISBN()).setAvailableForRent(true);
+        rentalRepository.removeRental(lendingId);
+        if (returnDate.isBefore(LocalDate.now())) {
+            return "This book should have been returned by: " + returnDate;
+        }
+        return "Thank you for renting books with us!";
+    }
+
+    public RentalRepository getRentalRepository() {
+        return rentalRepository;
+    }
+
+    public BookRepository getBookRepository() {
+        return bookRepository;
+    }
+
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
     }
 }

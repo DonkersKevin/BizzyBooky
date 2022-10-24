@@ -31,7 +31,20 @@ public class BookRepository {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
 
-    /*
+
+
+    /**
+     * Main method for testing purposes - to be removed later
+     */
+
+    public static void main(String[] args) {
+        BookRepository bookRepository = new BookRepository();
+        System.out.println(bookRepository.getBookDetailsByIsbn("1000-2000-3000").toString());
+    }
+
+    /** Main method for testing purposes - to be removed later*/
+
+    /**
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
         return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
     }

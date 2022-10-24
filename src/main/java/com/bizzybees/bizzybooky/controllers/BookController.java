@@ -83,4 +83,10 @@ public class BookController {
         return rentalService.rentBook(id, isbn);
 
     }
+
+    //Fix uri
+    @GetMapping(path = "/{lendingId}/return", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String returnBook(@PathVariable String lendingId) {
+        return rentalService.returnBook(lendingId);
+    }
 }

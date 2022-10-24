@@ -15,4 +15,20 @@ public class BookRentalDto {
         this.memberID = memberID;
         this.bookISBN = bookISBN;
     }
+
+    public String getLendingID() {
+        return lendingID;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public String getMemberID() {
+        return memberID;
+    }
+
+    public String getBookISBN() {
+        return bookISBN;
+    }
 }
