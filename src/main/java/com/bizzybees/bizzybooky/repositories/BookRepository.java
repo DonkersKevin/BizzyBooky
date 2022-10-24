@@ -22,9 +22,9 @@ public class BookRepository {
         return bookList;
     }
 
-    public Book getBookDetailsByIsbn(String isbn) {
+    public List<Book> getBookDetailsByIsbn(String isbn) {
         //return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
-        return bookList.stream().filter(book -> book.getIsbn().matches("....-....-....")).findFirst().orElseThrow();
+        return bookList.stream().filter(book -> book.getIsbn().matches("....-....-....")).toList();
     }
 
     public Book getBookById(String id) {
