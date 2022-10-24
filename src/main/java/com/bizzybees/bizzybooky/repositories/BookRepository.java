@@ -25,7 +25,8 @@ public class BookRepository {
     }
 
     public Book getBookDetailsByIsbn(String isbn) {
-        return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
+        //return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
+        return bookList.stream().filter(book -> book.getIsbn().matches("....-....-....")).findFirst().orElseThrow();
     }
 
     public Book getBookById(String id) {
@@ -38,7 +39,7 @@ public class BookRepository {
 
     public static void main(String[] args) {
         BookRepository bookRepository = new BookRepository();
-        System.out.println(bookRepository.getBookDetailsByIsbn("1000-2000-3000").toString());
+        System.out.println(bookRepository.getBookDetailsByIsbn("****-****-****").toString());
     }
 
     /** Main method for testing purposes - to be removed later*/
