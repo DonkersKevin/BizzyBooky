@@ -157,12 +157,7 @@ class BookControllerIntegrationTest {
 
     @Test
     void getRentalHappyPath() {
-        //given
-        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
-
-
-        //when
-        LocalDate result = RestAssured
+                LocalDate result = RestAssured
                 .given()
                 .baseUri("http://localhost")
                 .port(port)
@@ -174,11 +169,10 @@ class BookControllerIntegrationTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract()
                 .as(BookRental.class).getDueDate();
-        //Then
+
 
         assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
-        //then
-        //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
+
 
         //TODO What do we give back when the list is empty?
     }
