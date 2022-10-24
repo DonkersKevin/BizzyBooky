@@ -13,4 +13,8 @@ public class RentalRepository {
     public RentalRepository() {
         this.rentalDatabase = new ConcurrentHashMap<>();
     }
+
+    public void saveRental(BookRental bookRental){
+        rentalDatabase.put(bookRental.getLendingID(), bookRental);
+    }
 }

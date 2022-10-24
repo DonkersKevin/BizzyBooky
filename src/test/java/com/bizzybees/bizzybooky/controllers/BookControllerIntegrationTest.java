@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -127,10 +128,8 @@ class BookControllerIntegrationTest {
     @Test
     void getRentalHappyPath(){
         //given
-        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
 
-        List<BookDto> expectedBookList = new ArrayList<>(List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum")));
+
 
         //when
         LocalDate result = RestAssured
@@ -146,7 +145,7 @@ class BookControllerIntegrationTest {
                 .extract()
                 .as(BookRental.class).getDueDate();
         //Then
-        assertThat(result).isEqualTo(LocalDate.of(2022,11,11));
+        assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
     }

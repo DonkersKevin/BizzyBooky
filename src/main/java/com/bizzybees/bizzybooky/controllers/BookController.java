@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.services.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,7 @@ public class BookController {
     }
 
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRental rentBook(@PathVariable String id,@PathVariable String isbn){
+    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn){
         return rentalService.rentBook(id,isbn);
     }
 }

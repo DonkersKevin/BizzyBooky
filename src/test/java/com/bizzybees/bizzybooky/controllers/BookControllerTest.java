@@ -1,8 +1,11 @@
 package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Book;
+import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.BookService;
+import com.bizzybees.bizzybooky.services.RentalService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,8 @@ class BookControllerTest {
     BookController bookController;
     @Mock
     BookService bookService;
+
+
 
 
     @Test
@@ -45,6 +51,8 @@ class BookControllerTest {
             new BookDto("6000-7000-8000", "Programmes", "Boy", "Name")
     ));
      */
+
+
 
 
 
