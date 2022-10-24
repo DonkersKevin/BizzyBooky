@@ -9,7 +9,7 @@ public class BookRentalDto {
     private String memberID;
     private String bookISBN;
 
-    public BookRentalDto( String memberID, String bookISBN,LocalDate dueDate,String lendingID) {
+    public BookRentalDto(String memberID, String bookISBN, LocalDate dueDate, String lendingID) {
         this.lendingID = lendingID;
         this.dueDate = dueDate;
         this.memberID = memberID;

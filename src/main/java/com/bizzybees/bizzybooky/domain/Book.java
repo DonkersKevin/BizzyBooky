@@ -1,7 +1,6 @@
 package com.bizzybees.bizzybooky.domain;
 
 public class Book {
-    private String id;
     private String isbn;
     private String title;
     private String authorFirstName;
@@ -9,8 +8,7 @@ public class Book {
     private String summary;
     private boolean isAvailableForRent = true;
 
-    public Book(String id, String isbn, String title, String authorFirstName, String authorLastName, String summary) {
-        this.id = id;
+    public Book(String isbn, String title, String authorFirstName, String authorLastName, String summary) {
         this.isbn = isbn;
         this.title = title;
         this.authorFirstName = authorFirstName;
@@ -24,10 +22,6 @@ public class Book {
 
     public void setAvailableForRent(boolean availableForRent) {
         isAvailableForRent = availableForRent;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getIsbn() {
@@ -53,7 +47,6 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id='" + id + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
                 ", authorFirstName='" + authorFirstName + '\'' +

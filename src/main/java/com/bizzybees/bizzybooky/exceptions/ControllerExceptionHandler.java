@@ -14,7 +14,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     protected void bookNotFoundException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.NOT_FOUND.value(), "No book by that id...");
+        response.sendError(HttpStatus.NOT_FOUND.value(), "No book by that isbn...");
 
     }
 }
