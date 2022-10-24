@@ -1,16 +1,21 @@
 package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
+import com.bizzybees.bizzybooky.repositories.RentalRepository;
 import com.bizzybees.bizzybooky.services.memberdtos.MemberDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
     private MemberRepository memberRepository = new MemberRepository();
     private MemberService memberService = new MemberService(memberRepository);
+
+    private RentalService rentalService = new RentalService(new RentalRepository(),new BookRepository(),memberRepository);
 
 
     @Test
@@ -56,6 +61,17 @@ class MemberServiceTest {
 
         //then
         Assertions.assertThrows(IllegalArgumentException.class,()-> memberService.addMember(alreadyExistingMember));
+    }
+    @Test
+    void CreateABookrentalWithoutValidMember_ThrowsIllegalArgumentException(){
+        //given
+        memberRepository.memberDatabase.put("3",new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
+                , "randomstreet"
+                , "13", "1", "Bikini Bottom"));
+        //when
+
+        //then
+        Assertions.assertThrows(IllegalArgumentException.class,()->rentalService.rentBook("5","1000-2000-3000"));
     }
 
 }

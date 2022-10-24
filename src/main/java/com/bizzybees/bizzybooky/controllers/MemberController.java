@@ -14,9 +14,9 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-
-    // Do we need to return member?
-    public MemberDto addMember(MemberDto memberDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping(path = "add" , consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public MemberDto addMember(@RequestBody MemberDto memberDto) {
         return memberService.addMember(memberDto);
     }
 
