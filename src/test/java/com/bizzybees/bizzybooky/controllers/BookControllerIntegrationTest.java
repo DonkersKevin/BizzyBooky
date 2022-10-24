@@ -33,6 +33,8 @@ class BookControllerIntegrationTest {
 
     @Autowired
     BookController bookController;
+    @Autowired
+    RentalService rentalService;
     List<BookDto> expectedBookList;
 
     @BeforeEach
@@ -372,8 +374,6 @@ class BookControllerIntegrationTest {
         //Then
 
         assertThat(result).isEqualTo(LocalDate.of(2022, 11, 14));
-<<<<<<< HEAD
-=======
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 
@@ -395,35 +395,52 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookReturnHappyPath() {
+    void getBookReturnHappyPath_correctMessageDisplay() {
         //given
-        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
-        rentalService.rentBook("1", "1000-2000-3000");
-        rentalService.rentBook("2", "2000-3000-4000");
-        BookRental bookRental = rentalService.getRentalRepository().getRentalDatabase().values().stream().findFirst().orElseThrow();
-        String lendIDTest = bookRental.getLendingID();
-        String actual = rentalService.returnBook(lendIDTest);
+        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookrental.getLendingID();
+        //when
+
+/**
+        BookDto[] result1 = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+ */
 
 
-         //when
+        String result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + lendIDTest + "/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .response()
+                .body()
+                .print();
 
-         Book result = RestAssured
-         .given()
-         .baseUri("http://localhost")
-         .port(port)
-         .when()
-         .accept(ContentType.JSON)
-         .get("/books/" + lendIDTest + "/return")
-         .then()
-         .assertThat()
-         .statusCode(HttpStatus.OK.value())
-         .extract()
-         .as(BookRepository.class).getBookDetailsByIsbn("1000-2000-3000");
 
         //Then
+
         //assertEquals(actual, "Thank you for renting books with us!");
-        assertTrue(result.isAvailableForRent());
->>>>>>> eba40cca63b255cc232e802e1869a00ca2518e13
+        assertThat(result).isEqualTo("Thank you for renting books with us!");
+
+
+        //Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
+        //assertTrue(returnedBook.getIsAvailableForRent());
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 

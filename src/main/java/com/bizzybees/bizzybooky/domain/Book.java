@@ -16,7 +16,7 @@ public class Book {
         this.summary = summary;
     }
 
-    public boolean isAvailableForRent() {
+    public boolean getIsAvailableForRent() {
         return isAvailableForRent;
     }
 
@@ -43,6 +43,7 @@ public class Book {
     public String getSummary() {
         return summary;
     }
+
 
     @Override
     public String toString() {
