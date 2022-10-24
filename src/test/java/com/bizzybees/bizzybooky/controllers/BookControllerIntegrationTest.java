@@ -44,7 +44,12 @@ class BookControllerIntegrationTest {
     @Test
     void WhenCallingBooks_GetFullBookListBack() {
         //ARRANGE
-
+        ArrayList<BookDto> expectedBookListWithoutSummary = new ArrayList<>(List.of(
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs"),
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato"),
+                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce"),
+                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name")
+        ));
         //ACT
         BookDto[] result = RestAssured
                 .given()
@@ -60,7 +65,7 @@ class BookControllerIntegrationTest {
                 .as(BookDto[].class);
 
         //ASSES
-        assertThat(List.of(result)).isEqualTo(expectedBookList);
+        assertThat(List.of(result)).isEqualTo(expectedBookListWithoutSummary);
     }
 
     @Test
@@ -124,7 +129,6 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-<<<<<<< HEAD
     void titleSearch_HappyPath() {
         //ARRANGE
         List<BookDto> expectedBooks = List.of(
@@ -134,7 +138,6 @@ class BookControllerIntegrationTest {
 
         //ACT
         BookDto[] result = RestAssured
-=======
     void getRentalHappyPath(){
         //given
         BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
@@ -144,22 +147,17 @@ class BookControllerIntegrationTest {
 
         //when
         LocalDate result = RestAssured
->>>>>>> 5b81447b7074ee6dd713dfe1789c40bde19d44ac
                 .given()
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-<<<<<<< HEAD
                 .get("/books?title=ar")
-=======
                 .get("/books/1/1000-2000-3000/lent")
->>>>>>> 5b81447b7074ee6dd713dfe1789c40bde19d44ac
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
-<<<<<<< HEAD
                 .as(BookDto[].class);
 
         //ASSES
@@ -169,12 +167,10 @@ class BookControllerIntegrationTest {
     //TODO What do we give back when the list is empty?
 
 
-=======
+
                 .as(BookRental.class).getDueDate();
         //Then
         assertThat(result).isEqualTo(LocalDate.of(2022,11,11));
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
     }
->>>>>>> 5b81447b7074ee6dd713dfe1789c40bde19d44ac
-}
