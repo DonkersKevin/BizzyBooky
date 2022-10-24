@@ -1,12 +1,10 @@
 package com.bizzybees.bizzybooky.repositories;
 
 import com.bizzybees.bizzybooky.domain.Book;
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class BookRepository {
@@ -34,7 +32,9 @@ public class BookRepository {
     }
 
 
-    /** Main method for testing purposes - to be removed later*/
+    /**
+     * Main method for testing purposes - to be removed later
+     */
 
     public static void main(String[] args) {
         BookRepository bookRepository = new BookRepository();
@@ -42,4 +42,49 @@ public class BookRepository {
     }
 
     /** Main method for testing purposes - to be removed later*/
+
+    /*
+    public List<Book> getBooksByTitleAtLeastContaining(String title) {
+        return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
+    }
+
+     */
+
+
+    public List<Book> getBooksByTitleWithWildcards(String title){
+        return bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
+    }
+
+
+    //Needs refactoring
+    public static String wildcardToRegex(String wildcard){
+        StringBuffer s = new StringBuffer(wildcard.length());
+        s.append('^');
+        for (int i = 0, is = wildcard.length(); i < is; i++) {
+            char c = wildcard.charAt(i);
+            switch(c) {
+                case '*':
+                    s.append(".*");
+                    break;
+                case '?':
+                    s.append(".");
+                    break;
+                // escape special regexp-characters
+                case '(': case ')': case '[': case ']': case '$':
+                case '^': case '.': case '{': case '}': case '|':
+                case '\\':
+                    s.append("\\");
+                    s.append(c);
+                    break;
+                default:
+                    s.append(c);
+                    break;
+            }
+        }
+        s.append('$');
+        return(s.toString());
+    }
+
+
+
 }

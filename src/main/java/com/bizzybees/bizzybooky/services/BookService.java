@@ -33,12 +33,19 @@ public class BookService {
         return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));
     }
 
-    /** Main method for testing purposes - to be removed later*/
+    public List<BookDto> getBooksByTitle(String title) {
+        return bookMapper.listToDtoList(bookRepository.getBooksByTitleWithWildcards(title));
+    }
+
+    /**
+     * Main method for testing purposes - to be removed later
+     */
 
     public static void main(String[] args) {
         BookService bookService = new BookService(new BookRepository());
         System.out.println(bookService.getBookByIsbn("1000-2000-3000").toString());
     }
+
 
     /** Main method for testing purposes - to be removed later*/
 }
