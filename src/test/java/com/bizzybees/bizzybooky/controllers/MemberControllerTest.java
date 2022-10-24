@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Base64;
+
 @SpringBootTest
 class MemberControllerTest {
     @Autowired
@@ -22,12 +24,28 @@ class MemberControllerTest {
         //given
         NewMemberDto newMemberDto = new NewMemberDto(Role.MEMBER, "Squarepants", "Patrick", "Patrick@hotmail.com"
                 , "randomstreet"
-                , "Patrick@hotmail.com", "1", "Bikini Bottom", "", "fefe");
+                , "Patric@hotmail.com", "1", "Bikini Bottom", "", "fefe");
 
         //when
 
         ReturnMemberDto returnMemberDto1 = memberController.addMember(newMemberDto);
         //then
         Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
+    }
+    @Test
+    void addNewLibrarianToRepositoryIsSuccessful() {
+        //given
+        NewMemberDto newMemberDto = new NewMemberDto(Role.ADMIN, "Squarepants", "Patrick", "Patrick@hotmail.com"
+                , "randomstreet"
+                , "Patric@hotmail.com", "1", "Bikini Bottom", "", "fefe");
+
+
+
+
+        //when
+
+        //ReturnMemberDto returnMemberDto1 = memberController.addLibrarian(,newMemberDto);
+        //then
+       // Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
     }
 }
