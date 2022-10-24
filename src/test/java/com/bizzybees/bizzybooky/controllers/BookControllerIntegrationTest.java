@@ -38,7 +38,7 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void WhenCallingBooks_GetFullBookListBack() {
+    void GetBooks_HappyPath() {
         //ARRANGE
         ArrayList<BookDto> expectedBookListWithoutSummary = new ArrayList<>(List.of(
                 new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
@@ -86,6 +86,31 @@ class BookControllerIntegrationTest {
         assertThat(result).isEqualTo(bookDto);
     }
 
+    @Test
+    void IsbnSearch_HappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum")
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?isbn=*-3000-*")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+    }
+
     /*
     @Test
     void GivenStringId_ReturnBookWIthGivenId() {
@@ -114,7 +139,23 @@ class BookControllerIntegrationTest {
      */
 
     @Test
-    void GivenStringIdOutOfBounds_ThrowNoSuchElement() {
+    void GivenIsbnNotFound_ThrowNoSuchElement() {
+        RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/9000-9000-9000")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("No book by that isbn..."));
+    }
+
+    //TODO fix method name, and possibly add exception. Also implement properly
+    @Test
+    void GivenMalformedIsbn_ThrowXXXException() {
         RestAssured
                 .given()
                 .baseUri("http://localhost")
@@ -124,14 +165,138 @@ class BookControllerIntegrationTest {
                 .get("/books/8")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.NOT_FOUND.value())
-                .body("message", equalTo("No book by that isbn..."));
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", equalTo("Malformed Isbn detected"));
     }
 
     @Test
     void titleSearch_HappyPath() {
         //ARRANGE
+        List<BookDto> expectedBookList = new ArrayList<>(List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"))
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?title=Farmers")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBookList);
+    }
+
+    @Test
+    void titleSearch_WildCardHappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBookList = new ArrayList<>(List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"))
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?title=*rmer*")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBookList);
+    }
+
+    @Test
+    void titleSearch_WhenNotFound_ThrowException() {
+        //ARRANGE
+        List<BookDto> expectedBookList = new ArrayList<>(List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"))
+        );
+
+        //ACT
+        RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?title=farm")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("No book by that title..."));
+
+        //ASSES
+    }
+
+    @Test
+    void authorFirstNameSearch_HappyPath() {
+        //ARRANGE
         List<BookDto> expectedBooks = List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum")
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?author=Misses")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+    }
+
+    @Test
+    void authorLastNameSearch_HappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum")
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?author=Potato")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+    }
+
+    @Test
+    void authorSearch_WildCardHappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
                 new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
                 new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
         );
@@ -143,7 +308,7 @@ class BookControllerIntegrationTest {
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-                .get("/books?title=*ar*")
+                .get("/books?author=*t*")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
@@ -152,6 +317,29 @@ class BookControllerIntegrationTest {
 
         //ASSES
         assertThat(List.of(result)).isEqualTo(expectedBooks);
+    }
+
+    @Test
+    void authorSearch_WhenNotFound_ThrowException() {
+        //ARRANGE
+        List<BookDto> expectedBookList = new ArrayList<>(List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"))
+        );
+
+        //ACT
+        RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?author=*z*")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("No book by that author..."));
+
+        //ASSES
     }
 
 
@@ -176,7 +364,7 @@ class BookControllerIntegrationTest {
                 .as(BookRental.class).getDueDate();
         //Then
 
-        assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 14));
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 
