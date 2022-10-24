@@ -28,32 +28,22 @@ public class BookService {
 
      */
 
-
-    public BookMapper getBookMapper() {
-        return bookMapper;
-    }
-
     public BookDto getBookByIsbn(String isbn) {
         return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));
     }
 
-    public List<BookDto> getBooksByTitle(String title) {
+    public List<BookDto> getBooksByTitleSearch(String title) {
         return bookMapper.listToDtoList(bookRepository.getBooksByTitleWithWildcards(title));
     }
 
-    /**
-     * Main method for testing purposes - to be removed later
-     */
 
-    public static void main(String[] args) {
-        BookService bookService = new BookService(new BookRepository());
-        System.out.println(bookService.getBookByIsbn("1000-2000-3000").toString());
+    public List<BookDto> getAllBooksByIsbnSearch(String isbn) {
+        return bookMapper.listToDtoList(bookRepository.getBooksByIsbnWithWildcards(isbn));
     }
 
-    public List<BookDto> getAllBooksByIsbnWildcard(String isbn) {
-        return null;
-        //TODO implement
+    public List<BookDto> getBooksByAuthorSearch(String author) {
+        return bookMapper.listToDtoList(bookRepository.getBooksByAuthorWithWildcards(author));
     }
 
-    /** Main method for testing purposes - to be removed later*/
 }
+
