@@ -2,10 +2,13 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+<<<<<<< HEAD
 
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 
+=======
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -160,7 +163,11 @@ class BookControllerIntegrationTest {
     @Test
     void getRentalHappyPath() {
         //given
+<<<<<<< HEAD
 
+=======
+        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 
 
         //when
@@ -177,10 +184,14 @@ class BookControllerIntegrationTest {
                 .extract()
                 .as(BookRental.class).getDueDate();
         //Then
+<<<<<<< HEAD
 
         assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
         assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
 
+=======
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 
