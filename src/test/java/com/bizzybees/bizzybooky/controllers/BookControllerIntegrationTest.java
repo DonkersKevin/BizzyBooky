@@ -2,6 +2,19 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
+
+=======
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+=======
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+=======
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -159,10 +172,20 @@ class BookControllerIntegrationTest {
     @Test
     void getRentalHappyPath() {
         //given
-        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 
-        List<BookDto> expectedBookList = new ArrayList<>(List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum")));
+=======
+        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+=======
+        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+=======
+        BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+
 
         //when
         LocalDate result = RestAssured
@@ -178,7 +201,22 @@ class BookControllerIntegrationTest {
                 .extract()
                 .as(BookRental.class).getDueDate();
         //Then
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+        assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
         assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+
+=======
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+=======
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
+=======
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+>>>>>>> 97358f2add3783e56d6bd6543446f274aa76a466
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 

@@ -19,4 +19,20 @@ public class BookRental {
     public LocalDate getDueDate() {
         return dueDate;
     }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getLendingID() {
+        return lendingID;
+    }
+
+    public String getMemberID() {
+        return memberID;
+    }
+
+    public String getBookISBN() {
+        return bookISBN;
+    }
 }
