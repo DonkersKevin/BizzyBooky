@@ -15,7 +15,6 @@ import java.lang.management.MemoryManagerMXBean;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-
 class MemberControllerTest {
     @Autowired
     private MemberController memberController;
@@ -36,5 +35,4 @@ class MemberControllerTest {
         //then
         Assertions.assertTrue(memberRepository.memberDatabase.containsKey(memberDto1.getINSS()));
     }
-
 }

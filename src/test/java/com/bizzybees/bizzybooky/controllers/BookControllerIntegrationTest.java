@@ -1,14 +1,14 @@
 package com.bizzybees.bizzybooky.controllers;
 
-import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,10 +42,15 @@ class BookControllerIntegrationTest {
         ));
     }
 
-
     @Test
     void WhenCallingBooks_GetFullBookListBack() {
         //ARRANGE
+        ArrayList<BookDto> expectedBookListWithoutSummary = new ArrayList<>(List.of(
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs"),
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato"),
+                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce"),
+                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name")
+        ));
 
         //ACT
         BookDto[] result = RestAssured
@@ -62,7 +67,7 @@ class BookControllerIntegrationTest {
                 .as(BookDto[].class);
 
         //ASSES
-        assertThat(List.of(result)).isEqualTo(expectedBookList);
+        assertThat(List.of(result)).isEqualTo(expectedBookListWithoutSummary);
     }
 
     @Test
@@ -126,7 +131,34 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getRentalHappyPath(){
+    void titleSearch_HappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?title=ar")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+    }
+
+
+    @Test
+    void getRentalHappyPath() {
         //given
 
 
@@ -145,8 +177,13 @@ class BookControllerIntegrationTest {
                 .extract()
                 .as(BookRental.class).getDueDate();
         //Then
+
         assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
+
+        //TODO What do we give back when the list is empty?
     }
 }

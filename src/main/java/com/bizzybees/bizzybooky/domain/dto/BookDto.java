@@ -1,11 +1,13 @@
 package com.bizzybees.bizzybooky.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookDto {
     private String isbn;
     private String title;
     private String authorFirstName;
     private String authorLastName;
-
     private String summary;
 
 
@@ -15,6 +17,13 @@ public class BookDto {
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
         this.summary = summary;
+    }
+
+    public BookDto(String isbn, String title, String authorFirstName, String authorLastName) {
+        this.isbn = isbn;
+        this.title = title;
+        this.authorFirstName = authorFirstName;
+        this.authorLastName = authorLastName;
     }
 
     public String getISBN() {
