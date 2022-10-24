@@ -29,7 +29,7 @@ class BookControllerTest {
     BookService bookService;
 
 
-
+/*
 
     @Test
     void aListOfBooks_callTheBookServiceGetAllBooksMethod_bookControllerGetAllBooksMethodIsCalled() {
@@ -41,6 +41,8 @@ class BookControllerTest {
         //Then
         Assertions.assertEquals(expectedBookList, bookRepositoryToTest);
     }
+
+ */
 
 
 
