@@ -50,7 +50,7 @@ public class BookController {
 
     //Adapt the path naming according to conventions -> use query parameters
     @RequestMapping(path = "isbn/{isbn}", produces = "application/json")
-    public BookDto getBookByIsbn(@PathVariable String isbn) {
+    public List<BookDto> getBookByIsbn(@PathVariable String isbn) {
         return bookService.getBookByIsbn(isbn);
     }
 
