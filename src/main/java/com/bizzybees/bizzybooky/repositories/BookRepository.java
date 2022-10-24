@@ -39,22 +39,50 @@ public class BookRepository {
 
     public static void main(String[] args) {
         BookRepository bookRepository = new BookRepository();
-        System.out.println(bookRepository.getBookDetailsByIsbn("****-****-****").toString());
+        System.out.println(bookRepository.getBookDetailsByIsbn("1000-2000-3000").toString());
     }
 
     /** Main method for testing purposes - to be removed later*/
 
+    /*
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
         return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
-    }
-
-    /*
-    public List<Book> getBooksByTitleWithWildcards(String title){
-        String[] strings = title.split()
     }
 
      */
 
 
+    public List<Book> getBooksByTitleWithWildcards(String title){
+        return bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
+    }
 
+
+    //Needs refactoring
+    public static String wildcardToRegex(String wildcard){
+        StringBuffer s = new StringBuffer(wildcard.length());
+        s.append('^');
+        for (int i = 0, is = wildcard.length(); i < is; i++) {
+            char c = wildcard.charAt(i);
+            switch(c) {
+                case '*':
+                    s.append(".*");
+                    break;
+                case '?':
+                    s.append(".");
+                    break;
+                // escape special regexp-characters
+                case '(': case ')': case '[': case ']': case '$':
+                case '^': case '.': case '{': case '}': case '|':
+                case '\\':
+                    s.append("\\");
+                    s.append(c);
+                    break;
+                default:
+                    s.append(c);
+                    break;
+            }
+        }
+        s.append('$');
+        return(s.toString());
+    }
 }
