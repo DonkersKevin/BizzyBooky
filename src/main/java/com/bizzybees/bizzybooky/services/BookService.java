@@ -46,6 +46,5 @@ public class BookService {
         System.out.println(bookService.getBookByIsbn("1000-2000-3000").toString());
     }
 
-
     /** Main method for testing purposes - to be removed later*/
 }

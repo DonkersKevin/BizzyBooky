@@ -147,7 +147,7 @@ class BookControllerIntegrationTest {
 
 
     @Test
-    void getRentalHappyPath() {
+    void getRentalHappyPath(){
         //given
         BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
 
@@ -168,7 +168,7 @@ class BookControllerIntegrationTest {
                 .extract()
                 .as(BookRental.class).getDueDate();
         //Then
-        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 11));
+        assertThat(result).isEqualTo(LocalDate.of(2022,11,11));
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 

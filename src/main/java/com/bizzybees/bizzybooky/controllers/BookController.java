@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/books") // see if slash is needed
 public class BookController {
 
-    //Check if logger class declaration needs to be explicit....
+    //Check if class declaration needs to be explicit....
     private final Logger log = LoggerFactory.getLogger(getClass());
     private BookService bookService;
     private RentalService rentalService;
