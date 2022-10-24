@@ -26,6 +26,8 @@ public class BookRepository {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
 
+
+
     /**
      * Main method for testing purposes - to be removed later
      */
@@ -37,7 +39,7 @@ public class BookRepository {
 
     /** Main method for testing purposes - to be removed later*/
 
-    /*
+    /**
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
         return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
     }

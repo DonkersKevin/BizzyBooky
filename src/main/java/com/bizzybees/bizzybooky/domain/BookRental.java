@@ -35,4 +35,14 @@ public class BookRental {
     public String getBookISBN() {
         return bookISBN;
     }
+
+    @Override
+    public String toString() {
+        return "BookRental{" +
+                "lendingID='" + lendingID + '\'' +
+                ", dueDate=" + dueDate +
+                ", memberID='" + memberID + '\'' +
+                ", bookISBN='" + bookISBN + '\'' +
+                '}';
+    }
 }

@@ -17,4 +17,14 @@ public class RentalRepository {
     public void saveRental(BookRental bookRental){
         rentalDatabase.put(bookRental.getLendingID(), bookRental);
     }
+
+    public void removeRental (String lendingId) {
+        rentalDatabase.remove(lendingId);
+    }
+
+    public ConcurrentHashMap<String, BookRental> getRentalDatabase() {
+        return rentalDatabase;
+    }
+
+
 }

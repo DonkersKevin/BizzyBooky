@@ -1,7 +1,12 @@
 package com.bizzybees.bizzybooky.controllers;
 
+import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
+import com.bizzybees.bizzybooky.repositories.MemberRepository;
+import com.bizzybees.bizzybooky.repositories.RentalRepository;
+import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,9 +19,12 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookControllerIntegrationTest {
@@ -160,7 +168,6 @@ class BookControllerIntegrationTest {
         //given
         BookRental bookRentalExpected = new BookRental("1", "1000-2000-3000");
 
-
         //when
         LocalDate result = RestAssured
                 .given()
@@ -176,7 +183,56 @@ class BookControllerIntegrationTest {
                 .as(BookRental.class).getDueDate();
         //Then
 
-        assertThat(result).isEqualTo(LocalDate.of(2022,11,14));
+        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 14));
+        //then
+        //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
+
+        //TODO What do we give back when the list is empty?
+    }
+
+
+    public static void main(String[] args) {
+        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
+        rentalService.rentBook("1", "1000-2000-3000");
+        rentalService.rentBook("2", "2000-3000-4000");
+        BookRental bookRental = rentalService.getRentalRepository().getRentalDatabase().values().stream().findFirst().orElseThrow();
+        String lendIDTest = bookRental.getLendingID();
+
+        System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
+
+        System.out.println(rentalService.returnBook(lendIDTest));
+        System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
+    }
+
+    @Test
+    void getBookReturnHappyPath() {
+        //given
+        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
+        rentalService.rentBook("1", "1000-2000-3000");
+        rentalService.rentBook("2", "2000-3000-4000");
+        BookRental bookRental = rentalService.getRentalRepository().getRentalDatabase().values().stream().findFirst().orElseThrow();
+        String lendIDTest = bookRental.getLendingID();
+        String actual = rentalService.returnBook(lendIDTest);
+
+
+         //when
+
+         Book result = RestAssured
+         .given()
+         .baseUri("http://localhost")
+         .port(port)
+         .when()
+         .accept(ContentType.JSON)
+         .get("/books/" + lendIDTest + "/return")
+         .then()
+         .assertThat()
+         .statusCode(HttpStatus.OK.value())
+         .extract()
+         .as(BookRepository.class).getBookDetailsByIsbn("1000-2000-3000");
+
+        //Then
+        //assertEquals(actual, "Thank you for renting books with us!");
+        assertTrue(result.isAvailableForRent());
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 

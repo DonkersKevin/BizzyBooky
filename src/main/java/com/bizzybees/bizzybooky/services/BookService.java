@@ -50,11 +50,11 @@ public class BookService {
         BookService bookService = new BookService(new BookRepository());
         System.out.println(bookService.getBookByIsbn("1000-2000-3000").toString());
     }
-
+    /** Main method for testing purposes - to be removed later*/
     public List<BookDto> getAllBooksByIsbnWildcard(String isbn) {
         return null;
         //TODO implement
     }
 
-    /** Main method for testing purposes - to be removed later*/
+
 }
