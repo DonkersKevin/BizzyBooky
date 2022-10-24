@@ -212,27 +212,42 @@ class BookControllerIntegrationTest {
         rentalService.rentBook("2", "2000-3000-4000");
         BookRental bookRental = rentalService.getRentalRepository().getRentalDatabase().values().stream().findFirst().orElseThrow();
         String lendIDTest = bookRental.getLendingID();
-        String actual = rentalService.returnBook(lendIDTest);
+        Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
+
+        //when
 
 
-         //when
+        BookDto[] result1 = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
 
-         Book result = RestAssured
-         .given()
-         .baseUri("http://localhost")
-         .port(port)
-         .when()
-         .accept(ContentType.JSON)
-         .get("/books/" + lendIDTest + "/return")
-         .then()
-         .assertThat()
-         .statusCode(HttpStatus.OK.value())
-         .extract()
-         .as(BookRepository.class).getBookDetailsByIsbn("1000-2000-3000");
+        /**
+        Book result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + lendIDTest + "/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookRepository.class).getBookDetailsByIsbn("1000-2000-3000");
+         */
 
         //Then
         //assertEquals(actual, "Thank you for renting books with us!");
-        assertTrue(result.isAvailableForRent());
+        assertTrue(returnedBook.getIsAvailableForRent());
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 
