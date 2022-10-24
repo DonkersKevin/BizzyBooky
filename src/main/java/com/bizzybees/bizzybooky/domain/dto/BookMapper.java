@@ -10,6 +10,7 @@ public class BookMapper {
         return bookList.stream().map(book -> bookToDto(book)).collect(Collectors.toList());
     }
 
+
     public List<BookDto> listToDtoListNoSummary(List<Book> bookList) {
         return bookList.stream().map(book -> bookToDto_NoSummary(book)).collect(Collectors.toList());
     }

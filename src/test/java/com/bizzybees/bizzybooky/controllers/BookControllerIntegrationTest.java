@@ -46,6 +46,7 @@ class BookControllerIntegrationTest {
                 new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce"),
                 new BookDto("6000-7000-8000", "Programmes", "Boy", "Name")
         ));
+
         //ACT
         BookDto[] result = RestAssured
                 .given()
@@ -125,7 +126,6 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-<<<<<<< HEAD
     void titleSearch_HappyPath() {
         //ARRANGE
         List<BookDto> expectedBooks = List.of(

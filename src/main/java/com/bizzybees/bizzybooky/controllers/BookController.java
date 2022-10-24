@@ -35,6 +35,7 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("id/{id}")
     public BookDto getBookById(@PathVariable String id) {

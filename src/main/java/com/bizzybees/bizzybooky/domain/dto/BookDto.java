@@ -8,7 +8,6 @@ public class BookDto {
     private String title;
     private String authorFirstName;
     private String authorLastName;
-
     private String summary;
 
 

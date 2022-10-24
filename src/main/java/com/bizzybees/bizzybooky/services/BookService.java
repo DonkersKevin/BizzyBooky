@@ -21,6 +21,7 @@ public class BookService {
         return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
     }
 
+
     public BookMapper getBookMapper() {
         return bookMapper;
     }
