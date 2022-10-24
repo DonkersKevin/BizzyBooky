@@ -28,18 +28,12 @@ public class BookController {
         this.rentalService = rentalService;
     }
 
-
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
     log.info("Fetching all books...");
         //  return bookService.getAllBooksWithoutSummary();
         return bookService.getAllBooks();
     }
-
-    public BookService getBookService() {
-        return bookService;
-    }
-
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +69,6 @@ public class BookController {
         log.info("Looking for book with author: " + author);
         return bookService.getBooksByAuthorSearch(author);
     }
-
 
     //Fix uri
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
