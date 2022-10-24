@@ -22,7 +22,7 @@ class MemberControllerTest {
         //given
         NewMemberDto newMemberDto = new NewMemberDto(Role.MEMBER, "Squarepants", "Patrick", "Patrick@hotmail.com"
                 , "randomstreet"
-                , "Patrick@hotmail.com", "1", "Bikini Bottom", "", "fefe");
+                , "Patrrick@hotmail.com", "1", "Bikini Bottom", "", "fefe");
 
         //when
 
