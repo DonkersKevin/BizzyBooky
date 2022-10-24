@@ -1,6 +1,7 @@
 package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.domain.dto.BookMapper;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class BookService {
         this.bookMapper = new BookMapper();
     }
 
-    public List<BookDto> getAllBooks() {
-        return bookMapper.listToDtoList(bookRepository.getAllBooks());
+    public List<BookDtoWithoutSummary> getAllBooks() {
+        return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
     }
 
     /*

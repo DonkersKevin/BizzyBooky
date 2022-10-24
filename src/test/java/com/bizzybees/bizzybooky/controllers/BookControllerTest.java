@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
@@ -33,10 +34,10 @@ class BookControllerTest {
     @Test
     void aListOfBooks_callTheBookServiceGetAllBooksMethod_bookControllerGetAllBooksMethodIsCalled() {
         //Given
-        List<BookDto> expectedBookList = new ArrayList<>();
+        List<BookDtoWithoutSummary> expectedBookList = new ArrayList<>();
         Mockito.when(bookService.getAllBooks()).thenReturn(expectedBookList);
         //When
-        List<BookDto> bookRepositoryToTest = bookController.getAllBooks();
+        List<BookDtoWithoutSummary> bookRepositoryToTest = bookController.getAllBooks();
         //Then
         Assertions.assertEquals(expectedBookList, bookRepositoryToTest);
     }

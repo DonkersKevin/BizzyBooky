@@ -1,9 +1,6 @@
 package com.bizzybees.bizzybooky.services;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 95c815eec9bc1a58f531d401ea9b089e05f36699
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalMapper;
