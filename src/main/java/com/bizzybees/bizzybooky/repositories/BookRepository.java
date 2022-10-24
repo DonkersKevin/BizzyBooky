@@ -12,26 +12,19 @@ public class BookRepository {
 
     public BookRepository() {
         this.bookList = new ArrayList<>(List.of(
-                new Book("1", "1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
-                new Book("2", "2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
-                new Book("3", "3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
-                new Book("4", "6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")));
+                new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new Book("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")));
     }
 
     public List<Book> getAllBooks() {
         return bookList;
     }
 
-    public List<Book> getBookDetailsByIsbn(String isbn) {
-        //return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
-        return bookList.stream().filter(book -> book.getIsbn().matches("....-....-....")).toList();
+    public Book getBookDetailsByIsbn(String isbn) {
+        return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
-
-    public Book getBookById(String id) {
-        return bookList.stream().filter(book -> book.getId().matches("....-....-....")).findFirst().orElseThrow();
-        //return bookList.stream().filter(book -> book.getId().equals(id)).findFirst().orElseThrow();
-    }
-
 
     /**
      * Main method for testing purposes - to be removed later

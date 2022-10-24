@@ -19,6 +19,7 @@ public class BookDto {
         this.summary = summary;
     }
 
+    /*
     public BookDto(String isbn, String title, String authorFirstName, String authorLastName) {
         this.isbn = isbn;
         this.title = title;
@@ -26,7 +27,10 @@ public class BookDto {
         this.authorLastName = authorLastName;
     }
 
-    public String getISBN() {
+     */
+
+
+    public String getIsbn() {
         return isbn;
     }
 
@@ -51,12 +55,12 @@ public class BookDto {
         if (this == o) return true;
         if (!(o instanceof BookDto bookDto)) return false;
 
-        return getISBN() != null ? getISBN().equals(bookDto.getISBN()) : bookDto.getISBN() == null;
+        return getIsbn() != null ? getIsbn().equals(bookDto.getIsbn()) : bookDto.getIsbn() == null;
     }
 
     @Override
     public int hashCode() {
-        return getISBN() != null ? getISBN().hashCode() : 0;
+        return getIsbn() != null ? getIsbn().hashCode() : 0;
     }
 
 

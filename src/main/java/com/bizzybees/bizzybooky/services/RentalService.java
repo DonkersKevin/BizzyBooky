@@ -1,6 +1,5 @@
 package com.bizzybees.bizzybooky.services;
 
-import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;

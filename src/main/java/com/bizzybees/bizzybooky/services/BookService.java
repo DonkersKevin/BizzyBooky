@@ -18,20 +18,23 @@ public class BookService {
     }
 
     public List<BookDto> getAllBooks() {
+        return bookMapper.listToDtoList(bookRepository.getAllBooks());
+    }
+
+    /*
+    public List<BookDto> getAllBooksWithoutSummary() {
         return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
     }
+
+     */
 
 
     public BookMapper getBookMapper() {
         return bookMapper;
     }
 
-    public BookDto getBookById(String id) {
-        return bookMapper.bookToDto(bookRepository.getBookById(id));
-    }
-
-    public List<BookDto> getBookByIsbn(String isbn) {
-        return bookMapper.listToDtoList(bookRepository.getBookDetailsByIsbn(isbn));
+    public BookDto getBookByIsbn(String isbn) {
+        return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));
     }
 
     public List<BookDto> getBooksByTitle(String title) {
@@ -45,6 +48,11 @@ public class BookService {
     public static void main(String[] args) {
         BookService bookService = new BookService(new BookRepository());
         System.out.println(bookService.getBookByIsbn("1000-2000-3000").toString());
+    }
+
+    public List<BookDto> getAllBooksByIsbnWildcard(String isbn) {
+        return null;
+        //TODO implement
     }
 
     /** Main method for testing purposes - to be removed later*/

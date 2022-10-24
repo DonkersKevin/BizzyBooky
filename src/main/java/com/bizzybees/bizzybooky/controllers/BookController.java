@@ -3,16 +3,12 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import com.bizzybees.bizzybooky.services.BookService;
+import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import com.bizzybees.bizzybooky.services.RentalService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,44 +21,48 @@ public class BookController {
     private BookService bookService;
     private RentalService rentalService;
 
-    public BookController(BookService bookService, RentalService rentalService ) {
+    public BookController(BookService bookService, RentalService rentalService) {
         this.bookService = bookService;
         this.rentalService = rentalService;
     }
 
     @GetMapping
     public List<BookDto> getAllBooks() {
-        return bookService.getAllBooks();
+      //  return bookService.getAllBooksWithoutSummary();
+       return bookService.getAllBooks();
+
     }
 
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("id/{id}")
-    public BookDto getBookById(@PathVariable String id) {
-        log.info("Looking for book with id: " + id);
-        return bookService.getBookById(id);
-    }
 
     public BookService getBookService() {
         return bookService;
     }
 
-
-    //Adapt the path naming according to conventions -> use query parameters
-    @RequestMapping(path = "isbn/{isbn}", produces = "application/json")
-    public List<BookDto> getBookByIsbn(@PathVariable String isbn) {
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookDto getBookByIsbn(@PathVariable String isbn) {
+        log.info("Looking for book with ISBN: " + isbn);
         return bookService.getBookByIsbn(isbn);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn"})
+    public List<BookDto> getAllBooksByIsbnWildcardSearch(@RequestParam String isbn) {
+        log.info("Looking for book with ISBN: " + isbn);
+        return bookService.getAllBooksByIsbnWildcard(isbn);
+    }
 
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"title"})
-    public List<BookDto> getAllBooksWithPartialTitle(@RequestParam String title){
+    public List<BookDto> getAllBooksWithPartialTitle(@RequestParam String title) {
         return bookService.getBooksByTitle(title);
     }
 
 
+    //Fix uri
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRental rentBook(@PathVariable String id,@PathVariable String isbn){
-        return rentalService.rentBook(id,isbn);
+    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
+        return rentalService.rentBook(id, isbn);
     }
 }
