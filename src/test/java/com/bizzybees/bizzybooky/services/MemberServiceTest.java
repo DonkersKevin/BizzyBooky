@@ -4,12 +4,9 @@ import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.repositories.RentalRepository;
-import com.bizzybees.bizzybooky.services.memberdtos.MemberDto;
+import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
     private MemberRepository memberRepository = new MemberRepository();
@@ -28,7 +25,7 @@ class MemberServiceTest {
     @Test
     void givenNoEmailAdress_ThrowIllegalArgumentException() {
 
-        MemberDto memberWithNoEmail = new MemberDto("", "", "", null,
+        NewMemberDto memberWithNoEmail = new NewMemberDto("", "", "", null,
                 "","", " ","");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.checkRequiredFields(memberWithNoEmail));
@@ -36,7 +33,7 @@ class MemberServiceTest {
     @Test
     void givenNoLastname_ThrowIllegalArgumentException() {
 
-        MemberDto memberWithNoEmail = new MemberDto("", "", "", "randomeamilé@hotmail.com",
+        NewMemberDto memberWithNoEmail = new NewMemberDto("", "", "", "randomeamilé@hotmail.com",
                 "","", " ","");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.checkRequiredFields(memberWithNoEmail));
@@ -44,7 +41,7 @@ class MemberServiceTest {
     @Test
     void givenNoCity_ThrowIllegalArgumentException() {
 
-        MemberDto memberWithNoEmail = new MemberDto("", "", "", "randomeamilé@hotmail.com",
+        NewMemberDto memberWithNoEmail = new NewMemberDto("", "", "", "randomeamilé@hotmail.com",
                 "","", " ","");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.checkRequiredFields(memberWithNoEmail));
@@ -55,7 +52,7 @@ class MemberServiceTest {
         //given
         memberRepository.memberDatabase.put("1",new Member("", "", "patrick.spongebob@hotmail.com", "patrick.spongebob@hotmail.com",
                 "","", " "));
-        MemberDto alreadyExistingMember = new MemberDto("", "", "", "patrick.spongebob@hotmail.com",
+        NewMemberDto alreadyExistingMember = new NewMemberDto("", "", "", "patrick.spongebob@hotmail.com",
                 "","", " ","");
         //when
 
