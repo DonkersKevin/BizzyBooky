@@ -33,6 +33,8 @@ class BookControllerIntegrationTest {
 
     @Autowired
     BookController bookController;
+    @Autowired
+    RentalService rentalService;
     List<BookDto> expectedBookList;
 
     @BeforeEach
@@ -393,18 +395,13 @@ class BookControllerIntegrationTest {
     }
 
     @Test
-    void getBookReturnHappyPath() {
+    void getBookReturnHappyPath_correctMessageDisplay() {
         //given
-        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
-        rentalService.rentBook("1", "1000-2000-3000");
-        rentalService.rentBook("2", "2000-3000-4000");
-        BookRental bookRental = rentalService.getRentalRepository().getRentalDatabase().values().stream().findFirst().orElseThrow();
-        String lendIDTest = bookRental.getLendingID();
-        Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
-
+        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookrental.getLendingID();
         //when
 
-
+/**
         BookDto[] result1 = RestAssured
                 .given()
                 .baseUri("http://localhost")
@@ -417,9 +414,10 @@ class BookControllerIntegrationTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract()
                 .as(BookDto[].class);
+ */
 
-        /**
-        Book result = RestAssured
+
+        String result = RestAssured
                 .given()
                 .baseUri("http://localhost")
                 .port(port)
@@ -430,12 +428,19 @@ class BookControllerIntegrationTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
-                .as(BookRepository.class).getBookDetailsByIsbn("1000-2000-3000");
-         */
+                .response()
+                .body()
+                .print();
+
 
         //Then
+
         //assertEquals(actual, "Thank you for renting books with us!");
-        assertTrue(returnedBook.getIsAvailableForRent());
+        assertThat(result).isEqualTo("Thank you for renting books with us!");
+
+
+        //Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
+        //assertTrue(returnedBook.getIsAvailableForRent());
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 
