@@ -9,7 +9,7 @@ public class Member {
     private String memberId;
     private final String INSS;
     private final String password;
-    private final Role role;
+    private  Role role;
     private String lastname;
     private String firstname;
     private String email;
@@ -82,5 +82,9 @@ public class Member {
 
     public Role getRole() {
         return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
