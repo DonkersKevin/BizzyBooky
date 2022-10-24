@@ -2,6 +2,7 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookDto> getAllBooks() {
+    public List<BookDtoWithoutSummary> getAllBooks() {
       //  return bookService.getAllBooksWithoutSummary();
        return bookService.getAllBooks();
 
