@@ -27,7 +27,8 @@ public class BookRepository {
     }
 
     public Book getBookById(String id) {
-        return bookList.stream().filter(book -> book.getId().equals(id)).findFirst().orElseThrow();
+        return bookList.stream().filter(book -> book.getId().matches("....-....-....")).findFirst().orElseThrow();
+        //return bookList.stream().filter(book -> book.getId().equals(id)).findFirst().orElseThrow();
     }
 
 
@@ -46,9 +47,12 @@ public class BookRepository {
         return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
     }
 
+    /*
     public List<Book> getBooksByTitleWithWildcards(String title){
         String[] strings = title.split()
     }
+
+     */
 
 
 
