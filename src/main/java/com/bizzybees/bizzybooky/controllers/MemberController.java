@@ -14,6 +14,8 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+
+    // Do we need to return member?
     public MemberDto addMember(MemberDto memberDto) {
         return memberService.addMember(memberDto);
     }
