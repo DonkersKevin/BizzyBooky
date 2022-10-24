@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/books") // see if slash is needed
 public class BookController {
 
-    //Check if class declaration needs to be explicit....
+    //Check if logger class declaration needs to be explicit....
     private final Logger log = LoggerFactory.getLogger(getClass());
     private BookService bookService;
 
@@ -38,13 +38,14 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
-    public BookService getBookService() {
-        return bookService;
-    }
-
-
     @RequestMapping(path = "isbn/{isbn}", produces = "application/json")
     public BookDto getBookByIsbn(@PathVariable String isbn) {
         return bookService.getBookByIsbn(isbn);
     }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"title"})
+    public List<BookDto> getAllBooksWithPartialTitle(@RequestParam String title){
+        return bookService.getBooksByTitle(title);
+    }
+
 }

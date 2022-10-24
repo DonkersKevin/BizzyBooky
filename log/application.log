@@ -82,3 +82,60 @@
 2022-10-21 15:58:40.351  INFO 15592 --- [main] c.b.b.BizzyBookyApplicationTests         : Starting BizzyBookyApplicationTests using Java 17 on DESKTOP-OG4RUAL with PID 15592 (started by Kev in C:\_development\BizzyBooky)
 2022-10-21 15:58:40.354  INFO 15592 --- [main] c.b.b.BizzyBookyApplicationTests         : No active profile set, falling back to 1 default profile: "default"
 2022-10-21 15:58:45.803  INFO 15592 --- [main] c.b.b.BizzyBookyApplicationTests         : Started BizzyBookyApplicationTests in 6.481 seconds (JVM running for 8.893)
+2022-10-21 16:00:38.088  INFO 2716 --- [main] c.b.b.BizzyBookyApplicationTests         : Starting BizzyBookyApplicationTests using Java 17 on DESKTOP-OG4RUAL with PID 2716 (started by Kev in C:\_development\BizzyBooky)
+2022-10-21 16:00:38.091  INFO 2716 --- [main] c.b.b.BizzyBookyApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2022-10-21 16:00:42.551  INFO 2716 --- [main] c.b.b.BizzyBookyApplicationTests         : Started BizzyBookyApplicationTests in 5.18 seconds (JVM running for 7.388)
+2022-10-21 16:01:19.601  INFO 11476 --- [main] c.b.b.BizzyBookyApplicationTests         : Starting BizzyBookyApplicationTests using Java 17 on DESKTOP-OG4RUAL with PID 11476 (started by Kev in C:\_development\BizzyBooky)
+2022-10-21 16:01:19.606  INFO 11476 --- [main] c.b.b.BizzyBookyApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2022-10-21 16:01:23.095  INFO 3560 --- [main] c.b.bizzybooky.BizzyBookyApplication     : Starting BizzyBookyApplication using Java 17 on DESKTOP-OG4RUAL with PID 3560 (C:\_development\BizzyBooky\target\classes started by Kev in C:\_development\BizzyBooky)
+2022-10-21 16:01:23.105  INFO 3560 --- [main] c.b.bizzybooky.BizzyBookyApplication     : No active profile set, falling back to 1 default profile: "default"
+2022-10-21 16:01:24.844  INFO 11476 --- [main] c.b.b.BizzyBookyApplicationTests         : Started BizzyBookyApplicationTests in 6.235 seconds (JVM running for 8.934)
+2022-10-21 16:01:25.906  INFO 3560 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-10-21 16:01:25.926  INFO 3560 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-21 16:01:25.927  INFO 3560 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-10-21 16:01:26.112  INFO 3560 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-21 16:01:26.113  INFO 3560 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2871 ms
+2022-10-21 16:01:27.189  INFO 3560 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-10-21 16:01:27.209  INFO 3560 --- [main] c.b.bizzybooky.BizzyBookyApplication     : Started BizzyBookyApplication in 5.182 seconds (JVM running for 6.683)
+2022-10-21 16:01:35.251  INFO 3560 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-21 16:01:35.251  INFO 3560 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-21 16:01:35.252  INFO 3560 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-10-21 16:01:45.511  INFO 3560 --- [http-nio-8080-exec-4] c.b.b.controllers.BookController         : Looking for book with id: 1
+2022-10-21 16:01:51.022  INFO 3560 --- [http-nio-8080-exec-5] c.b.b.controllers.BookController         : Looking for book with id: 4
+2022-10-21 16:14:30.358  INFO 9304 --- [main] c.b.bizzybooky.BizzyBookyApplication     : Starting BizzyBookyApplication using Java 17 on DESKTOP-OG4RUAL with PID 9304 (C:\_development\BizzyBooky\target\classes started by Kev in C:\_development\BizzyBooky)
+2022-10-21 16:14:30.365  INFO 9304 --- [main] c.b.bizzybooky.BizzyBookyApplication     : No active profile set, falling back to 1 default profile: "default"
+2022-10-21 16:14:32.334  INFO 9304 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-10-21 16:14:32.352  INFO 9304 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-21 16:14:32.353  INFO 9304 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-10-21 16:14:32.523  INFO 9304 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-21 16:14:32.524  INFO 9304 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2046 ms
+2022-10-21 16:14:33.227  INFO 9304 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-10-21 16:14:33.250  INFO 9304 --- [main] c.b.bizzybooky.BizzyBookyApplication     : Started BizzyBookyApplication in 3.935 seconds (JVM running for 5.385)
+2022-10-21 16:14:42.057  INFO 9304 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-21 16:14:42.058  INFO 9304 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-21 16:14:42.060  INFO 9304 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-10-21 16:14:42.120  INFO 9304 --- [http-nio-8080-exec-2] c.b.b.controllers.BookController         : Looking for book with id: 4
+2022-10-21 16:20:26.046  INFO 15568 --- [main] c.b.b.c.BookControllerIntegrationTest    : Starting BookControllerIntegrationTest using Java 17 on DESKTOP-OG4RUAL with PID 15568 (started by Kev in C:\_development\BizzyBooky)
+2022-10-21 16:20:26.052  INFO 15568 --- [main] c.b.b.c.BookControllerIntegrationTest    : No active profile set, falling back to 1 default profile: "default"
+2022-10-21 16:20:29.384  INFO 15568 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-10-21 16:20:29.404  INFO 15568 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-21 16:20:29.405  INFO 15568 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-10-21 16:20:29.656  INFO 15568 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-21 16:20:29.657  INFO 15568 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2876 ms
+2022-10-21 16:20:31.602  INFO 15568 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 63046 (http) with context path ''
+2022-10-21 16:20:31.626  INFO 15568 --- [main] c.b.b.c.BookControllerIntegrationTest    : Started BookControllerIntegrationTest in 6.578 seconds (JVM running for 9.31)
+2022-10-21 16:20:34.637  INFO 15568 --- [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-21 16:20:34.637  INFO 15568 --- [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-21 16:20:34.639  INFO 15568 --- [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-10-21 16:21:09.054  INFO 244 --- [main] c.b.b.c.BookControllerIntegrationTest    : Starting BookControllerIntegrationTest using Java 17 on DESKTOP-OG4RUAL with PID 244 (started by Kev in C:\_development\BizzyBooky)
+2022-10-21 16:21:09.062  INFO 244 --- [main] c.b.b.c.BookControllerIntegrationTest    : No active profile set, falling back to 1 default profile: "default"
+2022-10-21 16:21:12.775  INFO 244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2022-10-21 16:21:12.806  INFO 244 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-10-21 16:21:12.807  INFO 244 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-10-21 16:21:13.066  INFO 244 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-10-21 16:21:13.066  INFO 244 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3238 ms
+2022-10-21 16:21:14.923  INFO 244 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 63053 (http) with context path ''
+2022-10-21 16:21:14.947  INFO 244 --- [main] c.b.b.c.BookControllerIntegrationTest    : Started BookControllerIntegrationTest in 6.984 seconds (JVM running for 10.086)
+2022-10-21 16:21:17.860  INFO 244 --- [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-10-21 16:21:17.861  INFO 244 --- [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-10-21 16:21:17.862  INFO 244 --- [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

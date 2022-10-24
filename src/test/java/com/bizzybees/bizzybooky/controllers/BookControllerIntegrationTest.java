@@ -36,7 +36,6 @@ class BookControllerIntegrationTest {
         ));
     }
 
-
     @Test
     void WhenCallingBooks_GetFullBookListBack() {
         //ARRANGE
@@ -118,4 +117,34 @@ class BookControllerIntegrationTest {
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("message", equalTo("No book by that id..."));
     }
+
+    @Test
+    void titleSearch_HappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
+        );
+
+        //ACT
+        BookDto[] result = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?title=ar")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+    }
+
+    //TODO What do we give back when the list is empty?
+
+
 }
