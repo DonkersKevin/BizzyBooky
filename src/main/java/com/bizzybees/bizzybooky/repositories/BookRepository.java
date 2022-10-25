@@ -32,22 +32,22 @@ public class BookRepository {
     }
 
     /**
-    public List<Book> getBooksByTitleAtLeastContaining(String title) {
-        return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
-    }
+     * public List<Book> getBooksByTitleAtLeastContaining(String title) {
+     * return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
+     * }
      */
 
     public List<Book> getBooksByTitleWithWildcards(String title) {
-        List <Book> listToReturn = bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
-        if (!listToReturn.isEmpty()){
+        List<Book> listToReturn = bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
+        if (!listToReturn.isEmpty()) {
             return listToReturn;
         }
         throw new TitleNotFoundException();
     }
 
     public List<Book> getBooksByIsbnWithWildcards(String isbn) {
-        List <Book> listToReturn = bookList.stream().filter(b -> b.getIsbn().matches(wildcardToRegex(isbn))).toList();
-        if (!listToReturn.isEmpty()){
+        List<Book> listToReturn = bookList.stream().filter(b -> b.getIsbn().matches(wildcardToRegex(isbn))).toList();
+        if (!listToReturn.isEmpty()) {
             return listToReturn;
         }
         throw new IsbnNotFoundException();
@@ -57,7 +57,7 @@ public class BookRepository {
         List<Book> combinedList = new ArrayList<>();
         combinedList.addAll(bookList.stream().filter(b -> b.getAuthorFirstName().matches(wildcardToRegex(author))).toList());
         combinedList.addAll(bookList.stream().filter(b -> b.getAuthorLastName().matches(wildcardToRegex(author))).toList());
-        if (!combinedList.isEmpty()){
+        if (!combinedList.isEmpty()) {
             return combinedList;
         }
         throw new AuthorNotFoundException();

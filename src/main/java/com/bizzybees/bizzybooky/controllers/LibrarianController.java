@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/librarians")
-
 public class LibrarianController {
     MemberService memberService;
     SecurityService securityService;
@@ -22,7 +21,7 @@ public class LibrarianController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "add" , consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ReturnMemberDto addLibrarian(@RequestHeader String authorization, @RequestBody NewMemberDto newMemberDto) {
         securityService.validateAuthorization(authorization, Feature.REGISTER_LIBRARIAN);
         return memberService.addLibrarian(newMemberDto);

@@ -35,7 +35,6 @@ public class RentalController {
     public String returnBook(@PathVariable String lendingId) {
         return rentalService.returnBook(lendingId);
     }
-
 }
 
 
