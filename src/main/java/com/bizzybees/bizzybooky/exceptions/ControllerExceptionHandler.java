@@ -37,4 +37,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected void LendingIdNotFoundException(LendingIdNotFoundException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value(), "This lending ID is not attributed");
     }
+    @ExceptionHandler(AccessDeniedException.class)
+    protected void AccesDeniedException(AccessDeniedException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.FORBIDDEN.value(), "Member is not authorised to do this action");
+    }
 }

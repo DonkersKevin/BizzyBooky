@@ -4,8 +4,8 @@ import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.MemberService;
-import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class MemberController {
         return memberService.addMember(newMemberDto);
     }
 
-    //For Testing creating members
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
     public ConcurrentHashMap<String, Member> getAllmembers(@RequestHeader String authorization) {
@@ -37,6 +37,6 @@ public class MemberController {
         return memberService.getAllMembers();
 
     }
-    //for Testing creating members
+
 
 }

@@ -1,5 +1,6 @@
 package com.bizzybees.bizzybooky.controllers;
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
+
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

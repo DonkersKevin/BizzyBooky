@@ -1,4 +1,4 @@
-package com.bizzybees.bizzybooky.domain.dto;
+package com.bizzybees.bizzybooky.domain.dto.bookDtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

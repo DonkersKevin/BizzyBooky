@@ -1,6 +1,6 @@
 package com.bizzybees.bizzybooky.services.util;
 
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 
 public class BookValidator {
     public void checkRequiredFields(BookDto bookDto) {
