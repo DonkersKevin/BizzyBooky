@@ -26,4 +26,7 @@ public class BookMapper {
     }
 
 
+    public Book dtoToBook(BookDto bookDto) {
+        return new Book(bookDto.getIsbn(), bookDto.getTitle(), bookDto.getAuthorFirstName(), bookDto.getAuthorLastName(), bookDto.getSummary());
+    }
 }

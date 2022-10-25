@@ -71,4 +71,10 @@ public class BookController {
         return bookService.getBooksByAuthorSearch(author);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookDto addBook(@RequestBody BookDto bookDto) {
+        return bookService.addBook(bookDto);
+    }
+
 }
