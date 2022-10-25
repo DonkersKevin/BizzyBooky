@@ -30,7 +30,7 @@ class MemberControllerTest {
 
         ReturnMemberDto returnMemberDto1 = memberController.addMember(newMemberDto);
         //then
-        Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
+        Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey(returnMemberDto1.getINSS()));
     }
 
 

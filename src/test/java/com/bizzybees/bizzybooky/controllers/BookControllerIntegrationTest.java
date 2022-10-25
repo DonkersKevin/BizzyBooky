@@ -383,18 +383,6 @@ class BookControllerIntegrationTest {
     }
 
 
-    public static void main(String[] args) {
-        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
-        rentalService.rentBook("1", "1000-2000-3000");
-        rentalService.rentBook("2", "2000-3000-4000");
-        BookRental bookRental = rentalService.getRentalRepository().getRentalDatabase().values().stream().findFirst().orElseThrow();
-        String lendIDTest = bookRental.getLendingID();
-
-        System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
-
-        System.out.println(rentalService.returnBook(lendIDTest));
-        System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
-    }
 
     @Test
     void getBookReturnHappyPath_correctMessageDisplay() {

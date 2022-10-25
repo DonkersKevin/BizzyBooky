@@ -53,7 +53,7 @@ class MemberServiceTest {
     @Test
     void givenEmailAddress_thatAlreadyExistsInDatabase() {
         //given
-        memberRepository.memberDatabase.put("1",new Member("1", "", "ffe", "fe",
+        memberRepository.save(new Member("1", "", "ffe", "fe",
                 "patrick.spongebob@hotmail.com","", " ", "", ""));
         NewMemberDto alreadyExistingMember = new NewMemberDto(Role.MEMBER, "", "", "patrick.spongebob@hotmail.com",
                 "","patrick.spongebob@hotmail.com", " ","", "", "");
@@ -62,16 +62,6 @@ class MemberServiceTest {
         //then
         Assertions.assertThrows(IllegalArgumentException.class,()-> memberService.addMember(alreadyExistingMember));
     }
-    @Test
-    void CreateABookrentalWithoutValidMember_ThrowsIllegalArgumentException(){
-        //given
-        memberRepository.memberDatabase.put("3",new Member("Squarepants", "Patrick", "Patrick@hotmail.com"
-                , "randomstreet"
-                , "13", "1", "Bikini Bottom", "", ""));
-        //when
 
-        //then
-        Assertions.assertThrows(IllegalArgumentException.class,()->rentalService.rentBook("5","1000-2000-3000"));
-    }
 
 }
