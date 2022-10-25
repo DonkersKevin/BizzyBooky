@@ -1,6 +1,9 @@
 package com.bizzybees.bizzybooky.services;
 
+import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
+import com.bizzybees.bizzybooky.domain.dto.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookMapper;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalMapper;
 import com.bizzybees.bizzybooky.exceptions.LendingIdNotFoundException;
@@ -10,7 +13,10 @@ import com.bizzybees.bizzybooky.repositories.RentalRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class RentalService {
@@ -20,12 +26,16 @@ public class RentalService {
     private MemberRepository memberRepository;
     private BookRentalMapper bookRentalMapper;
 
+    private BookMapper bookMapper;
+
     public RentalService(RentalRepository rentalRepository, BookRepository bookRepository, MemberRepository memberRepository) {
         this.rentalRepository = rentalRepository;
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
         this.bookRentalMapper = new BookRentalMapper();
     }
+
+
 
     public BookRental rentBook(String memberINSS, String bookISBN) {
         isBookAvailable(bookISBN);
@@ -73,5 +83,16 @@ public class RentalService {
 
     public MemberRepository getMemberRepository() {
         return memberRepository;
+    }
+
+    public List<BookDto> getLentBooksOfMember(String memberId) {
+        List <BookRental> bookRentals = new ArrayList<>(rentalRepository.getRentalDatabase().values());
+        List<String> isbnList = bookRentals.stream().filter(rental -> rental.getMemberID().equals(memberId)).map(BookRental::getBookISBN).collect(Collectors.toList());
+        List<BookDto> rentedBooksDto = bookRepository.getAllBooks()
+                .stream()
+                .filter(book -> isbnList.contains(book.getIsbn()))
+                .map(book -> bookMapper.bookToDto(book))
+                .collect(Collectors.toList());
+        return rentedBooksDto;
     }
 }
