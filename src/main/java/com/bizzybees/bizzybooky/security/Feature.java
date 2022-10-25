@@ -5,5 +5,6 @@ public enum Feature {
     REGISTER_LIBRARIAN,
     VIEW_MEMBERS,
     ADD_BOOK,
-    RETURN_LENT_BOOK;
+    RETURN_LENT_BOOK,
+    VIEW_OVERDUE_BOOKS,
 }

@@ -11,6 +11,7 @@ import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,13 @@ public class RentalController {
     public List<BookDto> returnLentBooksOfMember (@RequestHeader String authorization, @PathVariable String memberId) {
         securityService.validateAuthorization(authorization, Feature.RETURN_LENT_BOOK);
         return rentalService.getLentBooksOfMember(memberId);
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "/viewoverdue", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<BookRentalDto> getAllOverdueBooks(@RequestHeader String authorization) {
+        securityService.validateAuthorization(authorization, Feature.VIEW_OVERDUE_BOOKS);
+        return rentalService.getAllBooksThatAreOverdue();
+
     }
 }
 

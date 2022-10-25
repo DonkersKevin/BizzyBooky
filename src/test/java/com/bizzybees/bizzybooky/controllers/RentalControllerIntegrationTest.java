@@ -146,5 +146,26 @@ public class RentalControllerIntegrationTest {
 
     //Basic MzpTcXVhcmVwYW50cw==
 
+    @DirtiesContext
+    @Test
+    void normalMemberTriesToViewOverDueBooks() {
+
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1","Squarepants")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/viewoverdue")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value())
+                .extract();
+
+    }
+
 
 }

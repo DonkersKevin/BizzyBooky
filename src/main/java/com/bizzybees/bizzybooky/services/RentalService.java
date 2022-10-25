@@ -96,4 +96,14 @@ public class RentalService {
                 .collect(Collectors.toList());
         return rentedBooksDto;
     }
+
+    public List<BookRentalDto> getAllBooksThatAreOverdue() {
+        List<BookRentalDto> overDueBooks = new ArrayList<>();
+        for (BookRental bookRental:getRentalRepository().getRentalDatabase().values()) {
+            if(LocalDate.now().isAfter(bookRental.getDueDate())){
+                overDueBooks.add(bookRentalMapper.BookRentalToBookRentalDto(bookRental));
+            }
+        }
+        return overDueBooks;
+    }
 }

@@ -1,5 +1,6 @@
 package com.bizzybees.bizzybooky.controllers;
 
+import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.MemberService;
@@ -8,6 +9,8 @@ import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/librarians")
@@ -26,4 +29,5 @@ public class LibrarianController {
         securityService.validateAuthorization(authorization, Feature.REGISTER_LIBRARIAN);
         return memberService.addLibrarian(newMemberDto);
     }
+
 }
