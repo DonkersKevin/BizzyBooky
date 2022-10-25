@@ -372,8 +372,6 @@ class BookControllerIntegrationTest {
         //Then
 
         assertThat(result).isEqualTo(LocalDate.of(2022, 11, 14));
-<<<<<<< HEAD
-=======
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 
@@ -423,10 +421,7 @@ class BookControllerIntegrationTest {
         //Then
         //assertEquals(actual, "Thank you for renting books with us!");
         assertTrue(result.isAvailableForRent());
->>>>>>> eba40cca63b255cc232e802e1869a00ca2518e13
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
-
-        //TODO What do we give back when the list is empty?
     }
 }
