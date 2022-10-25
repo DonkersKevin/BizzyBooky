@@ -493,4 +493,3 @@ class BookControllerIntegrationTest {
                 .body("message", equalTo("This lending ID is not attributed"));
     }
 }
-

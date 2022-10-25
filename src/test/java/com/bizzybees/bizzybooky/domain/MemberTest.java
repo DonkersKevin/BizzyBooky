@@ -19,4 +19,13 @@ class MemberTest {
 
 
     }
+    @Test
+    void aNormalMemberCannotRegisterANewLibrarian() {
+        member = new Member("123","123","lastname","firstname","firstname@hotmail.com","street",
+                "12","9000","Ghent");
+
+        Assertions.assertThat(member.canHaveAccessTo(Feature.REGISTER_LIBRARIAN)).isFalse();
+
+
+    }
 }
