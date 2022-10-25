@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.bizzybees.bizzybooky.repositories.WildcardToRegexConverter.wildcardToRegex;
+import static com.bizzybees.bizzybooky.repositories.util.WildcardToRegexConverter.wildcardToRegex;
 
 @Repository
 public class BookRepository {
@@ -34,33 +34,22 @@ public class BookRepository {
 
 
     /**
-     * Main method for testing purposes - to be removed later
-     */
-
-    public static void main(String[] args) {
-        BookRepository bookRepository = new BookRepository();
-        System.out.println(bookRepository.getBookDetailsByIsbn("1000-2000-3000").toString());
-    }
-
-    /** Main method for testing purposes - to be removed later*/
-
-    /**
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
         return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
     }
      */
 
     public List<Book> getBooksByTitleWithWildcards(String title) {
-        List <Book> listToReturn = bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
-        if (!listToReturn.isEmpty()){
+        List<Book> listToReturn = bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
+        if (!listToReturn.isEmpty()) {
             return listToReturn;
         }
         throw new TitleNotFoundException();
     }
 
     public List<Book> getBooksByIsbnWithWildcards(String isbn) {
-        List <Book> listToReturn = bookList.stream().filter(b -> b.getIsbn().matches(wildcardToRegex(isbn))).toList();
-        if (!listToReturn.isEmpty()){
+        List<Book> listToReturn = bookList.stream().filter(b -> b.getIsbn().matches(wildcardToRegex(isbn))).toList();
+        if (!listToReturn.isEmpty()) {
             return listToReturn;
         }
         throw new IsbnNotFoundException();
@@ -70,7 +59,7 @@ public class BookRepository {
         List<Book> combinedList = new ArrayList<>();
         combinedList.addAll(bookList.stream().filter(b -> b.getAuthorFirstName().matches(wildcardToRegex(author))).toList());
         combinedList.addAll(bookList.stream().filter(b -> b.getAuthorLastName().matches(wildcardToRegex(author))).toList());
-        if (!combinedList.isEmpty()){
+        if (!combinedList.isEmpty()) {
             return combinedList;
         }
         throw new AuthorNotFoundException();

@@ -1,4 +1,4 @@
-package com.bizzybees.bizzybooky.repositories;
+package com.bizzybees.bizzybooky.repositories.util;
 
 public class WildcardToRegexConverter {
 

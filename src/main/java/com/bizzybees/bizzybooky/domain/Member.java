@@ -9,7 +9,7 @@ public class Member {
     private String memberId;
     private final String INSS;
     private final String password;
-    private  Role role;
+    private Role role;
     private String lastname;
     private String firstname;
     private String email;
@@ -18,7 +18,7 @@ public class Member {
     private String postalCode;
     private String city;
 
-    public Member( String INSS, String password, String lastname, String firstname, String email, String streetName, String streetNumber, String postalCode, String city) {
+    public Member(String INSS, String password, String lastname, String firstname, String email, String streetName, String streetNumber, String postalCode, String city) {
         this.memberId = UUID.randomUUID().toString();
         this.INSS = INSS;
         this.password = password;

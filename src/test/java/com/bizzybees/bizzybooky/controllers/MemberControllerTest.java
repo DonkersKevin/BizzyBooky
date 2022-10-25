@@ -11,6 +11,8 @@ import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
 import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
