@@ -76,21 +76,24 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto addBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        log.info("Adding book with isbn: " + bookDto.getIsbn());
         securityService.validateAuthorization(authorization, Feature.ADD_BOOK);
         return bookService.addBook(bookDto);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookDto updateBook(@RequestBody BookDto bookDto){
-        //Todo Security check
-        //Only Librarian/Admin?
+    public BookDto updateBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        log.info("Updating book with isbn: " + bookDto.getIsbn());
+        securityService.validateAuthorization(authorization, Feature.CAN_UPDATE_BOOK);
         return bookService.updateBook(bookDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping (consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteBook(@RequestBody BookDto bookDto){
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
+        log.info("Deleting book with isbn: " + bookDto.getIsbn());
         bookService.deleteBook(bookDto);
     }
 

@@ -1,6 +1,8 @@
 package com.bizzybees.bizzybooky.controllers;
 
+import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -10,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -24,6 +28,8 @@ class BookControllerIntegrationTest {
     BookController bookController;
     @Autowired
     RentalService rentalService;
+    @Autowired
+    BookRepository bookRepository;
 
     List<BookDto> expectedBookList;
 
@@ -345,55 +351,58 @@ class BookControllerIntegrationTest {
     @Test
     void deleteBook_HappyPath() {
         //ARRANGE
-        List<BookDto> expectedBooks = List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
-                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
-                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
+        List<Book> expectedBooks = List.of(
+                new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
         );
 
+        String requestedBody = "{\"isbn\":\"6000-7000-8000\",\"title\":\"Programmes\",\"authorFirstname\":\"Boy\",\"authorLastName\":\"Name\",\"summary\":\"Lorem Ipsum\"}";
+
         //ACT
-        BookDto[] result = RestAssured
+        RestAssured
                 .given()
+                .contentType(ContentType.JSON)
                 .baseUri("http://localhost")
                 .port(port)
+                .body(requestedBody)
                 .when()
-                .accept(ContentType.JSON)
-                .post("/books/add")
+                .delete("/books")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .as(BookDto[].class);
+                .statusCode(HttpStatus.NO_CONTENT.value());
 
         //ASSES
-        assertThat(List.of(result)).isEqualTo(expectedBooks);
+        assertThat(bookRepository.getAllBooks()).isEqualTo(expectedBooks);
     }
 
     @Test
     void updateBook_HappyPath() {
         //ARRANGE
         List<BookDto> expectedBooks = List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
-                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
-                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
-                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")
+                new BookDto("1000-2000-3000", "a", "g", "nana", "Lorem Ipsum")
         );
 
+        String requestedBody = "{\"isbn\":\"1000-2000-3000\",\"title\":\"a\",\"authorFirstname\":\"g\",\"authorLastName\":\"nana\",\"summary\":\"g\"}";
+
         //ACT
-        BookDto[] result = RestAssured
+        BookDto result = RestAssured
                 .given()
+                .contentType(ContentType.JSON)
                 .baseUri("http://localhost")
                 .port(port)
+                .body(requestedBody)
                 .when()
                 .accept(ContentType.JSON)
-                .post("/books/add")
+                .put("/books")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.OK.value())
+                .statusCode(HttpStatus.CREATED.value())
                 .extract()
-                .as(BookDto[].class);
+                .as(BookDto.class);
 
         //ASSES
         assertThat(List.of(result)).isEqualTo(expectedBooks);
+
     }
 }
