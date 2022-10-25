@@ -28,12 +28,7 @@ public class MemberController {
     public ReturnMemberDto addMember(@RequestBody NewMemberDto newMemberDto) {
         return memberService.addMember(newMemberDto);
     }
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "add-librarian" , consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ReturnMemberDto addLibrarian(@RequestHeader String authorization,@RequestBody NewMemberDto newMemberDto) {
-        securityService.validateAuthorization(authorization, Feature.REGISTER_LIBRARIAN);
-        return memberService.addLibrarian(newMemberDto);
-    }
+
     //For Testing creating members
     @GetMapping
     public ConcurrentHashMap<String, Member> getAllmembers() {

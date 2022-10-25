@@ -1,4 +1,4 @@
-package com.bizzybees.bizzybooky.services;
+package com.bizzybees.bizzybooky.domain.dto;
 
 import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;

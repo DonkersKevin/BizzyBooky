@@ -33,18 +33,6 @@ class MemberControllerTest {
         Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
     }
 
-    @Test
-    void addNewLibrarianToRepositoryIsSuccessful() {
-        //given
-        NewMemberDto newMemberDto = new NewMemberDto(Role.MEMBER, "Squarepants", "Patrick", "Patrick@hotmail.com"
-                , "randomstreet"
-                , "Patrrick@hotmail.com", "1", "Bikini Bottom", "", "fefe");
 
-        //when
-
-        ReturnMemberDto returnMemberDto1 = memberController.addLibrarian("Basic MjpTcXVhcmVwYW50cw==",newMemberDto);
-        //then
-        Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
-    }
 
 }
