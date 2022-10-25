@@ -32,4 +32,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     protected void AuthorNotFoundException(AuthorNotFoundException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value(), "No book by that author...");
     }
+
+    @ExceptionHandler(LendingIdNotFoundException.class)
+    protected void LendingIdNotFoundException(LendingIdNotFoundException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.NOT_FOUND.value(), "This lending ID is not attributed");
+    }
 }
