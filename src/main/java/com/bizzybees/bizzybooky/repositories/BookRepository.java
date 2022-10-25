@@ -31,8 +31,6 @@ public class BookRepository {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
 
-
-
     /**
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
         return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
@@ -84,6 +82,7 @@ public class BookRepository {
             throw new IsbnNotFoundException();
         }
         bookList.remove(book);
+        System.out.println(bookList);
     }
 
     public boolean isPresent(Book book) {

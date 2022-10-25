@@ -76,6 +76,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto addBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        log.info("Adding book with isbn: " + bookDto.getIsbn());
         securityService.validateAuthorization(authorization, Feature.ADD_BOOK);
         return bookService.addBook(bookDto);
     }
@@ -83,6 +84,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto updateBook(@RequestBody BookDto bookDto){
+        log.info("Updating book with isbn: " + bookDto.getIsbn());
         //Todo Security check
         //Only Librarian/Admin?
         return bookService.updateBook(bookDto);
@@ -91,6 +93,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping (consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteBook(@RequestBody BookDto bookDto){
+        log.info("Deleting book with isbn: " + bookDto.getIsbn());
         bookService.deleteBook(bookDto);
     }
 
