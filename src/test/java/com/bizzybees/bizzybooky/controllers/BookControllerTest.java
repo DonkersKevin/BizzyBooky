@@ -42,6 +42,15 @@ class BookControllerTest {
         Assertions.assertEquals(expectedBookList, bookRepositoryToTest);
     }
 
+    @Test
+    void addNewBookToRepository() {
+        //Given
+
+        //When
+
+        //Then
+    }
+
 
 
 

@@ -70,4 +70,6 @@ public class BookController {
         return rentalService.rentBook(id, isbn);
 
     }
+
+
 }
