@@ -44,7 +44,6 @@ public class Book {
         return summary;
     }
 
-
     @Override
     public String toString() {
         return "Book{" +

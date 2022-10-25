@@ -69,4 +69,24 @@ public class BookRepository {
         bookList.add(book);
         return book;
     }
+
+    public Book updateBook(Book book) {
+        if (!isPresent(book)) {
+            throw new IsbnNotFoundException();
+        }
+        int index = bookList.indexOf(getBookDetailsByIsbn(book.getIsbn()));
+        bookList.set(index, book);
+        return bookList.get(index);
+    }
+
+    public void deleteBook(Book book) {
+        if (!isPresent(book)) {
+            throw new IsbnNotFoundException();
+        }
+        bookList.remove(book);
+    }
+
+    public boolean isPresent(Book book) {
+        return bookList.contains(book);
+    }
 }

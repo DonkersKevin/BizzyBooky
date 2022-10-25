@@ -56,6 +56,13 @@ public class BookService {
         return bookMapper.bookToDto(newBook);
     }
 
+    public BookDto updateBook(BookDto bookDto) {
+        return bookMapper.bookToDto(bookRepository.updateBook(bookMapper.dtoToBook(bookDto)));
+    }
 
+    public void deleteBook(BookDto bookDto) {
+        bookRepository.deleteBook(bookMapper.dtoToBook(bookDto));
+    }
 }
+
 
