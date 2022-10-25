@@ -6,12 +6,14 @@ import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.repositories.RentalRepository;
 import com.bizzybees.bizzybooky.security.Role;
 import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.services.util.MemberValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class MemberServiceTest {
     private MemberRepository memberRepository = new MemberRepository();
     private MemberService memberService = new MemberService(memberRepository);
+    private MemberValidator memberValidator = new MemberValidator();
 
     private RentalService rentalService = new RentalService(new RentalRepository(),new BookRepository(),memberRepository);
 
@@ -20,7 +22,7 @@ class MemberServiceTest {
     void givenInvalidEmailAddress_thenThrowIllegalArgumentException() {
         String mailAddress = "patrick.spongebobhotmailcom";
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.isValidEmail(mailAddress));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.isValidEmail(mailAddress));
     }
 
     @Test
@@ -29,7 +31,7 @@ class MemberServiceTest {
         NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", null,
                 "","", " ","", "", "");
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.checkRequiredFields(memberWithNoEmail));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoEmail));
     }
     @Test
     void givenNoLastname_ThrowIllegalArgumentException() {
@@ -37,7 +39,7 @@ class MemberServiceTest {
         NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", "",
                 "","randomeamilé@hotmail.com", " ","", "", "");
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.checkRequiredFields(memberWithNoEmail));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoEmail));
     }
     @Test
     void givenNoCity_ThrowIllegalArgumentException() {
@@ -45,7 +47,7 @@ class MemberServiceTest {
         NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", "randomeamilé@hotmail.com",
                 "","", " ","", "", "");
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> memberService.checkRequiredFields(memberWithNoEmail));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoEmail));
     }
 
     @Test
