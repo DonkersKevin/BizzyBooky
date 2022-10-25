@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.services;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalMapper;
+import com.bizzybees.bizzybooky.exceptions.LendingIdNotFoundException;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.repositories.RentalRepository;
@@ -51,7 +52,7 @@ public class RentalService {
 
     public String returnBook(String lendingId) {
         if (!rentalRepository.getRentalDatabase().containsKey(lendingId)) {
-            throw new IllegalArgumentException("This lending ID is not attributed");
+            throw new LendingIdNotFoundException();
         }
         LocalDate returnDate = rentalRepository.getRentalDatabase().get(lendingId).getDueDate();
         bookRepository.getBookDetailsByIsbn(rentalRepository.getRentalDatabase().get(lendingId).getBookISBN()).setAvailableForRent(true);

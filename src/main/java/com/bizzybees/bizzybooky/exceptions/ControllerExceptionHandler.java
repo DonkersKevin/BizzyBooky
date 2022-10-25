@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-
+//Check if http status is needed...
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -31,5 +31,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AuthorNotFoundException.class)
     protected void AuthorNotFoundException(AuthorNotFoundException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value(), "No book by that author...");
+    }
+
+    @ExceptionHandler(LendingIdNotFoundException.class)
+    protected void LendingIdNotFoundException(LendingIdNotFoundException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.NOT_FOUND.value(), "This lending ID is not attributed");
     }
 }

@@ -6,11 +6,13 @@ import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.repositories.RentalRepository;
+import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -23,8 +25,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookControllerIntegrationTest {
@@ -35,6 +36,7 @@ class BookControllerIntegrationTest {
     BookController bookController;
     @Autowired
     RentalService rentalService;
+
     List<BookDto> expectedBookList;
 
     @BeforeEach
@@ -400,23 +402,6 @@ class BookControllerIntegrationTest {
         BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
         String lendIDTest = bookrental.getLendingID();
         //when
-
-/**
-        BookDto[] result1 = RestAssured
-                .given()
-                .baseUri("http://localhost")
-                .port(port)
-                .when()
-                .accept(ContentType.JSON)
-                .get("/books")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .as(BookDto[].class);
- */
-
-
         String result = RestAssured
                 .given()
                 .baseUri("http://localhost")
@@ -431,19 +416,80 @@ class BookControllerIntegrationTest {
                 .response()
                 .body()
                 .print();
+        //Then
+        assertThat(result).isEqualTo("Thank you for renting books with us!");
+    }
 
+    @Test
+    void getBookReturnHappyPath_bookIsMadeAvailable() {
+        //given
+        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookrental.getLendingID();
+        rentalService.returnBook(lendIDTest);
+
+        //when
+        /** -- Given that the DTO are given back (which do not include a "isAvailable field) there is no point in looking through the webapp.
+         BookDto result = RestAssured
+         .given()
+         .baseUri("http://localhost")
+         .port(port)
+         .when()
+         .accept(ContentType.JSON)
+         .get("/books/1000-2000-3000")
+         .then()
+         .assertThat()
+         .statusCode(HttpStatus.OK.value())
+         .extract()
+         .as(BookDto.class);
+         */
 
         //Then
+        Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
+        assertTrue(returnedBook.getIsAvailableForRent());
+    }
 
-        //assertEquals(actual, "Thank you for renting books with us!");
-        assertThat(result).isEqualTo("Thank you for renting books with us!");
 
+    @Test
+    void getBookReturn_ExceptionThrownWithInvalidLendingID() {
+        //given
+        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = "random and wrong ID";
+        //when
+        RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + lendIDTest + "/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("This lending ID is not attributed"));
+    }
 
-        //Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
-        //assertTrue(returnedBook.getIsAvailableForRent());
+    @Test
+    void returnBookTwice_ExceptionThrownAtSecondReturnTry() {
+        //given
+        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookrental.getLendingID();
+        rentalService.returnBook(lendIDTest);
+
+        //when
+        Book returnedBook = rentalService.getBookRepository().getBookDetailsByIsbn("1000-2000-3000");
+        assertTrue(returnedBook.getIsAvailableForRent());
+
         //then
-        //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
-
-        //TODO What do we give back when the list is empty?
+        RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + lendIDTest + "/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("This lending ID is not attributed"));
     }
 }

@@ -42,6 +42,7 @@ public class BookController {
         return bookService.getBookByIsbn(isbn);
     }
 
+    //TODO implement properly
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title","author"})
     public List<BookDto> getAllBooksCombinedSearch(@RequestParam(required = false) String isbn, @RequestParam(required = false) String title, @RequestParam(required = false) String author) {
