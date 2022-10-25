@@ -1,8 +1,10 @@
 package com.bizzybees.bizzybooky.repositories;
 
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.security.Role;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,6 +22,9 @@ public class MemberRepository {
                 , "randomstreet"
                 , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
 
+
+
+
     }
 
     public void save(Member member) {
@@ -33,4 +38,10 @@ public class MemberRepository {
     public Member getMember(String id) {
         return memberDatabase.get(id);
     }
+
+    //For testing purposes with postman
+    public ConcurrentHashMap<String, Member> getMemberDatabase() {
+        return memberDatabase;
+    }
+    //For testing purposes with postman
 }
