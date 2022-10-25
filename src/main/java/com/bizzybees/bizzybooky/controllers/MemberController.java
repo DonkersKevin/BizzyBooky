@@ -34,10 +34,10 @@ public class MemberController {
         securityService.validateAuthorization(authorization, Feature.REGISTER_LIBRARIAN);
         return memberService.addLibrarian(newMemberDto);
     }
-    //For Testing get creating members
+    //For Testing creating members
     @GetMapping
     public ConcurrentHashMap<String, Member> getAllmembers() {
-        //  return bookService.getAllBooksWithoutSummary();
+
         return memberService.getAllMembers();
 
     }

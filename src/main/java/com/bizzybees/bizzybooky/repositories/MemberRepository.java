@@ -21,6 +21,7 @@ public class MemberRepository {
         memberDatabase.put("2",new Member("1", "Squarepants", "Patrick"
                 , "randomstreet"
                 , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
+        memberDatabase.get("2").setRole(Role.ADMIN);
 
 
 

@@ -32,20 +32,19 @@ class MemberControllerTest {
         //then
         Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
     }
+
     @Test
     void addNewLibrarianToRepositoryIsSuccessful() {
         //given
-        NewMemberDto newMemberDto = new NewMemberDto(Role.ADMIN, "Squarepants", "Patrick", "Patrick@hotmail.com"
+        NewMemberDto newMemberDto = new NewMemberDto(Role.MEMBER, "Squarepants", "Patrick", "Patrick@hotmail.com"
                 , "randomstreet"
-                , "Patric@hotmail.com", "1", "Bikini Bottom", "", "fefe");
-
-
-
+                , "Patrrick@hotmail.com", "1", "Bikini Bottom", "", "fefe");
 
         //when
 
-        //ReturnMemberDto returnMemberDto1 = memberController.addLibrarian(,newMemberDto);
+        ReturnMemberDto returnMemberDto1 = memberController.addLibrarian("Basic MjpTcXVhcmVwYW50cw==",newMemberDto);
         //then
-       // Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
+        Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
     }
+
 }
