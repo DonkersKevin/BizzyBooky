@@ -144,5 +144,7 @@ public class RentalControllerIntegrationTest {
                 .body("message", equalTo("This lending ID is not attributed"));
     }
 
+    //Basic MzpTcXVhcmVwYW50cw==
+
 
 }

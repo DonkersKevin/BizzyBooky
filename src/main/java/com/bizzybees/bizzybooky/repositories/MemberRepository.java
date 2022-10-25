@@ -22,6 +22,10 @@ public class MemberRepository {
                 , "randomstreet"
                 , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
         memberDatabase.get("2").setRole(Role.ADMIN);
+        memberDatabase.put("3", new Member("3", "Squarepants", "Patrick"
+                , "randomstreet"
+                , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
+        memberDatabase.get("3").setRole(Role.LIBRARIAN);
 
 
     }
