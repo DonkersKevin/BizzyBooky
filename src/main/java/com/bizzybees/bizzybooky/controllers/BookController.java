@@ -2,6 +2,8 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDtoWithoutSummary;
+import com.bizzybees.bizzybooky.security.Feature;
+import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
@@ -14,23 +16,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books") // see if slash is needed
+@RequestMapping("/books")
 public class BookController {
 
     //Check if class declaration needs to be explicit....
     private final Logger log = LoggerFactory.getLogger(getClass());
     private BookService bookService;
     private RentalService rentalService;
+    private SecurityService securityService;
 
-    public BookController(BookService bookService, RentalService rentalService) {
+    public BookController(BookService bookService, RentalService rentalService, SecurityService securityService) {
         this.bookService = bookService;
         this.rentalService = rentalService;
+        this.securityService = securityService;
     }
 
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
         log.info("Fetching all books...");
-        //  return bookService.getAllBooksWithoutSummary();
         return bookService.getAllBooks();
     }
 
@@ -72,8 +75,26 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookDto addBook(@RequestBody BookDto bookDto) {
+    public BookDto addBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        log.info("Adding book with isbn: " + bookDto.getIsbn());
+        securityService.validateAuthorization(authorization, Feature.ADD_BOOK);
         return bookService.addBook(bookDto);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookDto updateBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        log.info("Updating book with isbn: " + bookDto.getIsbn());
+        securityService.validateAuthorization(authorization, Feature.CAN_UPDATE_BOOK);
+        return bookService.updateBook(bookDto);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
+        log.info("Deleting book with isbn: " + bookDto.getIsbn());
+        bookService.deleteBook(bookDto);
     }
 
 }

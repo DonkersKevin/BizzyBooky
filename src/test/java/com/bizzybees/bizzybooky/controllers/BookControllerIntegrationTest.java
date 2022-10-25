@@ -1,6 +1,8 @@
 package com.bizzybees.bizzybooky.controllers;
 
+import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -26,6 +28,8 @@ class BookControllerIntegrationTest {
     BookController bookController;
     @Autowired
     RentalService rentalService;
+    @Autowired
+    BookRepository bookRepository;
 
     List<BookDto> expectedBookList;
 
@@ -342,5 +346,63 @@ class BookControllerIntegrationTest {
                 .body("message", equalTo("No book by that author..."));
 
         //ASSES
+    }
+
+    @Test
+    void deleteBook_HappyPath() {
+        //ARRANGE
+        List<Book> expectedBooks = List.of(
+                new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
+        );
+
+        String requestedBody = "{\"isbn\":\"6000-7000-8000\",\"title\":\"Programmes\",\"authorFirstname\":\"Boy\",\"authorLastName\":\"Name\",\"summary\":\"Lorem Ipsum\"}";
+
+        //ACT
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .baseUri("http://localhost")
+                .port(port)
+                .body(requestedBody)
+                .when()
+                .delete("/books")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+
+        //ASSES
+        assertThat(bookRepository.getAllBooks()).isEqualTo(expectedBooks);
+    }
+
+    @Test
+    void updateBook_HappyPath() {
+        //ARRANGE
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("1000-2000-3000", "a", "g", "nana", "Lorem Ipsum")
+        );
+
+        String requestedBody = "{\"isbn\":\"1000-2000-3000\",\"title\":\"a\",\"authorFirstname\":\"g\",\"authorLastName\":\"nana\",\"summary\":\"g\"}";
+
+        //ACT
+        BookDto result = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .baseUri("http://localhost")
+                .port(port)
+                .body(requestedBody)
+                .when()
+                .accept(ContentType.JSON)
+                .put("/books")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .as(BookDto.class);
+
+        //ASSES
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+
     }
 }

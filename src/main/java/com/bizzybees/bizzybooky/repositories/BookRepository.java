@@ -15,6 +15,8 @@ import static com.bizzybees.bizzybooky.repositories.util.WildcardToRegexConverte
 public class BookRepository {
     private List<Book> bookList;
 
+    private List<Book> forbiddenBookList;
+
     public BookRepository() {
         this.bookList = new ArrayList<>(List.of(
                 new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
@@ -30,8 +32,6 @@ public class BookRepository {
     public Book getBookDetailsByIsbn(String isbn) {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
-
-
 
     /**
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
@@ -68,5 +68,26 @@ public class BookRepository {
     public Book addBook(Book book) {
         bookList.add(book);
         return book;
+    }
+
+    public Book updateBook(Book book) {
+        if (!isPresent(book)) {
+            throw new IsbnNotFoundException();
+        }
+        int index = bookList.indexOf(getBookDetailsByIsbn(book.getIsbn()));
+        bookList.set(index, book);
+        return bookList.get(index);
+    }
+
+    public void deleteBook(Book book) {
+        if (!isPresent(book)) {
+            throw new IsbnNotFoundException();
+        }
+        bookList.remove(book);
+        System.out.println(bookList);
+    }
+
+    public boolean isPresent(Book book) {
+        return bookList.contains(book);
     }
 }
