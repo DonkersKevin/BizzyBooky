@@ -1,10 +1,10 @@
 package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.BookRental;
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
-import com.bizzybees.bizzybooky.domain.dto.BookMapper;
-import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
-import com.bizzybees.bizzybooky.domain.dto.BookRentalMapper;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookMapper;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalMapper;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalMapper;
 import com.bizzybees.bizzybooky.exceptions.LendingIdNotFoundException;
