@@ -5,7 +5,7 @@ import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.repositories.RentalRepository;
 import com.bizzybees.bizzybooky.security.Role;
-import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
 import com.bizzybees.bizzybooky.services.util.MemberValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

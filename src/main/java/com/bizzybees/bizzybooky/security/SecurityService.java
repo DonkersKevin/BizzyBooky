@@ -2,7 +2,7 @@ package com.bizzybees.bizzybooky.security;
 
 import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
-import com.bizzybees.bizzybooky.security.exception.UnauthorizatedException;
+import com.bizzybees.bizzybooky.exceptions.AccessDeniedException;
 import com.bizzybees.bizzybooky.security.exception.UnknownUserException;
 import com.bizzybees.bizzybooky.security.exception.WrongPasswordException;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class SecurityService {
         }
         if (!member.canHaveAccessTo(feature)) {
             logger.error("User " + usernamePassword.getUsername() + " does not have access to " + feature);
-            throw new UnauthorizatedException();
+            throw new AccessDeniedException();
         }
 
     }

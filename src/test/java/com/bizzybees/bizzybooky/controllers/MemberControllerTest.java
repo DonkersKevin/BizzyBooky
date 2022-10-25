@@ -1,18 +1,18 @@
 package com.bizzybees.bizzybooky.controllers;
 
+
+import com.bizzybees.bizzybooky.exceptions.AccessDeniedException;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;
 import com.bizzybees.bizzybooky.security.exception.UnauthorizatedException;
-import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
-import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
+
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Base64;
 
 @SpringBootTest
 class MemberControllerTest {
@@ -37,8 +37,9 @@ class MemberControllerTest {
     }
     @Test
     void normalMemberCannotViewMembers(){
-        Assertions.assertThrows(UnauthorizatedException.class,()->memberController.getAllmembers("Basic MTpTcXVhcmVwYW50cw=="));
+        Assertions.assertThrows(AccessDeniedException.class,()->memberController.getAllmembers("Basic MTpTcXVhcmVwYW50cw=="));
     }
+
 
 
 

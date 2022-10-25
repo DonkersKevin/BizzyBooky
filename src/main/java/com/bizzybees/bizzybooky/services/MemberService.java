@@ -1,11 +1,11 @@
 package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.Member;
-import com.bizzybees.bizzybooky.domain.dto.MemberMapper;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.MemberMapper;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;
-import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 import com.bizzybees.bizzybooky.services.util.MemberValidator;
 import org.springframework.stereotype.Service;
 

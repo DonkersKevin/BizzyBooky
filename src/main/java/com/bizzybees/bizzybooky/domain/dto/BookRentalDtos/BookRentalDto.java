@@ -1,4 +1,4 @@
-package com.bizzybees.bizzybooky.domain.dto;
+package com.bizzybees.bizzybooky.domain.dto.BookRentalDtos;
 
 import java.time.LocalDate;
 import java.util.UUID;

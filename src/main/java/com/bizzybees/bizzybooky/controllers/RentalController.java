@@ -5,6 +5,8 @@ import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDto;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +31,7 @@ public class RentalController {
         this.rentalService = rentalService;
     }
 
-    // CHeck if we can return a bookRentalDto
+    // Check if we can return a bookRentalDto
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
         return rentalService.rentBook(id, isbn);

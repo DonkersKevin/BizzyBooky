@@ -1,31 +1,21 @@
 package com.bizzybees.bizzybooky.controllers;
 
-import com.bizzybees.bizzybooky.domain.Book;
-import com.bizzybees.bizzybooky.domain.BookRental;
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
-import com.bizzybees.bizzybooky.repositories.BookRepository;
-import com.bizzybees.bizzybooky.repositories.MemberRepository;
-import com.bizzybees.bizzybooky.repositories.RentalRepository;
-import com.bizzybees.bizzybooky.services.BookService;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookControllerIntegrationTest {
