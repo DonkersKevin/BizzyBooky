@@ -47,10 +47,18 @@ public class AddBookTest {
     }
 
     @Test
+    void givenExistingIsbn_ThrowException() {
+        BookDto bookDto = new BookDto("1", "a", "a", "a", "a");
+        bookService.addBook(bookDto);
+        BookDto bookDto1 = new BookDto("1", "a", "a", "a", "a");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> bookService.addBook(bookDto1));
+    }
+
+    @Test
     void givenNewBookEntry_BookIsAddedToBookRepository() {
 
 
-        String requestedBody = "{\"isbn\":\"1000-2000-3000\",\"title\":\"a\",\"authorFirstname\":\"g\",\"authorLastName\":\"nana\",\"summary\":\"g\"}";
+        String requestedBody = "{\"isbn\":\"1100-2000-3000\",\"title\":\"a\",\"authorFirstname\":\"g\",\"authorLastName\":\"nana\",\"summary\":\"g\"}";
 
         BookDto result = RestAssured
                 .given()
@@ -67,6 +75,28 @@ public class AddBookTest {
                 .statusCode(HttpStatus.CREATED.value())
                 .extract()
                 .as(BookDto.class);
+
+    }
+
+    @Test
+    void whenNoAuthorization_Http403IsReturned() {
+
+
+        String requestedBody = "{\"isbn\":\"1010-2000-3000\",\"title\":\"a\",\"authorFirstname\":\"g\",\"authorLastName\":\"nana\",\"summary\":\"g\"}";
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .baseUri("http://localhost")
+                .port(port)
+                .auth().preemptive().basic("1", "Squarepants")
+                .body(requestedBody)
+                .when()
+                .accept(ContentType.JSON)
+                .post("/books/add")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value());
 
     }
 }

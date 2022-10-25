@@ -52,8 +52,15 @@ public class BookService {
 
     public BookDto addBook(BookDto bookDto) {
         bookValidator.checkRequiredFields(bookDto);
+        isUniqueIsbn(bookDto.getIsbn());
         Book newBook = bookRepository.addBook(bookMapper.dtoToBook(bookDto));
         return bookMapper.bookToDto(newBook);
+    }
+
+    private void isUniqueIsbn(String isbn) {
+        if (bookRepository.getAllBooks().stream().anyMatch(book -> isbn.equals(book.getIsbn()))) {
+            throw  new IllegalArgumentException("Book is already in list");
+        }
     }
 
     public BookDto updateBook(BookDto bookDto) {
