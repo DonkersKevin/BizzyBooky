@@ -29,9 +29,10 @@ public class MemberController {
     }
 
     //For Testing creating members
-    @GetMapping
-    public ConcurrentHashMap<String, Member> getAllmembers() {
-
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ConcurrentHashMap<String, Member> getAllmembers(@RequestHeader String authorization) {
+        securityService.validateAuthorization(authorization, Feature.VIEW_MEMBERS);
         return memberService.getAllMembers();
 
     }
