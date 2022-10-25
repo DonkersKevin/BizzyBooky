@@ -2,9 +2,13 @@ package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
+import com.bizzybees.bizzybooky.security.Role;
 import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;
 import com.bizzybees.bizzybooky.services.memberdtos.ReturnMemberDto;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Service
@@ -22,6 +26,15 @@ public class MemberService {
         isValidEmail(newMemberDto.getEmail());
         isUniqueEmail(newMemberDto.getEmail());
         Member newMember = memberMapper.newMemberDtoToMember(newMemberDto);
+        memberRepository.save(newMember);
+        return memberMapper.memberToReturnMemberDto(newMember);
+    }
+    public ReturnMemberDto addLibrarian(NewMemberDto newMemberDto) {
+        checkRequiredFields(newMemberDto);
+        isValidEmail(newMemberDto.getEmail());
+        isUniqueEmail(newMemberDto.getEmail());
+        Member newMember = memberMapper.newMemberDtoToMember(newMemberDto);
+        newMember.setRole(Role.LIBRARIAN);
         memberRepository.save(newMember);
         return memberMapper.memberToReturnMemberDto(newMember);
     }
@@ -55,6 +68,12 @@ public class MemberService {
             throw new IllegalArgumentException("Provide an INSS number please!");
         }
     }
+
+    //GetMembers method for testing purposes
+    public ConcurrentHashMap<String, Member> getAllMembers(){
+        return memberRepository.getMemberDatabase();
+    }
+    //GetMembers method for testing purposes
 
 
 }

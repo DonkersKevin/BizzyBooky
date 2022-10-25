@@ -43,7 +43,7 @@ public class RentalService {
     }
 
     private void isBookAvailable(String bookISBN) {
-        if (!bookRepository.getBookDetailsByIsbn(bookISBN).isAvailableForRent()) {
+        if (!bookRepository.getBookDetailsByIsbn(bookISBN).getIsAvailableForRent()) {
             throw new IllegalArgumentException("This book is not available for rent");
         }
     }
