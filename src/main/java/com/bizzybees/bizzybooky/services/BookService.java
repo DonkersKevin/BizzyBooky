@@ -1,5 +1,6 @@
 package com.bizzybees.bizzybooky.services;
 
+import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.domain.dto.BookMapper;
@@ -45,6 +46,14 @@ public class BookService {
     public List<BookDto> getBooksByAuthorSearch(String author) {
         return bookMapper.listToDtoList(bookRepository.getBooksByAuthorWithWildcards(author));
     }
+
+    public BookDto addBook(BookDto bookDto) {
+
+        Book newBook = bookRepository.addBook(bookMapper.dtoToBook(bookDto));
+        return bookMapper.bookToDto(newBook);
+    }
+
+
 
 }
 
