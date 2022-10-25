@@ -2,6 +2,7 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;
+import com.bizzybees.bizzybooky.security.exception.UnauthorizatedException;
 import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;
 import com.bizzybees.bizzybooky.services.memberdtos.ReturnMemberDto;
 import org.junit.jupiter.api.Assertions;
@@ -31,6 +32,10 @@ class MemberControllerTest {
         ReturnMemberDto returnMemberDto1 = memberController.addMember(newMemberDto);
         //then
         Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey(returnMemberDto1.getINSS()));
+    }
+    @Test
+    void normalMemberCannotViewMembers(){
+        Assertions.assertThrows(UnauthorizatedException.class,()->memberController.getAllmembers("Basic MTpTcXVhcmVwYW50cw=="));
     }
 
 
