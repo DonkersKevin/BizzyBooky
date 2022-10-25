@@ -40,9 +40,9 @@ public class MemberRepository {
         return memberDatabase.get(id);
     }
 
-    //For testing purposes with postman
+
     public ConcurrentHashMap<String, Member> getMemberDatabase() {
         return memberDatabase;
     }
-    //For testing purposes with postman
+
 }
