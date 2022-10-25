@@ -27,11 +27,13 @@ public class MemberService {
     public ReturnMemberDto addMember(NewMemberDto newMemberDto) {
         memberValidator.checkRequiredFields(newMemberDto);
         memberValidator.isValidEmail(newMemberDto.getEmail());
-
+        isUniqueEmail(newMemberDto.getEmail());
+        isUniqueInss(newMemberDto.getINSS());
         Member newMember = memberMapper.newMemberDtoToMember(newMemberDto);
         memberRepository.save(newMember);
         return memberMapper.memberToReturnMemberDto(newMember);
     }
+
 
     public ReturnMemberDto addLibrarian(NewMemberDto newMemberDto) {
         memberValidator.checkRequiredFields(newMemberDto);
@@ -43,6 +45,11 @@ public class MemberService {
         return memberMapper.memberToReturnMemberDto(newMember);
     }
 
+    private void isUniqueInss(String inss) {
+        if (memberRepository.getMemberDatabase().values().stream().anyMatch(member -> inss.equals(member.getINSS()))) {
+            throw new IllegalArgumentException("INSS Already exists");
+        }
+    }
 
     // Public for testing
     public void isUniqueEmail(String email) {

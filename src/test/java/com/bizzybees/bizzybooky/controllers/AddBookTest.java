@@ -57,6 +57,7 @@ public class AddBookTest {
                 .contentType(ContentType.JSON)
                 .baseUri("http://localhost")
                 .port(port)
+                .auth().preemptive().basic("3", "Squarepants")
                 .body(requestedBody)
                 .when()
                 .accept(ContentType.JSON)

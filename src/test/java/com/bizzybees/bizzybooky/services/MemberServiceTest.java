@@ -63,5 +63,18 @@ class MemberServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class,()-> memberService.addMember(alreadyExistingMember));
     }
 
+    @Test
+    void givenInss_thatAlreadyExistsInDatabase() {
+        //given
+        memberRepository.save(new Member("1", "fe", "ffe", "fe",
+                "patrick.spongebob@hotmail.com","e", "e ", "e", "ee"));
+        NewMemberDto alreadyExistingMember = new NewMemberDto(Role.MEMBER, "ee", "1", "ee",
+                "e","patrbob@hotmail.com", "e ","", "e", "ee");
+        //when
+
+        //then
+        Assertions.assertThrows(IllegalArgumentException.class,()-> memberService.addMember(alreadyExistingMember));
+    }
+
 
 }
