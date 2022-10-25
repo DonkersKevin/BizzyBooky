@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books") // see if slash is needed
+@RequestMapping("/books")
 public class BookController {
 
     //Check if class declaration needs to be explicit....
@@ -31,7 +31,6 @@ public class BookController {
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
         log.info("Fetching all books...");
-        //  return bookService.getAllBooksWithoutSummary();
         return bookService.getAllBooks();
     }
 
@@ -75,6 +74,20 @@ public class BookController {
     @GetMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto addBook(@RequestBody BookDto bookDto) {
         return bookService.addBook(bookDto);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookDto updateBook(@RequestBody BookDto bookDto){
+        //Todo Security check
+        //Only Librarian/Admin?
+        return bookService.updateBook(bookDto);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping (consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBook(@RequestBody BookDto bookDto){
+        bookService.deleteBook(bookDto);
     }
 
 }
