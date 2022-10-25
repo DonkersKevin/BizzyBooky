@@ -30,7 +30,7 @@ class LibrarianControllerTest {
 
         ReturnMemberDto returnMemberDto1 = librarianController.addLibrarian("Basic MjpTcXVhcmVwYW50cw==",newMemberDto);
         //then
-        Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
+        Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey(returnMemberDto1.getINSS()));
     }
 
     @Test
