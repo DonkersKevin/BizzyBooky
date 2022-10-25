@@ -1,6 +1,7 @@
 package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.MemberService;
 import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
