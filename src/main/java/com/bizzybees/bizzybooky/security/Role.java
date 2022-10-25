@@ -8,7 +8,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public enum Role {
     ADMIN(newArrayList(REGISTER_MEMBER, REGISTER_LIBRARIAN, VIEW_MEMBERS)),
-    LIBRARIAN(newArrayList(REGISTER_MEMBER)),
+    LIBRARIAN(newArrayList(REGISTER_MEMBER, ADD_BOOK)),
     MEMBER(newArrayList(REGISTER_MEMBER));
 
 

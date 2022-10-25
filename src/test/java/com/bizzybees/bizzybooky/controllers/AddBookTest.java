@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookMapper;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
+import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.util.BookValidator;
 import io.restassured.RestAssured;
@@ -22,9 +23,10 @@ public class AddBookTest {
     private int port;
     @Autowired
     BookService bookService;
-
     @Autowired
     BookRepository bookRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     void givenNoIsbn_ThrowException() {
@@ -46,6 +48,8 @@ public class AddBookTest {
 
     @Test
     void givenNewBookEntry_BookIsAddedToBookRepository() {
+
+
         String requestedBody = "{\"isbn\":\"1000-2000-3000\",\"title\":\"a\",\"authorFirstname\":\"g\",\"authorLastName\":\"nana\",\"summary\":\"g\"}";
 
         BookDto result = RestAssured
