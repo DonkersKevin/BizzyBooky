@@ -15,6 +15,8 @@ import static com.bizzybees.bizzybooky.repositories.util.WildcardToRegexConverte
 public class BookRepository {
     private List<Book> bookList;
 
+    private List<Book> forbiddenBookList;
+
     public BookRepository() {
         this.bookList = new ArrayList<>(List.of(
                 new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),

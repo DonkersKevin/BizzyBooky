@@ -83,16 +83,16 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookDto updateBook(@RequestBody BookDto bookDto){
+    public BookDto updateBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
         log.info("Updating book with isbn: " + bookDto.getIsbn());
-        //Todo Security check
-        //Only Librarian/Admin?
+        securityService.validateAuthorization(authorization, Feature.CAN_UPDATE_BOOK);
         return bookService.updateBook(bookDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping (consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteBook(@RequestBody BookDto bookDto){
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
+        securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
         log.info("Deleting book with isbn: " + bookDto.getIsbn());
         bookService.deleteBook(bookDto);
     }
