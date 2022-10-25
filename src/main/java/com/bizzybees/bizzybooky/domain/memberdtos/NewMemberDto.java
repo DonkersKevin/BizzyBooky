@@ -1,10 +1,10 @@
-package com.bizzybees.bizzybooky.services.memberdtos;
-
+package com.bizzybees.bizzybooky.domain.memberdtos;
 
 import com.bizzybees.bizzybooky.security.Role;
 
-public class ReturnMemberDto {
+public class NewMemberDto {
     private Role role;
+    private String password;
     private String INSS;
     private String lastname;
     private String firstname;
@@ -18,8 +18,9 @@ public class ReturnMemberDto {
         return INSS;
     }
 
-    public ReturnMemberDto(Role role, String INSS, String lastname, String firstname, String email, String streetName, String streetNumber, String postalCode, String city) {
+    public NewMemberDto(Role role, String password, String INSS, String lastname, String firstname, String email, String streetName, String streetNumber, String postalCode, String city) {
         this.role = role;
+        this.password = password;
         this.INSS = INSS;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -62,6 +63,7 @@ public class ReturnMemberDto {
         return role;
     }
 
-
+    public String getPassword() {
+        return password;
+    }
 }
-

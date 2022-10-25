@@ -30,7 +30,7 @@ public class BookController {
 
     @GetMapping
     public List<BookDtoWithoutSummary> getAllBooks() {
-    log.info("Fetching all books...");
+        log.info("Fetching all books...");
         //  return bookService.getAllBooksWithoutSummary();
         return bookService.getAllBooks();
     }
@@ -44,7 +44,7 @@ public class BookController {
 
     //TODO implement properly
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title","author"})
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title", "author"})
     public List<BookDto> getAllBooksCombinedSearch(@RequestParam(required = false) String isbn, @RequestParam(required = false) String title, @RequestParam(required = false) String author) {
         log.info("Looking for book with: " + isbn + " " + title + " " + author);
         return new ArrayList<>();
@@ -71,16 +71,10 @@ public class BookController {
         return bookService.getBooksByAuthorSearch(author);
     }
 
-    //Fix uri
-    @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
-        return rentalService.rentBook(id, isbn);
-
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookDto addBook(@RequestBody BookDto bookDto) {
+        return bookService.addBook(bookDto);
     }
 
-    //Fix uri
-    @GetMapping(path = "/{lendingId}/return", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String returnBook(@PathVariable String lendingId) {
-        return rentalService.returnBook(lendingId);
-    }
 }

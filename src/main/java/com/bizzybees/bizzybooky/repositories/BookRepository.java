@@ -62,4 +62,9 @@ public class BookRepository {
         }
         throw new AuthorNotFoundException();
     }
+
+    public Book addBook(Book book) {
+        bookList.add(book);
+        return book;
+    }
 }

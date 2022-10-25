@@ -2,8 +2,11 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;
-import com.bizzybees.bizzybooky.services.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.services.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.security.exception.UnauthorizatedException;
+import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.domain.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.memberdtos.ReturnMemberDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +33,13 @@ class MemberControllerTest {
 
         ReturnMemberDto returnMemberDto1 = memberController.addMember(newMemberDto);
         //then
-        Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
+        Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey(returnMemberDto1.getINSS()));
     }
     @Test
-    void addNewLibrarianToRepositoryIsSuccessful() {
-        //given
-        NewMemberDto newMemberDto = new NewMemberDto(Role.ADMIN, "Squarepants", "Patrick", "Patrick@hotmail.com"
-                , "randomstreet"
-                , "Patric@hotmail.com", "1", "Bikini Bottom", "", "fefe");
-
-
-
-
-        //when
-
-        //ReturnMemberDto returnMemberDto1 = memberController.addLibrarian(,newMemberDto);
-        //then
-       // Assertions.assertTrue(memberRepository.memberDatabase.containsKey(returnMemberDto1.getINSS()));
+    void normalMemberCannotViewMembers(){
+        Assertions.assertThrows(UnauthorizatedException.class,()->memberController.getAllmembers("Basic MTpTcXVhcmVwYW50cw=="));
     }
+
+
+
 }
