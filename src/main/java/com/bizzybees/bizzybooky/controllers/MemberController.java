@@ -18,13 +18,13 @@ public class MemberController {
     MemberService memberService;
     SecurityService securityService;
 
-    public MemberController(MemberService memberService,SecurityService securityService) {
+    public MemberController(MemberService memberService, SecurityService securityService) {
         this.memberService = memberService;
         this.securityService = securityService;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "add" , consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ReturnMemberDto addMember(@RequestBody NewMemberDto newMemberDto) {
         return memberService.addMember(newMemberDto);
     }

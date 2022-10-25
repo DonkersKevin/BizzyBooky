@@ -18,7 +18,7 @@ public class RentalRepository {
         rentalDatabase.put(bookRental.getLendingID(), bookRental);
     }
 
-    public void removeRental (String lendingId) {
+    public void removeRental(String lendingId) {
         rentalDatabase.remove(lendingId);
     }
 

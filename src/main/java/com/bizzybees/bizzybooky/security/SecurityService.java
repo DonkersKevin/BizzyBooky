@@ -24,15 +24,15 @@ public class SecurityService {
     public void validateAuthorization(String authorization, Feature feature) {
         UsernamePassword usernamePassword = getUsernamePassword(authorization);
         Member member = memberRepository.getMember(usernamePassword.getUsername());
-        if(member == null) {
+        if (member == null) {
             logger.error("Unknown user" + usernamePassword.getUsername());
             throw new UnknownUserException();
         }
-        if(!member.doesPasswordMatch(usernamePassword.getPassword())) {
+        if (!member.doesPasswordMatch(usernamePassword.getPassword())) {
             logger.error("Password does not match for user " + usernamePassword.getUsername());
             throw new WrongPasswordException();
         }
-        if(!member.canHaveAccessTo(feature)) {
+        if (!member.canHaveAccessTo(feature)) {
             logger.error("User " + usernamePassword.getUsername() + " does not have access to " + feature);
             throw new UnauthorizatedException();
         }
