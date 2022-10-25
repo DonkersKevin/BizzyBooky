@@ -375,7 +375,7 @@ class BookControllerIntegrationTest {
                 .as(BookRental.class).getDueDate();
         //Then
 
-        assertThat(result).isEqualTo(LocalDate.of(2022, 11, 14));
+        assertThat(result).isEqualTo(LocalDate.now().plusWeeks(3));
         //then
         //Assertions.assertEquals(LocalDate.of(2022,11,11),rental.getDueDate());
 

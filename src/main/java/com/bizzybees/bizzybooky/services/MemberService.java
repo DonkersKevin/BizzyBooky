@@ -49,7 +49,7 @@ public class MemberService {
     }
 
     public void isUniqueEmail(String email) {
-        if (memberRepository.memberDatabase.values().stream().anyMatch(member -> email.equals(member.getEmail()))) {
+        if (memberRepository.getMemberDatabase().values().stream().anyMatch(member -> email.equals(member.getEmail()))) {
             throw new IllegalArgumentException("Email Already exists");
         }
     }
