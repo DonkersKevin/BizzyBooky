@@ -29,7 +29,7 @@ public class MemberController {
         return memberService.addMember(newMemberDto);
     }
 
-    //For Testing creating members
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
     public ConcurrentHashMap<String, Member> getAllmembers(@RequestHeader String authorization) {
@@ -37,6 +37,6 @@ public class MemberController {
         return memberService.getAllMembers();
 
     }
-    //for Testing creating members
+
 
 }
