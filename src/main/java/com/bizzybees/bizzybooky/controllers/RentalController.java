@@ -46,8 +46,8 @@ public class RentalController {
 
 
     @GetMapping(path = "/{memberId}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<BookDto> returnLentBooksOfMember (@RequestHeader String authorization, @PathVariable String memberId) {
-        securityService.validateAuthorization(authorization, Feature.RETURN_LENT_BOOK);
+    public List<BookDto> returnLentBooksOfMember (@RequestHeader(required = false) String authorization, @PathVariable String memberId) {
+        //securityService.validateAuthorization(authorization, Feature.RETURN_LENT_BOOK);
         return rentalService.getLentBooksOfMember(memberId);
     }
     @ResponseStatus(HttpStatus.OK)

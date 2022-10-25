@@ -2,17 +2,26 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
+import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
+import io.restassured.parsing.Parser;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -26,6 +35,9 @@ public class RentalControllerIntegrationTest {
 
     @Autowired
     RentalService rentalService;
+
+    @Autowired
+    MemberRepository memberRepository;
 
 
     @DirtiesContext
@@ -143,6 +155,36 @@ public class RentalControllerIntegrationTest {
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("message", equalTo("This lending ID is not attributed"));
     }
+
+    @DirtiesContext
+    @Test
+    void whenRegisteredAsALibrarian_ReturnAllLentBooksOfAMember() {
+        rentalService.rentBook("1", "1000-2000-3000");
+        rentalService.rentBook("1", "2000-3000-4000");
+        rentalService.rentBook("2", "3000-4000-5000");
+
+        BookDto[] dummyBookDtoArray = new BookDto[]{
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum")};
+
+        String member1Id = "1";
+
+        BookDto[] lentBooks = RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + member1Id + "/lent")
+                .then()
+                //.assertThat()
+                //.statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        Assertions.assertEquals(Arrays.stream(dummyBookDtoArray).toList(), Arrays.stream(lentBooks).toList());
+    }
+
 
     //Basic MzpTcXVhcmVwYW50cw==
 

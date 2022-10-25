@@ -12,6 +12,9 @@ public class RentalRepository {
 
     public RentalRepository() {
         this.rentalDatabase = new ConcurrentHashMap<>();
+        rentalDatabase.put("1" , new BookRental("1", "1000-2000-3000"));
+        rentalDatabase.put("2" , new BookRental("1", "2000-3000-4000"));
+        rentalDatabase.put("3" , new BookRental("2", "3000-4000-5000"));
     }
 
     public void saveRental(BookRental bookRental) {
