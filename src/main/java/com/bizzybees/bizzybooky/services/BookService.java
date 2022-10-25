@@ -5,6 +5,7 @@ import com.bizzybees.bizzybooky.domain.dto.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.domain.dto.BookMapper;
 import com.bizzybees.bizzybooky.repositories.BookRepository;
+import com.bizzybees.bizzybooky.services.util.BookValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class BookService {
     private BookRepository bookRepository;
     private BookMapper bookMapper;
+    private BookValidator bookValidator;
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -48,7 +50,7 @@ public class BookService {
     }
 
     public BookDto addBook(BookDto bookDto) {
-
+        bookValidator.checkRequiredFields(bookDto);
         Book newBook = bookRepository.addBook(bookMapper.dtoToBook(bookDto));
         return bookMapper.bookToDto(newBook);
     }
