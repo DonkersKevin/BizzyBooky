@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.bizzybees.bizzybooky.repositories.WildcardToRegexConverter.wildcardToRegex;
+import static com.bizzybees.bizzybooky.repositories.util.WildcardToRegexConverter.wildcardToRegex;
 
 @Repository
 public class BookRepository {
@@ -30,19 +30,6 @@ public class BookRepository {
     public Book getBookDetailsByIsbn(String isbn) {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
-
-
-
-    /**
-     * Main method for testing purposes - to be removed later
-     */
-
-    public static void main(String[] args) {
-        BookRepository bookRepository = new BookRepository();
-        System.out.println(bookRepository.getBookDetailsByIsbn("1000-2000-3000").toString());
-    }
-
-    /** Main method for testing purposes - to be removed later*/
 
     /**
     public List<Book> getBooksByTitleAtLeastContaining(String title) {
