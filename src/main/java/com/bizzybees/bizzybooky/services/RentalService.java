@@ -9,6 +9,7 @@ import com.bizzybees.bizzybooky.repositories.RentalRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 
 @Service
 public class RentalService {
@@ -44,7 +45,7 @@ public class RentalService {
 
     private void isBookAvailable(String bookISBN) {
         if (!bookRepository.getBookDetailsByIsbn(bookISBN).getIsAvailableForRent()) {
-            throw new IllegalArgumentException("This book is not available for rent");
+            throw new NoSuchElementException("This book is not available for lending");
         }
     }
 

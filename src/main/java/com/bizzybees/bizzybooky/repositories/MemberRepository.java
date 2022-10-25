@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class MemberRepository {
-    public ConcurrentHashMap<String, Member> memberDatabase;
+    private ConcurrentHashMap<String, Member> memberDatabase;
 
 
     public MemberRepository() {
