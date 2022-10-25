@@ -34,8 +34,8 @@ public class RentalService {
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
         this.bookRentalMapper = new BookRentalMapper();
+        this.bookMapper = new BookMapper();
     }
-
 
 
     public BookRental rentBook(String memberINSS, String bookISBN) {
@@ -87,7 +87,7 @@ public class RentalService {
     }
 
     public List<BookDto> getLentBooksOfMember(String memberId) {
-        List <BookRental> bookRentals = new ArrayList<>(rentalRepository.getRentalDatabase().values());
+        List<BookRental> bookRentals = new ArrayList<>(rentalRepository.getRentalDatabase().values());
         List<String> isbnList = bookRentals.stream().filter(rental -> rental.getMemberID().equals(memberId)).map(BookRental::getBookISBN).collect(Collectors.toList());
         List<BookDto> rentedBooksDto = bookRepository.getAllBooks()
                 .stream()
@@ -95,5 +95,11 @@ public class RentalService {
                 .map(book -> bookMapper.bookToDto(book))
                 .collect(Collectors.toList());
         return rentedBooksDto;
+    }
+
+    public static void main(String[] args) {
+        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
+        //System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
+        System.out.println(rentalService.getLentBooksOfMember("1"));
     }
 }
