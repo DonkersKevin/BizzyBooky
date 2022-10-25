@@ -1,8 +1,7 @@
 package com.bizzybees.bizzybooky.controllers;
 
-import com.bizzybees.bizzybooky.domain.BookRental;
-import com.bizzybees.bizzybooky.domain.dto.BookDto;
-import com.bizzybees.bizzybooky.domain.dto.BookDtoWithoutSummary;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
@@ -72,7 +71,7 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @GetMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public BookDto addBook(@RequestBody BookDto bookDto) {
         return bookService.addBook(bookDto);
     }

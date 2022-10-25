@@ -1,4 +1,4 @@
-package com.bizzybees.bizzybooky.domain.memberdtos;
+package com.bizzybees.bizzybooky.domain.dto.memberdtos;
 
 
 import com.bizzybees.bizzybooky.security.Role;
