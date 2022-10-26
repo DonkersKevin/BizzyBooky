@@ -23,6 +23,9 @@ public class BookRepository {
                 new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
                 new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
                 new Book("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")));
+
+        this.forbiddenBookList = new ArrayList<>(List.of(
+                new Book("7000-8000-9000", "Error", "Err", "or", "Lorem Ipsum")));
     }
 
     public List<Book> getAllBooks() {
@@ -32,12 +35,6 @@ public class BookRepository {
     public Book getBookDetailsByIsbn(String isbn) {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
-
-    /**
-    public List<Book> getBooksByTitleAtLeastContaining(String title) {
-        return bookList.stream().filter(b -> b.getTitle().contains(title)).toList();
-    }
-     */
 
     public List<Book> getBooksByTitleWithWildcards(String title) {
         List<Book> listToReturn = bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
@@ -57,12 +54,21 @@ public class BookRepository {
 
     public List<Book> getBooksByAuthorWithWildcards(String author) {
         List<Book> combinedList = new ArrayList<>();
-        combinedList.addAll(bookList.stream().filter(b -> b.getAuthorFirstName().matches(wildcardToRegex(author))).toList());
-        combinedList.addAll(bookList.stream().filter(b -> b.getAuthorLastName().matches(wildcardToRegex(author))).toList());
+        String regex = wildcardToRegex(author);
+        combinedList.addAll(getAllBooksByAuthorFirstNameRegex(regex));
+        combinedList.addAll(getAllBooksByAuthorLastNameRegex(regex));
         if (!combinedList.isEmpty()) {
             return combinedList;
         }
         throw new AuthorNotFoundException();
+    }
+
+    private List<Book> getAllBooksByAuthorFirstNameRegex(String authorRegex){
+        return bookList.stream().filter(b -> b.getAuthorFirstName().matches(authorRegex)).toList();
+    }
+
+    private List<Book> getAllBooksByAuthorLastNameRegex(String authorRegex){
+        return bookList.stream().filter(c -> c.getAuthorLastName().matches(authorRegex)).toList();
     }
 
     public Book addBook(Book book) {
