@@ -1,6 +1,5 @@
 package com.bizzybees.bizzybooky.controllers;
 
-import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.security.Feature;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/books")
@@ -44,14 +42,6 @@ public class BookController {
     public BookDto getBookByIsbn(@PathVariable String isbn) {
         log.info("Looking for book with ISBN: " + isbn);
         return bookService.getBookByIsbn(isbn);
-    }
-
-    //TODO implement properly
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title", "author"})
-    public List<BookDto> getAllBooksCombinedSearch(@RequestParam(required = false) String isbn, @RequestParam(required = false) String title, @RequestParam(required = false) String author) {
-        log.info("Looking for book with: " + isbn + " " + title + " " + author);
-        return new ArrayList<>();
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -99,6 +89,11 @@ public class BookController {
         bookService.deleteBook(bookDto);
     }
 
-
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(path = "/{isbn}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBookByIsbn(@RequestHeader String authorization, @PathVariable String isbn) {
+        log.info("Deleting book with isbn: " + isbn);
+        securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
+        bookService.deleteBookbyIsbn(isbn);
+    }
 }

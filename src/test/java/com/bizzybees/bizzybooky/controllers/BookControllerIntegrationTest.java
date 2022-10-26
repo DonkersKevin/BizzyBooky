@@ -147,22 +147,6 @@ class BookControllerIntegrationTest {
                 .body("message", equalTo("No book by that isbn..."));
     }
 
-    //TODO fix method name, and possibly add exception. Also implement properly
-    @Test
-    void GivenMalformedIsbn_ThrowXXXException() {
-        RestAssured
-                .given()
-                .baseUri("http://localhost")
-                .port(port)
-                .when()
-                .accept(ContentType.JSON)
-                .get("/books/8")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", equalTo("Malformed Isbn detected"));
-    }
-
     @Test
     void titleSearch_HappyPath() {
         //ARRANGE
@@ -337,12 +321,14 @@ class BookControllerIntegrationTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void deleteBook_HappyPath() {
         //ARRANGE
         List<Book> expectedBooks = List.of(
                 new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
                 new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
-                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
+                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new Book("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum")
         );
 
         String requestedBody = "{\"isbn\":\"6000-7000-8000\",\"title\":\"Programmes\",\"authorFirstname\":\"Boy\",\"authorLastName\":\"Name\",\"summary\":\"Lorem Ipsum\"}";
@@ -350,6 +336,9 @@ class BookControllerIntegrationTest {
         //ACT
         RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("3", "Squarepants")
                 .contentType(ContentType.JSON)
                 .baseUri("http://localhost")
                 .port(port)
@@ -362,6 +351,76 @@ class BookControllerIntegrationTest {
 
         //ASSES
         assertThat(bookRepository.getAllBooks()).isEqualTo(expectedBooks);
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    void deleteBookByIsbn_HappyPath() {
+        //ARRANGE
+        List<Book> expectedBooks = List.of(
+                new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new Book("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum")
+        );
+
+        //ACT
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("3", "Squarepants")
+                .contentType(ContentType.JSON)
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .delete("/books/6000-7000-8000")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+
+        //ASSES
+        assertThat(bookRepository.getAllBooks()).isEqualTo(expectedBooks);
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    void undeleteBook_HappyPath() {
+        //ARRANGE
+        List<Book> expectedBooks = List.of(
+                new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
+                new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new Book("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum"),
+                new Book("6000-7000-8000", "Error", "Err", "or", "Lorem Ipsum")
+        );
+
+        List<Book> expectedForbiddenBooks = List.of(
+                new Book("4000-5000-6000", "OverDueBook2", "Dudeette", "Guyana", "Lorem Ipsum")
+        );
+
+        String requestedBody = "{\"isbn\":\"6000-7000-8000\",\"title\":\"Error\",\"authorFirstname\":\"Err\",\"authorLastName\":\"or\",\"summary\":\"Lorem Ipsum\"}";
+
+        //ACT
+        BookDto result = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .baseUri("http://localhost")
+                .port(port)
+                .auth().preemptive().basic("3", "Squarepants")
+                .body(requestedBody)
+                .when()
+                .accept(ContentType.JSON)
+                .post("/books/add")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .as(BookDto.class);
+
+        //ASSES
+        assertThat(bookRepository.getAllBooks()).isEqualTo(expectedBooks);
+        assertThat(bookRepository.getAllForbiddenBooks()).isEqualTo(expectedForbiddenBooks);
     }
 
     @Test

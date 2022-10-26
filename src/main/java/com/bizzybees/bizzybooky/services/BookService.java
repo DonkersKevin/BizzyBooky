@@ -29,13 +29,6 @@ public class BookService {
         return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
     }
 
-    /*
-    public List<BookDto> getAllBooksWithoutSummary() {
-        return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
-    }
-
-     */
-
     public BookDto getBookByIsbn(String isbn) {
         return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));
     }
@@ -56,7 +49,14 @@ public class BookService {
     public BookDto addBook(BookDto bookDto) {
         bookValidator.checkRequiredFields(bookDto);
         isUniqueIsbn(bookDto.getIsbn());
-        Book newBook = bookRepository.addBook(bookMapper.dtoToBook(bookDto));
+        Book newBook;
+
+        if(isforbiddenBook(bookDto)){
+            newBook = bookRepository.unDeleteBook(bookMapper.dtoToBook(bookDto));
+        }else{
+            newBook = bookRepository.addBook(bookMapper.dtoToBook(bookDto));
+        }
+
         return bookMapper.bookToDto(newBook);
     }
 
@@ -64,6 +64,10 @@ public class BookService {
         if (bookRepository.getAllBooks().stream().anyMatch(book -> isbn.equals(book.getIsbn()))) {
             throw  new IllegalArgumentException("Book is already in list");
         }
+    }
+
+    private boolean isforbiddenBook(BookDto bookDto){
+        return bookRepository.isPresentInForbiddenBookList(bookMapper.dtoToBook(bookDto));
     }
 
     public BookDto updateBook(BookDto bookDto) {
@@ -74,7 +78,9 @@ public class BookService {
         bookRepository.deleteBook(bookMapper.dtoToBook(bookDto));
     }
 
-
+    public void deleteBookbyIsbn(String isbn) {
+        deleteBook(bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn)));
+    }
 }
 
 
