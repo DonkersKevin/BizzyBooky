@@ -78,8 +78,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturnHappyPath_correctMessageDisplay() {
         //given
-        BookRental bookRental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookRental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         //when
         String result = RestAssured
                 .given()
@@ -104,8 +104,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturnHappyPath_bookIsMadeAvailable() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         rentalService.returnBook(lendIDTest);
 
         //when
@@ -121,7 +121,7 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturn_ExceptionThrownWithInvalidLendingID() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
         String lendIDTest = "random and wrong ID";
         //when
         RestAssured
@@ -141,8 +141,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void returnBookTwice_ExceptionThrownAtSecondReturnTry() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         rentalService.returnBook(lendIDTest);
 
         //when
