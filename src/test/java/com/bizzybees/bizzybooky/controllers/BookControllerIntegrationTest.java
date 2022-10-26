@@ -107,33 +107,6 @@ class BookControllerIntegrationTest {
         assertThat(List.of(result)).isEqualTo(expectedBooks);
     }
 
-    /*
-    @Test
-    void GivenStringId_ReturnBookWIthGivenId() {
-        //ARRANGE
-
-        //ACT
-        BookDto result = RestAssured
-                .given()
-                .baseUri("http://localhost")
-                .port(port)
-                .when()
-                .accept(ContentType.JSON)
-                .get("/books/3")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.OK.value())
-                .extract()
-                .as(BookDto.class);
-
-        //ASSES
-        //Code smell?
-        assertEquals(result, expectedBookList.get(2));
-
-    }
-
-     */
-
     @Test
     void GivenIsbnNotFound_ThrowNoSuchElement() {
         RestAssured
@@ -143,6 +116,21 @@ class BookControllerIntegrationTest {
                 .when()
                 .accept(ContentType.JSON)
                 .get("/books/9000-9000-9000")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("message", equalTo("No book by that isbn..."));
+    }
+
+    @Test
+    void IsbnWildCardSearch_WhenNotFoundThrowIsbnNotFound() {
+        RestAssured
+                .given()
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books?isbn=*11-1000-*")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND.value())
