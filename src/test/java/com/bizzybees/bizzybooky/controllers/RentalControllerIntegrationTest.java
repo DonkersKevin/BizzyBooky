@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
@@ -74,8 +75,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturnHappyPath_correctMessageDisplay() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRental bookRental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRental.getLendingID();
         //when
         String result = RestAssured
                 .given()
@@ -194,5 +195,30 @@ public class RentalControllerIntegrationTest {
                 .assertThat()
                 .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
+
+
+    //Basic MzpTcXVhcmVwYW50cw==
+
+    @DirtiesContext
+    @Test
+    void normalMemberTriesToViewOverDueBooks() {
+
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1","Squarepants")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/viewoverdue")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value())
+                .extract();
+
+    }
+
 
 }

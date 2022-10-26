@@ -26,6 +26,7 @@ public class RentalService {
     private BookRepository bookRepository;
     private MemberRepository memberRepository;
     private BookRentalMapper bookRentalMapper;
+    private BookService bookService;
 
     private BookMapper bookMapper;
 
@@ -38,14 +39,14 @@ public class RentalService {
     }
 
 
-    public BookRental rentBook(String memberINSS, String bookISBN) {
+    public BookRentalDto rentBook(String memberINSS, String bookISBN) {
         isBookAvailable(bookISBN);
         isMemberInDatabase(memberINSS);
         bookRepository.getBookDetailsByIsbn(bookISBN).setAvailableForRent(false);
         BookRental bookrental = new BookRental(memberINSS, bookISBN);
         rentalRepository.saveRental(bookrental);
         BookRentalDto bookRentalDto = bookRentalMapper.BookRentalToBookRentalDto(bookrental);
-        return bookrental;
+        return bookRentalDto;
     }
 
     private void isMemberInDatabase(String memberINSS) {
@@ -96,6 +97,17 @@ public class RentalService {
                 .map(book -> bookMapper.bookToDto(book))
                 .collect(Collectors.toList());
         return rentedBooksDto;
+    }
+
+    public List<BookDto> getAllBooksThatAreOverdue() {
+        List<BookDto> overDueBooks = new ArrayList<>();
+        for (BookRental bookRental:getRentalRepository().getRentalDatabase().values()) {
+            if(LocalDate.now().isAfter(bookRental.getDueDate())){
+                overDueBooks.add(bookService.getBookByIsbn(bookRentalMapper.BookRentalToBookRentalDto(bookRental).getBookISBN()));
+
+            }
+        }
+        return overDueBooks;
     }
 
     public static void main(String[] args) {

@@ -6,6 +6,7 @@ public enum Feature {
     VIEW_MEMBERS,
     ADD_BOOK,
     RETURN_LENT_BOOK,
+    VIEW_OVERDUE_BOOKS,
 
     CAN_SOFT_DELETE_BOOK,
 
