@@ -1,6 +1,7 @@
 package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.junit.jupiter.api.Assertions;
@@ -17,11 +18,15 @@ public class RentalControllerTest {
 
     @Autowired
     private RentalService rentalService;
+    @Autowired
+    private BookRepository bookRepository;
 
     @Test
-    void givenLentOutBook_ThenThrowEception() {
+    void givenLentOutBook_ThenThrowException() {
         //Given
-        Assertions.assertThrows(NoSuchElementException.class, () -> rentalService.rentBook("1","1000.2000.3000" ));
+        rentalService.rentBook("1","1000-2000-3000");
+
+        Assertions.assertThrows(NoSuchElementException.class, () -> rentalService.rentBook("1","1000-2000-3000" ));
     }
 
     @Test

@@ -72,7 +72,7 @@ public class RentalControllerIntegrationTest {
 
         assertThat(result).isEqualTo(LocalDate.now().plusWeeks(3));
 
-        //ToDO create a test if a book doesn't exist
+
     }
 
     @DirtiesContext
@@ -122,6 +122,35 @@ public class RentalControllerIntegrationTest {
                 .print();
         //Then
         assertThat(result).isEqualTo("Thank you for renting books with us!");
+    }
+
+    @DirtiesContext
+    @Test
+    void getBookReturnHappyPathTooLate_correctMessageDisplay() {
+        //given
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
+
+        //when
+        String result = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/4/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .response()
+                .body()
+                .print();
+        //Then
+        assertThat(result).isEqualTo("This book should have been returned by: 2021-10-02");
     }
 
 
@@ -276,7 +305,6 @@ public class RentalControllerIntegrationTest {
 
     }
 
-    //ToDo create
     @DirtiesContext
     @Test
     void LibrarianTriesToViewOverDueBooksHappyPath() {

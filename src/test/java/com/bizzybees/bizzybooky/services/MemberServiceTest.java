@@ -28,7 +28,7 @@ class MemberServiceTest {
     @Test
     void givenNoEmailAdress_ThrowIllegalArgumentException() {
 
-        NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", null,
+        NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", "ee",
                 "","", " ","", "", "");
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoEmail));
@@ -36,27 +36,36 @@ class MemberServiceTest {
     @Test
     void givenNoLastname_ThrowIllegalArgumentException() {
 
-        NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", "",
-                "","randomeamilé@hotmail.com", " ","", "", "");
+        NewMemberDto memberWithNoLastName = new NewMemberDto(Role.MEMBER, "", "", "",
+                "","randomeamilé@hotmail.com", " ","", "", "ff");
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoEmail));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoLastName));
     }
     @Test
     void givenNoCity_ThrowIllegalArgumentException() {
 
-        NewMemberDto memberWithNoEmail = new NewMemberDto(Role.MEMBER, "", "", "randomeamilé@hotmail.com",
-                "","", " ","", "", "");
+        NewMemberDto memberWithNoCity = new NewMemberDto(Role.MEMBER, "", "", "randomeamilé@hotmail.com",
+                "","dd@ee.com", " ","", "", "");
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoEmail));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoCity));
+    }
+
+    @Test
+    void givenNoInss_ThrowIllegalArgumentException() {
+
+        NewMemberDto memberWithNoInss = new NewMemberDto(Role.MEMBER, "", "", "randomeamilé@hotmail.com",
+                "","dd@ee.com", " ","", "", "dd");
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> memberValidator.checkRequiredFields(memberWithNoInss));
     }
 
     @Test
     void givenEmailAddress_thatAlreadyExistsInDatabase() {
         //given
-        memberRepository.save(new Member("1", "", "ffe", "fe",
-                "patrick.spongebob@hotmail.com","", " ", "", ""));
-        NewMemberDto alreadyExistingMember = new NewMemberDto(Role.MEMBER, "", "", "patrick.spongebob@hotmail.com",
-                "","patrick.spongebob@hotmail.com", " ","", "", "");
+//        memberRepository.save(new Member("1", "", "ffe", "fe",
+//                "Patrick@hotmail.com","", " ", "", "gg"));
+        NewMemberDto alreadyExistingMember = new NewMemberDto(Role.MEMBER, "", "th", "gg",
+                "","Patrick@hotmail.com", " ","", "", "th");
         //when
 
         //then

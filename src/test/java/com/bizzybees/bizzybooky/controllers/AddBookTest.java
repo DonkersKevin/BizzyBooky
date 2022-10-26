@@ -42,7 +42,7 @@ public class AddBookTest {
 
     @Test
     void givenNoLastName_ThrowException() {
-        BookDto bookDto = new BookDto("", "a", "a", "a", "a");
+        BookDto bookDto = new BookDto("a", "a", "a", "", "a");
         Assertions.assertThrows(IllegalArgumentException.class, () -> bookService.addBook(bookDto));
     }
 
