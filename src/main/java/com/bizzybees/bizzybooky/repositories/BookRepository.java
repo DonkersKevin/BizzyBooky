@@ -22,6 +22,7 @@ public class BookRepository {
                 new Book("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
                 new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
                 new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new Book("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum"),
                 new Book("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")));
 
         this.forbiddenBookList = new ArrayList<>(List.of(

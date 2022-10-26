@@ -15,7 +15,7 @@ class MemberServiceTest {
     private MemberService memberService = new MemberService(memberRepository);
     private MemberValidator memberValidator = new MemberValidator();
 
-    private RentalService rentalService = new RentalService(new RentalRepository(),new BookRepository(),memberRepository);
+    private RentalService rentalService = new RentalService(new RentalRepository(),new BookRepository(),memberRepository,new BookService(new BookRepository()));
 
 
     @Test

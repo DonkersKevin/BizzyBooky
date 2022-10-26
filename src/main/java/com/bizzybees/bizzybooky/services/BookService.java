@@ -1,6 +1,7 @@
 package com.bizzybees.bizzybooky.services;
 
 import com.bizzybees.bizzybooky.domain.Book;
+import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDtoWithoutSummary;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookMapper;
@@ -8,7 +9,9 @@ import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.services.util.BookValidator;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class BookService {
@@ -52,8 +55,15 @@ public class BookService {
 
     public BookDto addBook(BookDto bookDto) {
         bookValidator.checkRequiredFields(bookDto);
+        isUniqueIsbn(bookDto.getIsbn());
         Book newBook = bookRepository.addBook(bookMapper.dtoToBook(bookDto));
         return bookMapper.bookToDto(newBook);
+    }
+
+    private void isUniqueIsbn(String isbn) {
+        if (bookRepository.getAllBooks().stream().anyMatch(book -> isbn.equals(book.getIsbn()))) {
+            throw  new IllegalArgumentException("Book is already in list");
+        }
     }
 
     public BookDto updateBook(BookDto bookDto) {
@@ -63,6 +73,8 @@ public class BookService {
     public void deleteBook(BookDto bookDto) {
         bookRepository.deleteBook(bookMapper.dtoToBook(bookDto));
     }
+
+
 }
 
 

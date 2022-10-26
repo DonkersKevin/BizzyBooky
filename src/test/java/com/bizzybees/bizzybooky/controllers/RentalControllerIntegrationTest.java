@@ -2,17 +2,28 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
+import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.repositories.MemberRepository;
+import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
+import io.restassured.parsing.Parser;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -27,6 +38,14 @@ public class RentalControllerIntegrationTest {
     @Autowired
     RentalService rentalService;
 
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    BookService bookService;
+
+    @Autowired
+    RentalController rentalController;
+
 
     @DirtiesContext
     @Test
@@ -37,6 +56,9 @@ public class RentalControllerIntegrationTest {
         //when
         LocalDate result = RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -52,18 +74,42 @@ public class RentalControllerIntegrationTest {
 
         assertThat(result).isEqualTo(LocalDate.now().plusWeeks(3));
 
-        //TODO What do we give back when the list is empty?
+        //ToDO create a test if a book doesn't exist
+    }
+
+    @DirtiesContext
+    @Test
+    void whenWronglyRegisteredAndTryingToRentABook_ThrowError() {
+
+        String member1Id = "1";
+
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1","wrongpass")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/1/1000-2000-3000/lent")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
     @DirtiesContext
     @Test
     void getBookReturnHappyPath_correctMessageDisplay() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         //when
         String result = RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -85,8 +131,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturnHappyPath_bookIsMadeAvailable() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         rentalService.returnBook(lendIDTest);
 
         //when
@@ -102,11 +148,14 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturn_ExceptionThrownWithInvalidLendingID() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
         String lendIDTest = "random and wrong ID";
         //when
         RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -122,8 +171,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void returnBookTwice_ExceptionThrownAtSecondReturnTry() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         rentalService.returnBook(lendIDTest);
 
         //when
@@ -133,6 +182,9 @@ public class RentalControllerIntegrationTest {
         //then
         RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -144,7 +196,115 @@ public class RentalControllerIntegrationTest {
                 .body("message", equalTo("This lending ID is not attributed"));
     }
 
+    @DirtiesContext
+    @Test
+    void returningABookWithWithoutRegistrationAsAMember_ExceptionThrown() {
+        //given
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
+        //when
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1", "wrongpass")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + lendIDTest + "/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    @DirtiesContext
+    @Test
+    void whenRegisteredAsALibrarian_ReturnAllLentBooksOfAMember() {
+
+        BookDto[] dummyBookDtoArray = new BookDto[]{
+                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
+                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum")};
+
+        String member1Id = "1";
+
+        BookDto[] lentBooks = rentalController.returnLentBooksOfMember("Basic MzpTcXVhcmVwYW50cw==", member1Id).toArray(new BookDto[0]);
+
+        Assertions.assertEquals(Arrays.stream(dummyBookDtoArray).toList(), Arrays.stream(lentBooks).toList());
+    }
+
+    @DirtiesContext
+    @Test
+    void whenWrongAuthorizationForALibrarian_ThrowError() {
+
+        String member1Id = "1";
+
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1","wrongpass")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + member1Id + "/lent")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
+
     //Basic MzpTcXVhcmVwYW50cw==
+
+    @DirtiesContext
+    @Test
+    void normalMemberTriesToViewOverDueBooks() {
+
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/viewoverdue")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value())
+                .extract();
+
+    }
+
+    //ToDo create
+    @DirtiesContext
+    @Test
+    void LibrarianTriesToViewOverDueBooksHappyPath() {
+
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum")
+        );
+        BookDto[] result = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("3", "Squarepants")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/viewoverdue")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
+
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
+
+    }
 
 
 }

@@ -24,26 +24,29 @@ public class RentalService {
     private BookRepository bookRepository;
     private MemberRepository memberRepository;
     private BookRentalMapper bookRentalMapper;
+    private BookService bookService;
 
     private BookMapper bookMapper;
 
-    public RentalService(RentalRepository rentalRepository, BookRepository bookRepository, MemberRepository memberRepository) {
+    public RentalService(RentalRepository rentalRepository, BookRepository bookRepository, MemberRepository memberRepository,BookService bookService) {
         this.rentalRepository = rentalRepository;
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
         this.bookRentalMapper = new BookRentalMapper();
+        this.bookMapper = new BookMapper();
+        this.bookService = bookService;
+
     }
 
 
-
-    public BookRental rentBook(String memberINSS, String bookISBN) {
+    public BookRentalDto rentBook(String memberINSS, String bookISBN) {
         isBookAvailable(bookISBN);
         isMemberInDatabase(memberINSS);
         bookRepository.getBookDetailsByIsbn(bookISBN).setAvailableForRent(false);
         BookRental bookrental = new BookRental(memberINSS, bookISBN);
         rentalRepository.saveRental(bookrental);
         BookRentalDto bookRentalDto = bookRentalMapper.BookRentalToBookRentalDto(bookrental);
-        return bookrental;
+        return bookRentalDto;
     }
 
     private void isMemberInDatabase(String memberINSS) {
@@ -85,13 +88,31 @@ public class RentalService {
     }
 
     public List<BookDto> getLentBooksOfMember(String memberId) {
-        List <BookRental> bookRentals = new ArrayList<>(rentalRepository.getRentalDatabase().values());
+        List<BookRental> bookRentals = new ArrayList<>(rentalRepository.getRentalDatabase().values());
         List<String> isbnList = bookRentals.stream().filter(rental -> rental.getMemberID().equals(memberId)).map(BookRental::getBookISBN).collect(Collectors.toList());
-        List<BookDto> rentedBooksDto = bookRepository.getAllBooks()
+        List<BookDto> rentedBooksDto = bookRepository
+                .getAllBooks()
                 .stream()
                 .filter(book -> isbnList.contains(book.getIsbn()))
                 .map(book -> bookMapper.bookToDto(book))
                 .collect(Collectors.toList());
         return rentedBooksDto;
+    }
+
+    public List<BookDto> getAllBooksThatAreOverdue() {
+        List<BookDto> overDueBooks = new ArrayList<>();
+        for (BookRental bookRental:getRentalRepository().getRentalDatabase().values()) {
+            if(LocalDate.now().isAfter(bookRental.getDueDate())){
+                overDueBooks.add(bookService.getBookByIsbn(bookRentalMapper.BookRentalToBookRentalDto(bookRental).getBookISBN()));
+
+            }
+        }
+        return overDueBooks;
+    }
+
+    public static void main(String[] args) {
+        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository(),new BookService(new BookRepository()));
+        //System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
+        System.out.println(rentalService.getLentBooksOfMember("1"));
     }
 }

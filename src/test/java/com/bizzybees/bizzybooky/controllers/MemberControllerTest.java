@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -27,8 +28,11 @@ import static io.restassured.RestAssured.port;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
 class MemberControllerTest {
+    @LocalServerPort
+    private int port;
     @Autowired
     private MemberController memberController;
 
