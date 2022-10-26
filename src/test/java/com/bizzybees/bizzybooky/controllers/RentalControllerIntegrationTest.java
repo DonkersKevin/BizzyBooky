@@ -68,7 +68,7 @@ public class RentalControllerIntegrationTest {
 
         assertThat(result).isEqualTo(LocalDate.now().plusWeeks(3));
 
-        //TODO What do we give back when the list is empty?
+        //ToDO create a test if a book doesn't exist
     }
 
     @DirtiesContext
@@ -217,6 +217,31 @@ public class RentalControllerIntegrationTest {
                 .assertThat()
                 .statusCode(HttpStatus.FORBIDDEN.value())
                 .extract();
+
+    }
+    //ToDo create
+    @DirtiesContext
+    @Test
+    void LibrarianTriesToViewOverDueBooksHappyPath() {
+
+        List<BookDto> expectedBooks = List.of(
+                new BookDto("2000-3000-4000", "OverDueBookTest", "Misses", "Potato", "Lorem Ipsum")
+        );
+        BookDto[] result= RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("3","Squarepants")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/viewoverdue")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(BookDto[].class);
 
     }
 

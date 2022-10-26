@@ -35,6 +35,7 @@ public class MemberController {
     public ConcurrentHashMap<String, Member> getAllmembers(@RequestHeader String authorization) {
         securityService.validateAuthorization(authorization, Feature.VIEW_MEMBERS);
         return memberService.getAllMembers();
+        //ToDo Exclude INSS adn also return memberDto
 
     }
 
