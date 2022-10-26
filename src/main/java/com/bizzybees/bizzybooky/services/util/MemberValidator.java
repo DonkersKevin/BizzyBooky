@@ -1,6 +1,6 @@
 package com.bizzybees.bizzybooky.services.util;
 
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.NewMemberDto;
 
 public class MemberValidator {
     public void isValidEmail(String emailAddress) {

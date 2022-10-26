@@ -1,8 +1,6 @@
-package com.bizzybees.bizzybooky.domain.dto.memberdtos;
+package com.bizzybees.bizzybooky.domain.dto.memberDtos;
 
 import com.bizzybees.bizzybooky.domain.Member;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 
 public class MemberMapper {
     public Member newMemberDtoToMember(NewMemberDto newMemberDto) {

@@ -1,7 +1,7 @@
 package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
-import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
+import com.bizzybees.bizzybooky.domain.dto.bookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.RentalService;

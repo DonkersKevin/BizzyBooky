@@ -1,6 +1,5 @@
-package com.bizzybees.bizzybooky.domain.dto.BookRentalDtos;
+package com.bizzybees.bizzybooky.domain.dto.bookRentalDtos;
 
-import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 
 import java.util.List;

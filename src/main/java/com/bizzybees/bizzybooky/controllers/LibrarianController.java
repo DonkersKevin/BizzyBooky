@@ -1,18 +1,15 @@
 package com.bizzybees.bizzybooky.controllers;
 
-import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.MemberService;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.ReturnMemberDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/librarians")
