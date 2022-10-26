@@ -141,7 +141,7 @@ public class RentalControllerIntegrationTest {
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
-                .get("/books/5/return")
+                .get("/books/4/return")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
