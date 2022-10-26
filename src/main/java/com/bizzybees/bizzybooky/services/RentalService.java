@@ -92,7 +92,8 @@ public class RentalService {
     public List<BookDto> getLentBooksOfMember(String memberId) {
         List<BookRental> bookRentals = new ArrayList<>(rentalRepository.getRentalDatabase().values());
         List<String> isbnList = bookRentals.stream().filter(rental -> rental.getMemberID().equals(memberId)).map(BookRental::getBookISBN).collect(Collectors.toList());
-        List<BookDto> rentedBooksDto = bookRepository.getAllBooks()
+        List<BookDto> rentedBooksDto = bookRepository
+                .getAllBooks()
                 .stream()
                 .filter(book -> isbnList.contains(book.getIsbn()))
                 .map(book -> bookMapper.bookToDto(book))
