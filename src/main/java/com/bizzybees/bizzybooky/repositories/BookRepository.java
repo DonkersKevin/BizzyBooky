@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.bizzybees.bizzybooky.repositories.util.WildcardToRegexConverter.wildcardToRegex;
 
@@ -40,6 +41,9 @@ public class BookRepository {
 
     public Book getBookDetailsByIsbn(String isbn) {
         log.info("Getting book by isbn: " + isbn);
+        if (bookList.stream().filter(book -> book.getIsbn().equals(isbn)).collect(Collectors.toList()).isEmpty()) {
+            throw new IsbnNotFoundException();
+        }
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
 

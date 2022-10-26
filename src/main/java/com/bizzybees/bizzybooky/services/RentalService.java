@@ -38,6 +38,13 @@ public class RentalService {
 
     }
 
+    public static void main(String[] args) {
+        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository(), new BookService(new BookRepository()));
+        rentalService.rentBook("1", "1000-2000-3000");
+        rentalService.rentBook("1", "1000-2000-3000");
+
+
+    }
 
     public BookRentalDto rentBook(String memberINSS, String bookISBN) {
         isBookAvailable(bookISBN);
@@ -52,7 +59,6 @@ public class RentalService {
         if (!memberRepository.isMemberInDatabase(memberINSS)) {
             throw new IllegalArgumentException("Member doesn't exist");
         }
-
     }
 
     private void isBookAvailable(String bookISBN) {

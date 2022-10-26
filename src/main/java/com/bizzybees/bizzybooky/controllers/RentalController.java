@@ -28,7 +28,6 @@ public class RentalController {
         this.rentalService = rentalService;
     }
 
-    // Check if we can return a bookRentalDto
     @GetMapping(path = "/{memberId}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
     public BookRentalDto rentBook(@RequestHeader String authorization, @PathVariable String memberId, @PathVariable String isbn) {
         log.info(memberId + "has rented the following book: "+ isbn);
