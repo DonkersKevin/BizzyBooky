@@ -30,12 +30,14 @@ public class RentalService {
 
     private BookMapper bookMapper;
 
-    public RentalService(RentalRepository rentalRepository, BookRepository bookRepository, MemberRepository memberRepository) {
+    public RentalService(RentalRepository rentalRepository, BookRepository bookRepository, MemberRepository memberRepository,BookService bookService) {
         this.rentalRepository = rentalRepository;
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
         this.bookRentalMapper = new BookRentalMapper();
         this.bookMapper = new BookMapper();
+        this.bookService = bookService;
+
     }
 
 
@@ -110,7 +112,7 @@ public class RentalService {
     }
 
     public static void main(String[] args) {
-        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository());
+        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository(),new BookService(new BookRepository()));
         //System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
         System.out.println(rentalService.getLentBooksOfMember("1"));
     }

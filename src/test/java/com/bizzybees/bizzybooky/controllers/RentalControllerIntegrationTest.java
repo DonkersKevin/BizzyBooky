@@ -6,6 +6,7 @@ import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
+import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -39,6 +40,8 @@ public class RentalControllerIntegrationTest {
 
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    BookService bookService;
 
 
     @DirtiesContext
@@ -197,7 +200,7 @@ public class RentalControllerIntegrationTest {
                 .given()
                 .auth()
                 .preemptive()
-                .basic("1","Squarepants")
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -209,19 +212,20 @@ public class RentalControllerIntegrationTest {
                 .extract();
 
     }
+
     //ToDo create
     @DirtiesContext
     @Test
     void LibrarianTriesToViewOverDueBooksHappyPath() {
 
         List<BookDto> expectedBooks = List.of(
-                new BookDto("2000-3000-4000", "OverDueBookTest", "Misses", "Potato", "Lorem Ipsum")
+                new BookDto("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum")
         );
-        BookDto[] result= RestAssured
+        BookDto[] result = RestAssured
                 .given()
                 .auth()
                 .preemptive()
-                .basic("3","Squarepants")
+                .basic("3", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -232,6 +236,8 @@ public class RentalControllerIntegrationTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract()
                 .as(BookDto[].class);
+
+        assertThat(List.of(result)).isEqualTo(expectedBooks);
 
     }
 

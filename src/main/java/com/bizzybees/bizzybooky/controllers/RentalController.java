@@ -8,6 +8,7 @@ import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
+import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class RentalController {
 
     @Autowired
     RentalService rentalService;
+
 
     public RentalController(SecurityService securityService, RentalService rentalService) {
         this.securityService = securityService;
