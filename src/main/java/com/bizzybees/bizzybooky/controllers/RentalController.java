@@ -33,14 +33,16 @@ public class RentalController {
 
     // Check if we can return a bookRentalDto
     @GetMapping(path = "/{memberId}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRentalDto rentBook(@PathVariable String memberId, @PathVariable String isbn) {
+    public BookRentalDto rentBook(@RequestHeader String authorization, @PathVariable String memberId, @PathVariable String isbn) {
         log.info(memberId + "has rented the following book: "+ isbn);
+        securityService.validateAuthorization(authorization, Feature.RENT_BOOK);
         return rentalService.rentBook(memberId, isbn);
     }
 
     @GetMapping(path = "/{lendingId}/return", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String returnBook(@PathVariable String lendingId) {
+    public String returnBook(@RequestHeader String authorization, @PathVariable String lendingId) {
         log.info("The rental has been turned in: " + lendingId);
+        securityService.validateAuthorization(authorization, Feature.RETURN_BOOK);
         return rentalService.returnBook(lendingId);
     }
 
@@ -49,7 +51,7 @@ public class RentalController {
     @GetMapping(path = "/{memberId}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> returnLentBooksOfMember (@RequestHeader String authorization, @PathVariable String memberId) {
         log.info("Looking for all borrowed books by: " + memberId);
-        securityService.validateAuthorization(authorization, Feature.RETURN_LENT_BOOK);
+        securityService.validateAuthorization(authorization, Feature.VIEW_LENT_BOOKS_OF_MEMBER);
         return rentalService.getLentBooksOfMember(memberId);
     }
     @ResponseStatus(HttpStatus.OK)
