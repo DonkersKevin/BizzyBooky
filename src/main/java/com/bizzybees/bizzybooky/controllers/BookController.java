@@ -36,6 +36,11 @@ public class BookController {
         log.info("Fetching all books...");
         return bookService.getAllBooks();
     }
+    @GetMapping(path = "/forbidden")
+    public List<BookDtoWithoutSummary> getAllHiddenBooks() {
+        log.info("Fetching all books...");
+        return bookService.getAllHiddenBooks();
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)

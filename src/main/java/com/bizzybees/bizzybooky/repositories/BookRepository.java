@@ -43,6 +43,12 @@ public class BookRepository {
         return bookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
     }
 
+
+    private Book getHiddenBookDetailsByIsbn(String isbn) {
+        log.info("Getting hidden book by isbn: " + isbn);
+        return forbiddenBookList.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst().orElseThrow();
+    }
+
     public List<Book> getBooksByTitleWithWildcards(String title) {
         log.info("Getting book by search: " + title);
         List<Book> listToReturn = bookList.stream().filter(b -> b.getTitle().matches(wildcardToRegex(title))).toList();
@@ -88,21 +94,22 @@ public class BookRepository {
     }
 
     public Book updateBook(Book book) {
-        List<Book> listWithBook;
+        int index;
 
         if (!isPresentInBookList(book) && (!isPresentInForbiddenBookList(book))) {
             throw new IsbnNotFoundException();
         }
 
         if (!isPresentInForbiddenBookList(book)) {
-            listWithBook = bookList;
+            log.info("found in booklist");
+            index = bookList.indexOf(getBookDetailsByIsbn(book.getIsbn()));
+            bookList.set(index,book);
         } else {
-            listWithBook = forbiddenBookList;
+            log.info("found in hidden booklist");
+            index = forbiddenBookList.indexOf(getHiddenBookDetailsByIsbn(book.getIsbn()));
+            forbiddenBookList.set(index,book);
         }
-
-        int index = listWithBook.indexOf(getBookDetailsByIsbn(book.getIsbn()));
-        bookList.set(index, book);
-        return bookList.get(index);
+        return book;
     }
 
     public void deleteBook(Book book) {
@@ -129,10 +136,12 @@ public class BookRepository {
     }
 
     private boolean isPresentInBookList(Book book) {
+        log.info("Checking in booklist");
         return bookList.contains(book);
     }
 
     public boolean isPresentInForbiddenBookList(Book book) {
+        log.info("Checking in hidden booklist");
         return forbiddenBookList.contains(book);
     }
 

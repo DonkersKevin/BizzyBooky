@@ -29,6 +29,10 @@ public class BookService {
         return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
     }
 
+    public List<BookDtoWithoutSummary> getAllHiddenBooks() {
+        return bookMapper.listToDtoListNoSummary(bookRepository.getAllForbiddenBooks());
+    }
+
     public BookDto getBookByIsbn(String isbn) {
         return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));
     }
@@ -81,6 +85,8 @@ public class BookService {
     public void deleteBookbyIsbn(String isbn) {
         deleteBook(bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn)));
     }
+
+
 }
 
 
