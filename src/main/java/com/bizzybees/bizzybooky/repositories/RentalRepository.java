@@ -20,6 +20,8 @@ public class RentalRepository {
         //an overdue bookRental for testing
         rentalDatabase.put("4", new BookRental("4", "4000-5000-6000"));
         rentalDatabase.get("4").setDueDate(LocalDate.of(2021,10,2));
+        rentalDatabase.put("5", new BookRental("4", "4000-5000-6000"));
+        rentalDatabase.get("5").setDueDate(LocalDate.of(2021,10,2));
         //an overdue bookRental for testing
     }
 

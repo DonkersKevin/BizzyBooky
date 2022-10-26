@@ -68,7 +68,6 @@ public class RentalService {
         LocalDate returnDate = rentalRepository.getRentalDatabase().get(lendingId).getDueDate();
         bookRepository.getBookDetailsByIsbn(rentalRepository.getRentalDatabase().get(lendingId).getBookISBN()).setAvailableForRent(true);
         rentalRepository.removeRental(lendingId);
-        // ToDo unit test for exception
         if (returnDate.isBefore(LocalDate.now())) {
             return "This book should have been returned by: " + returnDate;
         }
