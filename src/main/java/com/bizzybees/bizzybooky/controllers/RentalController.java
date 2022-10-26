@@ -44,7 +44,7 @@ public class RentalController {
     }
 
 
-    //ToDo Might need to change the path for restful compliance
+
     @GetMapping(path = "/{memberId}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> returnLentBooksOfMember (@RequestHeader String authorization, @PathVariable String memberId) {
         log.info("Looking for all borrowed books by: " + memberId);

@@ -72,7 +72,7 @@ public class RentalControllerIntegrationTest {
 
         assertThat(result).isEqualTo(LocalDate.now().plusWeeks(3));
 
-        //ToDO create a test if a book doesn't exist
+
     }
 
     @DirtiesContext
@@ -276,7 +276,6 @@ public class RentalControllerIntegrationTest {
 
     }
 
-    //ToDo create
     @DirtiesContext
     @Test
     void LibrarianTriesToViewOverDueBooksHappyPath() {

@@ -42,7 +42,7 @@ public class MemberController {
         log.info("Retrieving the list of all registered members" );
         securityService.validateAuthorization(authorization, Feature.VIEW_MEMBERS);
         return memberService.getAllMembers();
-        //ToDo Exclude INSS adn also return memberDto
+
 
     }
 
