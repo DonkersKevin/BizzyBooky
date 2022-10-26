@@ -47,6 +47,7 @@ public class RentalService {
         rentalRepository.saveRental(bookrental);
         BookRentalDto bookRentalDto = bookRentalMapper.BookRentalToBookRentalDto(bookrental);
         return bookrental;
+        //ToDo
     }
 
     private void isMemberInDatabase(String memberINSS) {
