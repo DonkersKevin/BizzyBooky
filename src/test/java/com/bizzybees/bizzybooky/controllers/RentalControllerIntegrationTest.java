@@ -3,6 +3,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.domain.dto.BookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
@@ -71,8 +72,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturnHappyPath_correctMessageDisplay() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         //when
         String result = RestAssured
                 .given()
@@ -97,8 +98,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturnHappyPath_bookIsMadeAvailable() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto boobookRentalDtorental = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = boobookRentalDtorental.getLendingID();
         rentalService.returnBook(lendIDTest);
 
         //when
@@ -114,7 +115,7 @@ public class RentalControllerIntegrationTest {
     @Test
     void getBookReturn_ExceptionThrownWithInvalidLendingID() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
         String lendIDTest = "random and wrong ID";
         //when
         RestAssured
@@ -134,8 +135,8 @@ public class RentalControllerIntegrationTest {
     @Test
     void returnBookTwice_ExceptionThrownAtSecondReturnTry() {
         //given
-        BookRental bookrental = rentalService.rentBook("1", "1000-2000-3000");
-        String lendIDTest = bookrental.getLendingID();
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
         rentalService.returnBook(lendIDTest);
 
         //when

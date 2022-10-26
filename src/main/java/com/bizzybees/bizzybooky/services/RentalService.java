@@ -39,14 +39,14 @@ public class RentalService {
     }
 
 
-    public BookRental rentBook(String memberINSS, String bookISBN) {
+    public BookRentalDto rentBook(String memberINSS, String bookISBN) {
         isBookAvailable(bookISBN);
         isMemberInDatabase(memberINSS);
         bookRepository.getBookDetailsByIsbn(bookISBN).setAvailableForRent(false);
         BookRental bookrental = new BookRental(memberINSS, bookISBN);
         rentalRepository.saveRental(bookrental);
         BookRentalDto bookRentalDto = bookRentalMapper.BookRentalToBookRentalDto(bookrental);
-        return bookrental;
+        return bookRentalDto;
     }
 
     private void isMemberInDatabase(String memberINSS) {

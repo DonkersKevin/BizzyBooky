@@ -36,7 +36,7 @@ public class RentalController {
 
     // Check if we can return a bookRentalDto
     @GetMapping(path = "/{id}/{isbn}/lent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public BookRental rentBook(@PathVariable String id, @PathVariable String isbn) {
+    public BookRentalDto rentBook(@PathVariable String id, @PathVariable String isbn) {
         return rentalService.rentBook(id, isbn);
 
     }
