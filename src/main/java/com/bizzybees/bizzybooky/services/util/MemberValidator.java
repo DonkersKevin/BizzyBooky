@@ -1,6 +1,6 @@
 package com.bizzybees.bizzybooky.services.util;
 
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.NewMemberDto;
 
 public class MemberValidator {
     public void isValidEmail(String emailAddress) {
@@ -11,6 +11,7 @@ public class MemberValidator {
 
     }
 
+    //ToDo add unit test for lastname and inss
     public void checkRequiredFields(NewMemberDto newMemberDto) {
         if (newMemberDto.getEmail() == null || newMemberDto.getEmail().equals("")) {
             throw new IllegalArgumentException("Provide an Email address please!");

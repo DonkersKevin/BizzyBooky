@@ -52,6 +52,7 @@ public class BookRepository {
         throw new TitleNotFoundException();
     }
 
+    //ToDo test isbnNotFoundException
     public List<Book> getBooksByIsbnWithWildcards(String isbn) {
         log.info("Getting book by search: " + isbn);
         List<Book> listToReturn = bookList.stream().filter(b -> b.getIsbn().matches(wildcardToRegex(isbn))).toList();

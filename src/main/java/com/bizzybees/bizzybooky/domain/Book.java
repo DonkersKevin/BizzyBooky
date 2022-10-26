@@ -46,16 +46,7 @@ public class Book {
         return summary;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                ", isbn='" + isbn + '\'' +
-                ", title='" + title + '\'' +
-                ", authorFirstName='" + authorFirstName + '\'' +
-                ", authorLastName='" + authorLastName + '\'' +
-                ", summary='" + summary + '\'' +
-                '}';
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -65,8 +56,4 @@ public class Book {
         return Objects.equals(isbn, book.isbn);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(isbn);
-    }
 }

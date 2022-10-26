@@ -45,8 +45,7 @@ public class RentalService {
         bookRepository.getBookDetailsByIsbn(bookISBN).setAvailableForRent(false);
         BookRental bookrental = new BookRental(memberINSS, bookISBN);
         rentalRepository.saveRental(bookrental);
-        BookRentalDto bookRentalDto = bookRentalMapper.BookRentalToBookRentalDto(bookrental);
-        return bookRentalDto;
+        return bookRentalMapper.BookRentalToBookRentalDto(bookrental);
     }
 
     private void isMemberInDatabase(String memberINSS) {
@@ -56,6 +55,7 @@ public class RentalService {
 
     }
 
+    // ToDo unit test for exception
     private void isBookAvailable(String bookISBN) {
         if (!bookRepository.getBookDetailsByIsbn(bookISBN).getIsAvailableForRent()) {
             throw new NoSuchElementException("This book is not available for lending");
@@ -69,6 +69,7 @@ public class RentalService {
         LocalDate returnDate = rentalRepository.getRentalDatabase().get(lendingId).getDueDate();
         bookRepository.getBookDetailsByIsbn(rentalRepository.getRentalDatabase().get(lendingId).getBookISBN()).setAvailableForRent(true);
         rentalRepository.removeRental(lendingId);
+        // ToDo unit test for exception
         if (returnDate.isBefore(LocalDate.now())) {
             return "This book should have been returned by: " + returnDate;
         }
@@ -108,11 +109,5 @@ public class RentalService {
             }
         }
         return overDueBooks;
-    }
-
-    public static void main(String[] args) {
-        RentalService rentalService = new RentalService(new RentalRepository(), new BookRepository(), new MemberRepository(),new BookService(new BookRepository()));
-        //System.out.println(rentalService.getRentalRepository().getRentalDatabase().values());
-        System.out.println(rentalService.getLentBooksOfMember("1"));
     }
 }

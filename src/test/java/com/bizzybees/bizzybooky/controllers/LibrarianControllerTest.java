@@ -4,8 +4,8 @@ import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;
 import com.bizzybees.bizzybooky.security.exception.UnknownUserException;
 import com.bizzybees.bizzybooky.security.exception.WrongPasswordException;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.ReturnMemberDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ class LibrarianControllerTest {
 
         ReturnMemberDto returnMemberDto1 = librarianController.addLibrarian("Basic MjpTcXVhcmVwYW50cw==",newMemberDto);
         //then
-        Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey(returnMemberDto1.getINSS()));
+        Assertions.assertEquals(returnMemberDto1.getRole(), Role.LIBRARIAN);
     }
 
     @Test

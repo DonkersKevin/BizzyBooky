@@ -30,16 +30,7 @@ public class BookDtoWithoutSummary {
         return authorLastName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BookDtoWithoutSummary that)) return false;
 
-        return getIsbn() != null ? getIsbn().equals(that.getIsbn()) : that.getIsbn() == null;
-    }
 
-    @Override
-    public int hashCode() {
-        return getIsbn() != null ? getIsbn().hashCode() : 0;
-    }
+
 }

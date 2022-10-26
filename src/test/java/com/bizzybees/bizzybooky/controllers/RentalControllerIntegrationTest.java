@@ -2,6 +2,7 @@ package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
+import com.bizzybees.bizzybooky.domain.dto.bookRentalDtos.BookRentalDto;
 
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.bookRentalDtos.BookRentalDto;

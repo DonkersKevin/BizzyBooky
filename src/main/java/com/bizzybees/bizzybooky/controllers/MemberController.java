@@ -4,14 +4,15 @@ import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.MemberService;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.NewMemberDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.ReturnMemberDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -37,7 +38,7 @@ public class MemberController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/view", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ConcurrentHashMap<String, Member> getAllmembers(@RequestHeader String authorization) {
+    public List<ReturnMemberDto> getAllmembers(@RequestHeader String authorization) {
         log.info("Retrieving the list of all registered members" );
         securityService.validateAuthorization(authorization, Feature.VIEW_MEMBERS);
         return memberService.getAllMembers();

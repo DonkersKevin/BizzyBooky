@@ -1,8 +1,6 @@
-package com.bizzybees.bizzybooky.domain.dto.memberdtos;
+package com.bizzybees.bizzybooky.domain.dto.memberDtos;
 
 import com.bizzybees.bizzybooky.domain.Member;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.NewMemberDto;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.ReturnMemberDto;
 
 public class MemberMapper {
     public Member newMemberDtoToMember(NewMemberDto newMemberDto) {
@@ -10,7 +8,7 @@ public class MemberMapper {
     }
 
     public ReturnMemberDto memberToReturnMemberDto(Member member) {
-        return new ReturnMemberDto(member.getRole(), member.getINSS(), member.getLastname(), member.getFirstname(), member.getEmail(), member.getStreetName(), member.getStreetNumber(), member.getPostalCode(), member.getCity());
+        return new ReturnMemberDto(member.getRole(), member.getLastname(), member.getFirstname(), member.getEmail(), member.getStreetName(), member.getStreetNumber(), member.getPostalCode(), member.getCity());
 
 
     }

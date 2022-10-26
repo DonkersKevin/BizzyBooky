@@ -1,11 +1,13 @@
-package com.bizzybees.bizzybooky.domain.dto.memberdtos;
+package com.bizzybees.bizzybooky.domain.dto.memberDtos;
+
 
 import com.bizzybees.bizzybooky.security.Role;
 
-public class NewMemberDto {
+import java.util.Objects;
+
+public class ReturnMemberDto {
     private Role role;
-    private String password;
-    private String INSS;
+
     private String lastname;
     private String firstname;
     private String email;
@@ -14,14 +16,11 @@ public class NewMemberDto {
     private String postalCode;
     private String City;
 
-    public String getINSS() {
-        return INSS;
-    }
 
-    public NewMemberDto(Role role, String password, String INSS, String lastname, String firstname, String email, String streetName, String streetNumber, String postalCode, String city) {
+
+    public ReturnMemberDto(Role role, String lastname, String firstname, String email, String streetName, String streetNumber, String postalCode, String city) {
         this.role = role;
-        this.password = password;
-        this.INSS = INSS;
+
         this.lastname = lastname;
         this.firstname = firstname;
         this.email = email;
@@ -63,7 +62,14 @@ public class NewMemberDto {
         return role;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReturnMemberDto that = (ReturnMemberDto) o;
+        return getRole() == that.getRole() && Objects.equals(getLastname(), that.getLastname()) && Objects.equals(getFirstname(), that.getFirstname()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getStreetName(), that.getStreetName()) && Objects.equals(getStreetNumber(), that.getStreetNumber()) && Objects.equals(getPostalCode(), that.getPostalCode()) && Objects.equals(getCity(), that.getCity());
     }
+
+
 }
+
