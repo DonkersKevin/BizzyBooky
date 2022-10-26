@@ -39,6 +39,9 @@ public class RentalControllerIntegrationTest {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    RentalController rentalController;
+
 
     @DirtiesContext
     @Test
@@ -159,9 +162,6 @@ public class RentalControllerIntegrationTest {
     @DirtiesContext
     @Test
     void whenRegisteredAsALibrarian_ReturnAllLentBooksOfAMember() {
-        rentalService.rentBook("1", "1000-2000-3000");
-        rentalService.rentBook("1", "2000-3000-4000");
-        rentalService.rentBook("2", "3000-4000-5000");
 
         BookDto[] dummyBookDtoArray = new BookDto[]{
                 new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
@@ -169,24 +169,30 @@ public class RentalControllerIntegrationTest {
 
         String member1Id = "1";
 
-        BookDto[] lentBooks = RestAssured
+        BookDto[] lentBooks = rentalController.returnLentBooksOfMember("Basic MzpTcXVhcmVwYW50cw==", member1Id).toArray(new BookDto[0]);
+
+        Assertions.assertEquals(Arrays.stream(dummyBookDtoArray).toList(), Arrays.stream(lentBooks).toList());
+    }
+
+    @DirtiesContext
+    @Test
+    void whenWrongAuthorizationForALibrarian_ThrowError() {
+
+        String member1Id = "1";
+
+        RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1","wrongpass")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
                 .accept(ContentType.JSON)
                 .get("/books/" + member1Id + "/lent")
                 .then()
-                //.assertThat()
-                //.statusCode(HttpStatus.OK.value())
-                .extract()
-                .as(BookDto[].class);
-
-        Assertions.assertEquals(Arrays.stream(dummyBookDtoArray).toList(), Arrays.stream(lentBooks).toList());
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
-
-
-    //Basic MzpTcXVhcmVwYW50cw==
-
 
 }
