@@ -94,8 +94,8 @@ public class BookController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void deleteBook(@RequestHeader String authorization, @RequestBody BookDto bookDto) {
-        securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
         log.info("Deleting book with isbn: " + bookDto.getIsbn());
+        securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
         bookService.deleteBook(bookDto);
     }
 
