@@ -29,12 +29,6 @@ public class BookService {
         return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
     }
 
-    /*
-    public List<BookDto> getAllBooksWithoutSummary() {
-        return bookMapper.listToDtoListNoSummary(bookRepository.getAllBooks());
-    }
-
-     */
 
     public BookDto getBookByIsbn(String isbn) {
         return bookMapper.bookToDto(bookRepository.getBookDetailsByIsbn(isbn));

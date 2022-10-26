@@ -4,7 +4,7 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Member;
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 import com.bizzybees.bizzybooky.domain.dto.memberDtos.MemberMapper;
-import com.bizzybees.bizzybooky.domain.dto.memberdtos.MemberMapper;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.MemberMapper;
 import com.bizzybees.bizzybooky.exceptions.AccessDeniedException;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;

@@ -47,30 +47,30 @@ public class BookController {
     }
 
     //TODO implement properly
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title", "author"})
-    public List<BookDto> getAllBooksCombinedSearch(@RequestParam(required = false) String isbn, @RequestParam(required = false) String title, @RequestParam(required = false) String author) {
-        log.info("Looking for book with: " + isbn + " " + title + " " + author);
-        return new ArrayList<>();
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn", "title", "author"})
+//    public List<BookDto> getAllBooksCombinedSearch(@RequestParam(required = false) String isbn, @RequestParam(required = false) String title, @RequestParam(required = false) String author) {
+//        log.info("Looking for book with: " + isbn + " " + title + " " + author);
+//        return new ArrayList<>();
+//    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"isbn"})
-    public List<BookDto> getAllBooksByIsbnWildcardSearch(@RequestParam String isbn) {
+    public List<BookDto> getAllBooksByIsbnWildcardSearch(@RequestParam(required = false) String isbn) {
         log.info("Looking for book with isbn: " + isbn);
         return bookService.getAllBooksByIsbnSearch(isbn);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"title"})
-    public List<BookDto> getAllBooksWithTitleWildcardSearch(@RequestParam String title) {
+    public List<BookDto> getAllBooksWithTitleWildcardSearch(@RequestParam(required = false) String title) {
         log.info("Looking for book with title: " + title);
         return bookService.getBooksByTitleSearch(title);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = {"author"})
-    public List<BookDto> getAllBooksWithAuthorWildcardSearch(@RequestParam String author) {
+    public List<BookDto> getAllBooksWithAuthorWildcardSearch(@RequestParam(required = false) String author) {
         log.info("Looking for book with author: " + author);
         return bookService.getBooksByAuthorSearch(author);
     }

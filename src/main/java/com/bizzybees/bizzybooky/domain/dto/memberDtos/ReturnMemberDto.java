@@ -70,9 +70,6 @@ public class ReturnMemberDto {
         return getRole() == that.getRole() && Objects.equals(getLastname(), that.getLastname()) && Objects.equals(getFirstname(), that.getFirstname()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getStreetName(), that.getStreetName()) && Objects.equals(getStreetNumber(), that.getStreetNumber()) && Objects.equals(getPostalCode(), that.getPostalCode()) && Objects.equals(getCity(), that.getCity());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getRole(), getLastname(), getFirstname(), getEmail(), getStreetName(), getStreetNumber(), getPostalCode(), getCity());
-    }
+
 }
 
