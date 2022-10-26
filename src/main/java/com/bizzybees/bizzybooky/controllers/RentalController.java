@@ -1,6 +1,7 @@
 package com.bizzybees.bizzybooky.controllers;
 
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.bookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.security.Feature;
 import com.bizzybees.bizzybooky.security.SecurityService;
 import com.bizzybees.bizzybooky.services.RentalService;
@@ -16,14 +17,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/books")
 public class RentalController {
-
     private final Logger log = LoggerFactory.getLogger(getClass());
     SecurityService securityService;
 
-
     @Autowired
     RentalService rentalService;
-
 
     public RentalController(SecurityService securityService, RentalService rentalService) {
         this.securityService = securityService;
@@ -53,6 +51,7 @@ public class RentalController {
         securityService.validateAuthorization(authorization, Feature.VIEW_LENT_BOOKS_OF_MEMBER);
         return rentalService.getLentBooksOfMember(memberId);
     }
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/viewoverdue", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BookDto> getAllOverdueBooks(@RequestHeader String authorization) {
