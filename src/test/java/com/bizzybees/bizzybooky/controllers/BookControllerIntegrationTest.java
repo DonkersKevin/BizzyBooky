@@ -6,12 +6,12 @@ import com.bizzybees.bizzybooky.repositories.BookRepository;
 import com.bizzybees.bizzybooky.services.RentalService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,29 +19,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BookControllerIntegrationTest {
     @LocalServerPort
     private int port;
-
     @Autowired
     BookController bookController;
     @Autowired
     RentalService rentalService;
     @Autowired
     BookRepository bookRepository;
-
-    List<BookDto> expectedBookList;
-
-    @BeforeEach
-    void init() {
-        expectedBookList = new ArrayList<>(List.of(
-                new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
-                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
-                new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
-                new BookDto("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")
-        ));
-    }
 
     @Test
     void GetBooks_HappyPath() {
@@ -273,7 +261,9 @@ class BookControllerIntegrationTest {
         assertThat(List.of(result)).isEqualTo(expectedBooks);
     }
 
+
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void authorLastNameSearch_HappyPath() {
         //ARRANGE
         List<BookDto> expectedBooks = List.of(
@@ -299,9 +289,10 @@ class BookControllerIntegrationTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void authorSearch_WildCardHappyPath() {
         //ARRANGE
-        List<BookDto> expectedBooks = List.of(
+        List<BookDto> expectedBooksList = List.of(
                 new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
                 new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
                 new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum")
@@ -322,16 +313,13 @@ class BookControllerIntegrationTest {
                 .as(BookDto[].class);
 
         //ASSES
-        assertThat(List.of(result)).isEqualTo(expectedBooks);
+        assertThat(List.of(result)).isEqualTo(expectedBooksList);
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void authorSearch_WhenNotFound_ThrowException() {
         //ARRANGE
-        List<BookDto> expectedBookList = new ArrayList<>(List.of(
-                new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"))
-        );
-
         //ACT
         RestAssured
                 .given()
@@ -388,6 +376,9 @@ class BookControllerIntegrationTest {
         //ACT
         BookDto result = RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("3", "Squarepants")
                 .contentType(ContentType.JSON)
                 .baseUri("http://localhost")
                 .port(port)

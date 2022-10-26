@@ -1,7 +1,6 @@
-package com.bizzybees.bizzybooky.domain.dto.BookRentalDtos;
+package com.bizzybees.bizzybooky.domain.dto.bookRentalDtos;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class BookRentalDto {
     private String lendingID;
