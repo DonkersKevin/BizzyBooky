@@ -95,7 +95,7 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(path = "/{isbn}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(path = "/{isbn}")
     public void deleteBookByIsbn(@RequestHeader String authorization, @PathVariable String isbn) {
         log.info("Deleting book with isbn: " + isbn);
         securityService.validateAuthorization(authorization, Feature.CAN_SOFT_DELETE_BOOK);
