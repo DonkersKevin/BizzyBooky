@@ -2,6 +2,9 @@ package com.bizzybees.bizzybooky.controllers;
 
 
 import com.bizzybees.bizzybooky.domain.Member;
+import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.memberDtos.MemberMapper;
+import com.bizzybees.bizzybooky.domain.dto.memberdtos.MemberMapper;
 import com.bizzybees.bizzybooky.exceptions.AccessDeniedException;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.security.Role;
@@ -20,6 +23,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,18 +39,21 @@ class MemberControllerTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    private MemberMapper memberMapper = new MemberMapper();
+
     @Test
     void addNewMemberToRepositoryIsSuccessful() {
         //given
-        NewMemberDto newMemberDto = new NewMemberDto(Role.MEMBER, "Squarepants", "Patrick", "Patrick@hotmail.com"
+        NewMemberDto newMemberDto = new NewMemberDto(Role.MEMBER, "Squarepants", "5", "Patrick@hotmail.com"
                 , "randomstreet"
                 , "Patrrick@hotmail.com", "1", "Bikini Bottom", "", "fefe");
 
         //when
 
         ReturnMemberDto returnMemberDto1 = memberController.addMember(newMemberDto);
+
         //then
-        Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey(returnMemberDto1.getINSS()));
+        Assertions.assertTrue(memberRepository.getMemberDatabase().containsKey("5"));
     }
     @Test
     void normalMemberCannotViewMembers(){
@@ -56,17 +63,15 @@ class MemberControllerTest {
     @Test
     void viewMembershappyPath(){
         //given
-        ConcurrentHashMap<String, Member> expectedDatabase;
-        expectedDatabase = new ConcurrentHashMap<String, Member>();
-        expectedDatabase.put("1", new Member("1", "Squarepants", "Patrick"
-                , "randomstreet"
-                , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
-        expectedDatabase.put("2", new Member("1", "Squarepants", "Patrick"
-                , "randomstreet"
-                , "Patrick@hotmail.com", "1", "13", "1", "Bikini Bottom"));
-        expectedDatabase.get("2").setRole(Role.ADMIN);
+
+
+
+        List<ReturnMemberDto> expectedList = memberRepository.getMemberDatabase().values().stream()
+                .map(member -> memberMapper.memberToReturnMemberDto(member))
+                .toList();
+
         //when
-        ConcurrentHashMap result = RestAssured
+        ReturnMemberDto[] result = RestAssured
                 .given()
                 .auth()
                 .preemptive()
@@ -80,9 +85,10 @@ class MemberControllerTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .extract()
-                .as(ConcurrentHashMap.class);
+                .as(ReturnMemberDto[].class);
         //then
-        assertThat(List.of(result).equals(List.of(expectedDatabase)));
+
+        Assertions.assertEquals(List.of(result),expectedList);
     }
     @Test
     void viewMembersByMemberGivesAccessDeniedException(){

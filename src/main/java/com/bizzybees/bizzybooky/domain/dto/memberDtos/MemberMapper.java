@@ -8,7 +8,7 @@ public class MemberMapper {
     }
 
     public ReturnMemberDto memberToReturnMemberDto(Member member) {
-        return new ReturnMemberDto(member.getRole(), member.getINSS(), member.getLastname(), member.getFirstname(), member.getEmail(), member.getStreetName(), member.getStreetNumber(), member.getPostalCode(), member.getCity());
+        return new ReturnMemberDto(member.getRole(), member.getLastname(), member.getFirstname(), member.getEmail(), member.getStreetName(), member.getStreetNumber(), member.getPostalCode(), member.getCity());
 
 
     }

@@ -3,7 +3,9 @@ package com.bizzybees.bizzybooky.controllers;
 import com.bizzybees.bizzybooky.domain.Book;
 import com.bizzybees.bizzybooky.domain.BookRental;
 import com.bizzybees.bizzybooky.domain.dto.bookRentalDtos.BookRentalDto;
+
 import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
+import com.bizzybees.bizzybooky.domain.dto.bookRentalDtos.BookRentalDto;
 import com.bizzybees.bizzybooky.repositories.MemberRepository;
 import com.bizzybees.bizzybooky.services.BookService;
 import com.bizzybees.bizzybooky.services.RentalService;
@@ -52,6 +54,9 @@ public class RentalControllerIntegrationTest {
         //when
         LocalDate result = RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -72,6 +77,27 @@ public class RentalControllerIntegrationTest {
 
     @DirtiesContext
     @Test
+    void whenWronglyRegisteredAndTryingToRentABook_ThrowError() {
+
+        String member1Id = "1";
+
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1","wrongpass")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/1/1000-2000-3000/lent")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    @DirtiesContext
+    @Test
     void getBookReturnHappyPath_correctMessageDisplay() {
         //given
         BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
@@ -79,6 +105,9 @@ public class RentalControllerIntegrationTest {
         //when
         String result = RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -122,6 +151,9 @@ public class RentalControllerIntegrationTest {
         //when
         RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -148,6 +180,9 @@ public class RentalControllerIntegrationTest {
         //then
         RestAssured
                 .given()
+                .auth()
+                .preemptive()
+                .basic("1", "Squarepants")
                 .baseUri("http://localhost")
                 .port(port)
                 .when()
@@ -157,6 +192,28 @@ public class RentalControllerIntegrationTest {
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("message", equalTo("This lending ID is not attributed"));
+    }
+
+    @DirtiesContext
+    @Test
+    void returningABookWithWithoutRegistrationAsAMember_ExceptionThrown() {
+        //given
+        BookRentalDto bookRentalDto = rentalService.rentBook("1", "1000-2000-3000");
+        String lendIDTest = bookRentalDto.getLendingID();
+        //when
+        RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .basic("1", "wrongpass")
+                .baseUri("http://localhost")
+                .port(port)
+                .when()
+                .accept(ContentType.JSON)
+                .get("/books/" + lendIDTest + "/return")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
     }
 
     @DirtiesContext

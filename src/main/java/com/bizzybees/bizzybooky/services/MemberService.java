@@ -9,7 +9,8 @@ import com.bizzybees.bizzybooky.domain.dto.memberDtos.ReturnMemberDto;
 import com.bizzybees.bizzybooky.services.util.MemberValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Collection;
+import java.util.List;
 
 
 @Service
@@ -60,8 +61,11 @@ public class MemberService {
 
 
     //GetMembers method for testing purposes
-    public ConcurrentHashMap<String, Member> getAllMembers() {
-        return memberRepository.getMemberDatabase();
+    public List<ReturnMemberDto> getAllMembers() {
+
+        return memberRepository.getMemberDatabase().values().stream()
+                .map(member -> memberMapper.memberToReturnMemberDto(member))
+                .toList();
     }
 
 

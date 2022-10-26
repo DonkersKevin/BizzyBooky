@@ -45,8 +45,7 @@ public class RentalService {
         bookRepository.getBookDetailsByIsbn(bookISBN).setAvailableForRent(false);
         BookRental bookrental = new BookRental(memberINSS, bookISBN);
         rentalRepository.saveRental(bookrental);
-        BookRentalDto bookRentalDto = bookRentalMapper.BookRentalToBookRentalDto(bookrental);
-        return bookRentalDto;
+        return bookRentalMapper.BookRentalToBookRentalDto(bookrental);
     }
 
     private void isMemberInDatabase(String memberINSS) {
