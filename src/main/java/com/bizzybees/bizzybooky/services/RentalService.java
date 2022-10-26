@@ -55,7 +55,6 @@ public class RentalService {
 
     }
 
-    // ToDo unit test for exception
     private void isBookAvailable(String bookISBN) {
         if (!bookRepository.getBookDetailsByIsbn(bookISBN).getIsAvailableForRent()) {
             throw new NoSuchElementException("This book is not available for lending");

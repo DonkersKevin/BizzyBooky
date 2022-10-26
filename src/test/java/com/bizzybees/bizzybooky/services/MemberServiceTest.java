@@ -62,10 +62,10 @@ class MemberServiceTest {
     @Test
     void givenEmailAddress_thatAlreadyExistsInDatabase() {
         //given
-        memberRepository.save(new Member("1", "", "ffe", "fe",
-                "patrick.spongebob@hotmail.com","", " ", "", "gg"));
-        NewMemberDto alreadyExistingMember = new NewMemberDto(Role.MEMBER, "", "", "patrick.spongebob@hotmail.com",
-                "","patrick.spongebob@hotmail.com", " ","", "", "");
+//        memberRepository.save(new Member("1", "", "ffe", "fe",
+//                "Patrick@hotmail.com","", " ", "", "gg"));
+        NewMemberDto alreadyExistingMember = new NewMemberDto(Role.MEMBER, "", "th", "gg",
+                "","Patrick@hotmail.com", " ","", "", "th");
         //when
 
         //then
