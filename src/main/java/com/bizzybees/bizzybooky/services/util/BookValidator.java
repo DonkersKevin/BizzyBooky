@@ -4,7 +4,7 @@ import com.bizzybees.bizzybooky.domain.dto.bookDtos.BookDto;
 
 public class BookValidator {
 
-    //ToDo check false last name exception
+
     public void checkRequiredFields(BookDto bookDto) {
         if (bookDto.getIsbn() == null || bookDto.getIsbn().equals("")) {
             throw new IllegalArgumentException("Provide an ISBN number address please!");

@@ -52,7 +52,7 @@ public class MemberService {
         }
     }
 
-    // ToDo make unit test for exception
+    //ToDo make unit test for exception
     public void isUniqueEmail(String email) {
         if (memberRepository.getMemberDatabase().values().stream().anyMatch(member -> email.equals(member.getEmail()))) {
             throw new IllegalArgumentException("Email Already exists");
