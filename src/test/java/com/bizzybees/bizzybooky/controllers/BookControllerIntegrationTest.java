@@ -32,12 +32,14 @@ class BookControllerIntegrationTest {
     BookRepository bookRepository;
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void GetBooks_HappyPath() {
         //ARRANGE
         ArrayList<BookDto> expectedBookListWithoutSummary = new ArrayList<>(List.of(
                 new BookDto("1000-2000-3000", "Pirates", "Mister", "Crabs", "Lorem Ipsum"),
                 new BookDto("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
                 new BookDto("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
+                new BookDto("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum"),
                 new BookDto("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum")
         ));
 
@@ -392,14 +394,15 @@ class BookControllerIntegrationTest {
                 new Book("2000-3000-4000", "Farmers", "Misses", "Potato", "Lorem Ipsum"),
                 new Book("3000-4000-5000", "Gardeners", "Miss", "Lettuce", "Lorem Ipsum"),
                 new Book("4000-5000-6000", "OverDueBook", "Dude", "Guy", "Lorem Ipsum"),
-                new Book("6000-7000-8000", "Error", "Err", "or", "Lorem Ipsum")
+                new Book("6000-7000-8000", "Programmes", "Boy", "Name", "Lorem Ipsum"),
+                new Book("7000-8000-9000", "Error", "Err", "or", "Lorem Ipsum")
         );
 
         List<Book> expectedForbiddenBooks = List.of(
                 new Book("4000-5000-6000", "OverDueBook2", "Dudeette", "Guyana", "Lorem Ipsum")
         );
 
-        String requestedBody = "{\"isbn\":\"6000-7000-8000\",\"title\":\"Error\",\"authorFirstname\":\"Err\",\"authorLastName\":\"or\",\"summary\":\"Lorem Ipsum\"}";
+        String requestedBody = "{\"isbn\":\"7000-8000-9000\",\"title\":\"Error\",\"authorFirstname\":\"Err\",\"authorLastName\":\"or\",\"summary\":\"Lorem Ipsum\"}";
 
         //ACT
         BookDto result = RestAssured
